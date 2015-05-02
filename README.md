@@ -14,7 +14,7 @@ Finally, the spec is designed to support clients that use HATEOAS (hypertext as 
 
 There are currently two implementations of frameworks that implement the spec, allowing a RESTful API to be automatically generated from a domain object model.
 
-[Apache Isis](http://incubator.apache.org/isis) is a full-stack open source application development framework, designed to let you rapidly develop domain-driven business enterprise applications, for the Java platform.
+[Apache Isis](https://isis.apache.org) is a full-stack open source application development framework, designed to let you rapidly develop domain-driven business enterprise applications, for the Java platform.
 
 [Restful Objects for .NET](http://restfulobjects.codeplex.com) runs on the .NET platform, and was the first framework to fully implement this spec.
 
