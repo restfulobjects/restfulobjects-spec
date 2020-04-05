@@ -1,0 +1,4 @@
+= Restful Objects
+:page-role: -narrow -title
+
+WARNING: TODO

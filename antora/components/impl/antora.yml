@@ -1,0 +1,8 @@
+name: impl
+title: "Implementations"
+version: latest
+start_page: ROOT:about.adoc
+nav:
+- modules/ROOT/nav.adoc
+- modules/apache-isis/nav.adoc
+- modules/nof/nav.adoc

@@ -1,0 +1,6 @@
+name: spec
+title: "Specification"
+version: latest
+start_page: ROOT:about.adoc
+nav:
+- modules/ROOT/nav.adoc

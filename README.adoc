@@ -1,4 +1,4 @@
-# Restful Objects #
+= Restful Objects
 
 The Restful Objects specification defines a set of RESTful resources, and corresponding JSON representations, for accessing and manipulating a domain object model.
 
@@ -10,15 +10,18 @@ Restful Objects is agnostic as to the nature of the server-side state that it ex
 
 Finally, the spec is designed to support clients that use HATEOAS (hypertext as the engine of application state, with opaque URI values) and also those that prefer to use templated URIs.
 
-# Implementations #
+= Implementations
 
 There are currently two implementations of frameworks that implement the spec, allowing a RESTful API to be automatically generated from a domain object model.
 
-[Apache Isis](https://isis.apache.org) is a full-stack open source application development framework, designed to let you rapidly develop domain-driven business enterprise applications, for the Java platform.
+https://isis.apache.org[Apache Isis] is a full-stack open source application development framework, designed to let you rapidly develop domain-driven business enterprise applications, for the Java platform.
 
-[Restful Objects for .NET](http://restfulobjects.codeplex.com) runs on the .NET platform, and was the first framework to fully implement this spec.
+http://restfulobjects.codeplex.com[Restful Objects for .NET] runs on the .NET platform, and was the first framework to fully implement this spec.
 
-# Feedback #
+= Feedback
 
 Even though v1.0.0 of the Restful Objects spec has now been issued, we intend to continue working on the spec, clarifying it, enhancing it, and adopting new and emerging standards where appropriate. As such, we always welcome your feedback, either via the issue tracker on github, or just by commenting here.
 
+= Format
+
+The specification v1.0 was originally written using Microsoft Word, but has since been ported to Asciidoc.

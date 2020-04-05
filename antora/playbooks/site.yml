@@ -1,0 +1,40 @@
+site:
+  title: Restful Objects Spec
+  url: https://restfulobjects.org/
+  start_page: docs:ROOT:about.adoc
+
+content:
+  sources:
+
+# antora
+    - url: .
+      start_path: antora/components/docs
+      branches: HEAD
+    - url: .
+      start_path: antora/components/impl
+      branches: HEAD
+    - url: .
+      start_path: antora/components/spec
+      branches: HEAD
+
+ui:
+  bundle:
+    url: ../antora-ui-bundle/build/ui-bundle.zip
+#    url: https://github.com/restfulobjecst/antora-ui-bundle/blob/master/build/ui-bundle.zip?raw=true
+    snapshot: true
+  supplemental_files: antora/supplemental-ui
+
+asciidoc:
+  extensions:
+    - asciidoctor-plantuml
+    - ./antora/lib/lorem
+    - ./antora/lib/github-issue
+  attributes:
+    experimental: ""
+    idprefix: ""
+    idseparator: "-"
+    plantuml-server-url: "http://www.plantuml.com/plantuml"
+    page-isisrel: "2.0.0-M3"
+
+output:
+  dir: antora/target/site
