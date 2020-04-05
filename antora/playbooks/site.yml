@@ -34,7 +34,6 @@ asciidoc:
     idprefix: ""
     idseparator: "-"
     plantuml-server-url: "http://www.plantuml.com/plantuml"
-    page-isisrel: "2.0.0-M3"
 
 output:
   dir: antora/target/site
