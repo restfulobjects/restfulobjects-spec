@@ -1,3 +1,2 @@
-
-* xref:docs:ROOT:about.adoc[Restful Objects]
+* xref:docs:ROOT:about.adoc[About]
 

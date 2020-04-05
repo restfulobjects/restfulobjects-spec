@@ -1,4 +1,4 @@
-= Restful Objects
+= About
 :page-role: -narrow -title
 
 WARNING: TODO
