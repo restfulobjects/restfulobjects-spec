@@ -1,5 +1,5 @@
-= 33	FAQS
-=== 33.1	"The spec defines URLs with a single instance identifier component. For objects that notionally have a 'composite primary key' (e.g. order line item) I'd rather separate out those parts out, (e.g. "objects/ORI/123/1" rather than "/objects/ORI/123-1/…")  Can I change the URL format in this way?"
+= 33 FAQS
+== 33.1 "The spec defines URLs with a single instance identifier component. For objects that notionally have a 'composite primary key' (e.g. order line item) I'd rather separate out those parts out, (e.g. "objects/ORI/123/1" rather than "/objects/ORI/123-1/…")  Can I change the URL format in this way?"
 The short answer is: no, you can't change the URL format of the instance identifier. The slightly longer answer is: and you shouldn't care.
 The primary reason that the specification does not allow the format of its URLs to be changed is to ensure that all the resources for all objects can be addressed in a uniform way.
 For example, the templated URL:
@@ -12,7 +12,7 @@ Or, they can be treated as semi-opaque: the instance identifiers are opaque, the
 One other benefit of this approach is that implementations are free to encrypt instance ids.
 This could be used to prevent a rogue client from generating URLs that would give it access to restricted resources.
 
-=== 33.2	"Why doesn't Restful Objects define its own media-types?"
+== 33.2 "Why doesn't Restful Objects define its own media-types?"
 
 Many REST practitioners recommend minting custom media types for every representation.
 Such media types effectively encode the semantics of the representations.
@@ -25,7 +25,7 @@ In contrast, the media type defined by Restful Objects, through its use of media
 It would, of course, be possible to add a media type parameter x-ro-domain-type to a custom media type, but why bother?
 Better to overlay the additional layers of abstraction.
 
-=== 33.3	"Restful Objects can expose domain entities as resources. But doesn't exposing domain entities mean that the server and client are closely coupled, thereby violating REST?"
+== 33.3 "Restful Objects can expose domain entities as resources. But doesn't exposing domain entities mean that the server and client are closely coupled, thereby violating REST?"
 
 To answer this properly we should distinguish three cases.
 The first is to note that in many cases the server and client will in fact be closely coupled.
@@ -40,7 +40,7 @@ The last case to consider is an independently-developed client that is bespoke; 
 For these cases, it is currently the case that Restful Objects offers limited support; the domain type of the representation is advertised through the "x-ro-domain-type" media type parameter of the Content-Type header, but it is not possible for the client to request a particular representation by setting the Accept header.
 This is likely to be added as a future enhancement, see §34.1.
 
-=== 33.4	But isn't exposing domain entities just the wrong thing to do?  Surely I should be exposing use cases as resources?
+== 33.4 But isn't exposing domain entities just the wrong thing to do?  Surely I should be exposing use cases as resources?
 
 Not necessarily; both are valid approaches.
 Some practitioners have claimed that exposing entities makes it difficult to render the relevant links to support hypermedia-driven designs.
@@ -50,7 +50,7 @@ Because of that, you can start off exposing behaviour directly on entities.
 Later on – if you find that you need them – then you can start to add in either commands/use case objects to support the commonly-trod paths.
 In other words, Restful Objects lets you add in layering as and when it's justified, but allows you to defer that decision until a later point in the project when you've learnt more.
 
-=== 33.5	I prefer having an application service layer that exposes use cases and views. Doesn't Restful Objects simply move the design work that I would normally have done in my resources back a level".
+== 33.5 I prefer having an application service layer that exposes use cases and views. Doesn't Restful Objects simply move the design work that I would normally have done in my resources back a level".
 
 Yes, it does.
 But the benefits of doing so are that:

@@ -1,4 +1,4 @@
-= 26	DOMAIN TYPE ACTION PARAMETER DESCRIPTION RESOURCE
+= 26 DOMAIN TYPE ACTION PARAMETER DESCRIPTION RESOURCE
 
 The domain action parameter description resource represents a description of a parameter of an action on a domain type, within the metamodel.
 Clients can use the domain action parameter description representations as hints when building a UI. For example, there will be links back to the domain type representing each of the action parameter return types; this might be used in order to select the appropriate widgets when building a UI. Or, the client can use information in the representation to apply client-side validation of declarative semantics (for example, mandatory parameters, or regex patterns).
@@ -16,17 +16,17 @@ where:
 
 * {paramName} is the named action parameter
 
-=== 26.1	HTTP GET
+== 26.1 HTTP GET
 
 Obtain a representation of a description of a domain action parameter, within the metamodel.
 
-=== 26.1.1	GET Request
+=== 26.1.1 GET Request
 
-=== 26.1.1.1	Query String
+==== 26.1.1.1 Query String
 
 * none
 
-=== 26.1.1.2	Headers
+==== 26.1.1.2 Headers
 
 * Accept
 
@@ -34,15 +34,15 @@ Obtain a representation of a description of a domain action parameter, within th
 
 * *application/json;profile=".../action-param-description"
 
-=== 26.1.1.3	Body
+==== 26.1.1.3 Body
 
 * N/A
 
-=== 26.1.2	Successful Response
+=== 26.1.2 Successful Response
 
 As per §20.1 (200); body as per §26.2.
 
-=== 26.2	Representation
+== 26.2 Representation
 
 The links from the domain action parameter description representation to other resources are as shown in the diagram below:
 

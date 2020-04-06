@@ -1,4 +1,4 @@
-= 23	DOMAIN TYPE PROPERTY DESCRIPTION RESOURCE
+= 23 DOMAIN TYPE PROPERTY DESCRIPTION RESOURCE
 
 The domain property description resource describes a property of a domain type within the metamodel.
 Clients can use the domain property description's representation as hints when building a UI. For example, there will be links back to a domain type representing the property type; this can be used to select the relevant widget for that property.
@@ -15,17 +15,17 @@ where:
 
 * {propertyId} identifies the property.
 
-=== 23.1	HTTP GET
+== 23.1 HTTP GET
 
 Obtain a representation that describes a domain property within the metamodel.
 
-=== 23.1.1	GET Request
+=== 23.1.1 GET Request
 
-=== 23.1.1.1	Query String
+==== 23.1.1.1 Query String
 
 * none
 
-=== 23.1.1.2	Headers
+==== 23.1.1.2 Headers
 
 * Accept
 
@@ -33,15 +33,15 @@ Obtain a representation that describes a domain property within the metamodel.
 
 * *application/json;profile=".../property-description"
 
-=== 23.1.1.3	Body
+==== 23.1.1.3 Body
 
 * N/A
 
-=== 23.1.2	Successful Response
+=== 23.1.2 Successful Response
 
 As per §20.1 (200); body as per §23.2.
 
-=== 23.2	Representation
+== 23.2 Representation
 
 The links from the domain property description representation to other resources are as shown in the diagram below:
 

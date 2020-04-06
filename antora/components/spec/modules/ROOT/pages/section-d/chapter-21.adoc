@@ -1,18 +1,18 @@
-= 21	DOMAIN TYPES RESOURCE
+= 21 DOMAIN TYPES RESOURCE
 
 The domain types resource provides a list of all the domain types that are known to the system.
 The endpoint URL for this resource is simply:
 /domain-types/
 
-=== 21.1	HTTP GET
+== 21.1 HTTP GET
 
-=== 21.1.1	Request
+=== 21.1.1 Request
 
-=== 21.1.1.1	Query String
+==== 21.1.1.1 Query String
 
 * none
 
-=== 21.1.1.2	Headers
+==== 21.1.1.2 Headers
 
 * Accept
 
@@ -20,15 +20,15 @@ The endpoint URL for this resource is simply:
 
 * *application/json;profile=".../type-list"
 
-=== 21.1.1.3	Body
+==== 21.1.1.3 Body
 
 * N/A
 
-=== 21.1.2	Successful Response
+=== 21.1.2 Successful Response
 
 As per §20.1 (200); body as per §21.2.
 
-=== 21.2	Representation
+== 21.2 Representation
 
 The links from the typelist representation to other resources are as shown in the diagram below:
 
@@ -38,7 +38,7 @@ FIGURE 16: DOMAIN TYPE LIST REPRESENTATION For example, the JSON representation 
 "extensions" : { ... } } where:
 JSON-Property Description links list of links to resources links[rel=self]    link to a resource that can obtain this representation links[rel=up]    link to the homepage resource, B5. values List of links to domain types, §22 extensions map of additional information about the resource.
 
-=== 21.3	Predefined Domain Types
+== 21.3 Predefined Domain Types
 
 There are a number of predefined "formal" domain type resources that correspond either to the built-in scalar types described §A2.5, or to lists and sets (for collections), or to void (for actions with void return type).
 The following table shows the correlation in these cases:

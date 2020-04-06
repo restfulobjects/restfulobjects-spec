@@ -1,4 +1,4 @@
-= 20	RESPONSE SCENARIOS
+= 20 RESPONSE SCENARIOS
 
 When a domain type resource is invoked, one of several responses can occur.
 These can be distinguished by the HTTP status return code
@@ -17,15 +17,15 @@ This section (§20) describes all the responses irrespective of resource called.
 Sections §21 to §27 identify the various request/response scenarios for each of the domain type resources.
 In each case they define the request URL, headers and body, and also identify the standard (success) response headers and body, if any.
 
-=== 20.1	Request succeeded, and generated a representation
+== 20.1 Request succeeded, and generated a representation
 
 For resources that return a body containing some representation.
 
-=== 20.1.1	Status code
+=== 20.1.1 Status code
 
 * 200 "OK"
 
-=== 20.1.2	Headers
+=== 20.1.2 Headers
 
 * Content-Length:
 
@@ -39,19 +39,19 @@ For resources that return a body containing some representation.
 
 * *NON_EXPIRING, see §A2.13
 
-=== 20.1.3	Body (representation)
+=== 20.1.3 Body (representation)
 
 The representation will depend on the resource being requested.
 
-=== 20.2	Type or type member not found or not visible
+== 20.2 Type or type member not found or not visible
 
 This is the response if a requested type or type member does not exist, or if the object/member exists but is not visible based on the current user's credentials.
 
-=== 20.2.1	Status Code
+=== 20.2.1 Status Code
 
 * 404 "Not found"
 
-=== 20.2.2	Headers
+=== 20.2.2 Headers
 
 * Warning
 
@@ -65,39 +65,39 @@ This is the response if a requested type or type member does not exist, or if th
 
 * *No such action parameter {actionId, actionParamId}
 
-=== 20.2.3	Body
+=== 20.2.3 Body
 
 * empty
 
-=== 20.3	Resource has invalid semantics for method called
+== 20.3 Resource has invalid semantics for method called
 
-=== 20.3.1	Status code
+=== 20.3.1 Status code
 
 * 405 ("method not allowed")
 
-=== 20.3.2	Headers
+=== 20.3.2 Headers
 
 * Allow
 
 * *GET
 
-=== 20.3.3	Body
+=== 20.3.3 Body
 
 * empty
 
-=== 20.4	Not acceptable
+== 20.4 Not acceptable
 
 The client has specified an Accept header that does not include a media type provided by the resource.
 
-=== 20.4.1	Status code
+=== 20.4.1 Status code
 
 * 406 ("not acceptable")
 
-=== 20.4.2	Headers
+=== 20.4.2 Headers
 
 * none
 
-=== 20.4.3	Body
+=== 20.4.3 Body
 
 * empty
 

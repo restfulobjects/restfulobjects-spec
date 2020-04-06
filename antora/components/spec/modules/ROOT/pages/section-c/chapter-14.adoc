@@ -1,4 +1,4 @@
-= 14	DOMAIN OBJECT RESOURCE & REPRESENTATION
+= 14 DOMAIN OBJECT RESOURCE & REPRESENTATION
 
 The domain object resource can be used to obtain the summary domain object representation §14.4 for a particular domain object, and can also be used to update or delete individual persisted domain object instances (where allowed).
 
@@ -12,11 +12,11 @@ where:
 The specification does not mandate the format of either the domainType or the instanceId; the following are all potentially valid forms:
 /objects/customers/123 /objects/myApp.Customer/123 /objects/CUS/123 /objects/ORD/123-456 /objects/countries/USA
 
-= 14.1	HTTP GET
+== 14.1 HTTP GET
 Obtain a summary representation of a domain object §14.4.  The intention is that enough information is provided to render the object in the client's UI.
-=== 14.1.1	Request
+=== 14.1.1 Request
 
-=== 14.1.1.1	Query String
+==== 14.1.1.1 Query String
 
 * x-ro-domain-model (optional, §A3.1)
 
@@ -24,7 +24,7 @@ Obtain a summary representation of a domain object §14.4.  The intention is tha
 
 * *"formal"
 
-=== 14.1.1.2	Headers
+==== 14.1.1.2 Headers
 
 * Accept
 
@@ -32,33 +32,33 @@ Obtain a summary representation of a domain object §14.4.  The intention is tha
 
 * *application/json;profile=".../object" If the "profile" parameter is specified to any value other than "…/object", then a 406 response code should be returned §13.9.
 
-=== 14.1.1.3	Body
+==== 14.1.1.3 Body
 
 * N/A
 
-=== 14.1.2	Success Response
+=== 14.1.2 Success Response
 
 As per §13.1 (200), returning a domain object representation §14.4.
 
-=== 14.2	HTTP PUT
+== 14.2 HTTP PUT
 
 Update multiple properties of the object at the same time, or alternatively validate the proposed values but do not modify the object.
 
-=== 14.2.1	Request
+=== 14.2.1 Request
 
 The request can either be to update the properties, or to request validation of the proposed values using the x-ro-validate-only query param §A3.2.
 
-=== 14.2.1.1	Query String
+==== 14.2.1.1 Query String
 
 * None
 
-=== 14.2.1.2	Headers
+==== 14.2.1.2 Headers
 
 * If-Match
 
 * *timestamp digest  obtained from ETag header of representation
 
-=== 14.2.1.3	Body
+==== 14.2.1.3 Body
 
 The body is the map of new properties, as per §A2.9.2.3. Note that any blob/clob properties must be in-lined within this map.
 (Contrast this to updating of individual properties where the value of a blob/clob can be PUT in its native media type, §16.2).
@@ -78,38 +78,38 @@ In addition, it may include the reserved query parameters:
 }, ...
 }
 
-=== 14.2.2	Success Response
+=== 14.2.2 Success Response
 
 As per 13.3 (200), returning a domain object representation §14.4. Because the resource has mutated the state, there will be no self link (so that it cannot be bookmarked by clients).
 
-=== 14.3	HTTP DELETE
+== 14.3 HTTP DELETE
 
 Deletes an object.
 This is an optional capability §B8 because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
 If the implementation does support the capability then it must also determine that it is safe to delete the object.
 A 405 ("method not allowed") error will be returned otherwise.
 
-=== 14.3.1	DELETE Request
+=== 14.3.1 DELETE Request
 
-=== 14.3.1.1	Query String
+==== 14.3.1.1 Query String
 
 * none
 
-=== 14.3.1.2	Headers
+==== 14.3.1.2 Headers
 
 * If-Match
 
 * *timestamp digest  obtained from ETag header of representation
 
-=== 14.3.1.3	Body
+==== 14.3.1.3 Body
 
 * N/A
 
-=== 14.3.2	DELETE Success Response
+=== 14.3.2 DELETE Success Response
 
 As per §13.3 (204), returning no representation.
 
-=== 14.4	Representation
+== 14.4 Representation
 
 The domain object representation provides summary information about a single domain object instance, along with links to other sub-resources by which the domain object may be interacted with, or mutated.
 As such, it the single most important representation defined by Restful Objects.
@@ -171,7 +171,7 @@ Note that there is no need to specify the domain type within the "arguments" map
 "links" and "extensions" Domain model information about the type is available through either the "links" or the "extensions" json-properties.
 This is discussed separately in §14.4.4. Implementations are free to add to their own links/properties to "links" and "extensions" as they require.
 
-=== 14.4.1	Properties
+=== 14.4.1 Properties
 
 The "members" map contains an entry for every (visible) property.
 This entry contains a subset of the information shown in the detailed property representation §16.4. The intention is to provide enough information to render the property value in a user interface without having to make additional requests.
@@ -203,7 +203,7 @@ From the client's perspective, this means that there is always either a "value" 
 "links" and "extensions" Other domain model information about the property is available through either the "links" or the "extensions" json-properties.
 The information provided through these json-properties is the same as provided in the domain object property representation, see §16.4.3. Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require
 
-=== 14.4.2	Collections
+=== 14.4.2 Collections
 
 The "members" map also contains an entry for every (visible) collection, which provides a link to the corresponding Object Collection resource.
 The member entry may also provide summary information about the collection (for example, its size) so that the client can render the collection without having to make additional requests to the server.
@@ -228,7 +228,7 @@ Instead, they may provide a "links[rel=.../details]" which when followed will re
 "links" and "extensions" Other domain model information about the collection is available through either the "links" or the "extensions" json-properties.
 The information provided through these json-properties is the same as provided in the domain object collection representation, see §17.5.3. Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require
 
-=== 14.4.3	Actions
+=== 14.4.3 Actions
 
 The "members" map also contains an entry for every (visible) action.
 Note however that only domain objects with corresponding server-side state (§A2.2) will have actions.
@@ -246,7 +246,7 @@ links[rel=.../details]    link to the detailed representation of the action, §1
 The information provided through these json-properties is the same as provided in the domain object action representation, see §18.2.3. Restful Objects defines no further standard links/json-properties for "links" or "extensions".
 However, implementations are free to add to their own links/json-properties as they require.
 
-=== 14.4.4	Domain model information
+=== 14.4.4 Domain model information
 
 Domain model information is available through either the "links" or the "extensions" json-properties.
 Simple scheme Implementations that support the simple scheme provide extra data in the "extensions" json-properties.

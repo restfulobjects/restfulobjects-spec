@@ -1,4 +1,4 @@
-a= 9 OBJECTS OF TYPE RESOURCE
+= 9 OBJECTS OF TYPE RESOURCE
 
 The "Object of Type " resource is the target of a persist link to persist a proto-persistent ("not yet persisted") object §A2.2 of a given domain type.
 
@@ -23,13 +23,13 @@ where:
 
 * {domainType} uniquely identifies the domain type of the objects being persisted
 
-== 9.1HTTP POST
+== 9.1 HTTP POST
 
 Persist a domain object by posting a cut-down version of its representation.
 
-=== 9.1.1POST Request
+=== 9.1.1 POST Request
 
-==== 9.1.1.1	Headers
+==== 9.1.1.1 Headers
 
 * Accept
 
@@ -37,7 +37,7 @@ Persist a domain object by posting a cut-down version of its representation.
 
 * *application/json;profile=".../object"
 
-==== 9.1.1.2	Body
+==== 9.1.1.2 Body
 
 Because this resource is in a sense "uploading" a new object, the body is the cut-down version of the domain object representation §C14.4. It consists of:
 
@@ -55,55 +55,55 @@ For example:
 ]
 }
 
-=== 9.1.2POST Successful Response
+=== 9.1.2 POST Successful Response
 
 As per §C13.2 (201), returning a domain object representation §C14.4.
 
-=== 9.1.3POST Validation Only and Succeeded
+=== 9.1.3 POST Validation Only and Succeeded
 
-==== 9.1.3.1	Status Code
+==== 9.1.3.1 Status Code
 
 * 204 "No content"
 
-==== 9.1.3.2	Headers
+==== 9.1.3.2 Headers
 
 * none
 
-==== 9.1.3.3	Body
+==== 9.1.3.3 Body
 
 * none
 
-=== 9.1.4POST Invalid Request
+=== 9.1.4 POST Invalid Request
 
 For example, if the body is malformed, or any other syntax error.
 
-==== 9.1.4.1	Status Code
+==== 9.1.4.1 Status Code
 
 * 400 "bad request"
 
-==== 9.1.4.2	Headers
+==== 9.1.4.2 Headers
 
 * Warning
 
 * *summary message – indicating the nature of the error
 
-==== 9.1.4.3	Body
+==== 9.1.4.3 Body
 
 Error representation, §10.
 
-=== 9.1.5POST Validation Failed Response
+=== 9.1.5 POST Validation Failed Response
 
-==== 9.1.5.1	Status Code
+==== 9.1.5.1 Status Code
 
 * 422 "unprocessable entity"
 
-==== 9.1.5.2	Headers
+==== 9.1.5.2 Headers
 
 * Warning
 
 * *summary message
 
-==== 9.1.5.3	Body
+==== 9.1.5.3 Body
 
 Body is the same as that posted, but indicating the properties that were invalid, with a reason in each case.
 For example:

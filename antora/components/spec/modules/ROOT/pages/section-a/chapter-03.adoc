@@ -9,7 +9,7 @@ If a framework has not implemented some optional aspect of the Restful Objects s
 If there is no reasonable way to continue, then the framework should return a 501 "Not implemented" status code along with a Warning header explaining the feature that has not been implemented.
 The sections that follow each indicate the query parameter that is used to request the capability.
 
-== 3.1Domain Metadata (x-ro-domain-model)
+== 3.1 Domain Metadata (x-ro-domain-model)
 
 Some clients may wish to perform client-side validation before submitting changes to the server: examples include the enforcement of mandatory properties (or action parameters) and the enforcement of maximum string length.
 Such rules are applicable to any domain object instance of that given type, and so may be defined on the domain type Restful Objects defines two ways in which such domain type information may be represented: a "simple" scheme and a "formal" scheme, defined below.
@@ -20,7 +20,7 @@ Common to both is that the information is accessible by way of links and extensi
 * a value of "selectable" is for implementations that support both schemes.
 By default such implementations will return both simple and formal domain metadata, but the client can provide a reserved x-ro-domain-model query parameter to request either just "simple" or "formal" as it requires.
 
-=== 3.1.1Simple Scheme
+=== 3.1.1 Simple Scheme
 
 In the simple scheme, Restful Objects allows that implementations may in-line certain domain type information within the “extensions” json-property of the domain object representation.
 For example, the fact that a property is required (may not be left empty) is captured using:
@@ -52,7 +52,7 @@ However, in the cases where no ordering information is available, the implementa
 For example, an implementation might return 0 for all unordered members (putting them joint first place in the list) or it might return a value of 999, say (putting them all joint last place).
 Alternatively, an implementation may choose to synthesise ordering information, for example based on the declaration order of its source code. , or on the alphabetic order of the member names.
 
-=== 3.1.2Formal Scheme
+=== 3.1.2 Formal Scheme
 
 The formal scheme of providing domain type information defines separate resources that generate representations of the domain metamodel.
 If this scheme is followed then such resources are obtained by rel="describedby" link in the "links" json-property.
@@ -88,7 +88,7 @@ However, navigating to the formal domain type resource would show that a salary 
 Because domain types are intended to be cacheable, implementations should not attempt to alter the metadata representations on a user-by-user basis.
 If an implementation intends to support use cases where the above issue might be considered a security risk, then it should also offer the simple scheme and provide an implementation-specific mechanism to disable formal scheme support.
 
-== 3.2Validation (x-ro-validate-only)
+== 3.2 Validation (x-ro-validate-only)
 
 If validation logic has been defined for a property value, a collection reference, or an action’s parameter(s), then the server implementation is expected to perform that validation prior to initiating any change.
 For example, a Customer’s firstName property might disallow certain characters , or its showPayments() action might require that the toDate parameter is greater than the fromDate.
@@ -99,7 +99,7 @@ Restful Objects defines an optional capability §B8 whereby the client can set t
 If the validation completes, then a 204 "No content " status code will be returned.
 If a validation failure occurs, then the response will be 422 "unprocessable entity" with corresponding Warning header / "invalidReason" json-properties.
 
-== 3.3Blobs/Clobs and Attachments
+== 3.3 Blobs/Clobs and Attachments
 
 As well as properties representing strings and dates, etc, the specification also defines optional support for properties whose value is a blob (binary large object) or a clob (character large object) §2.5. A typical example is a property representing a media item such as a picture or document.
 If an implementation does support blobs/clobs, then the value of the blob/clob is suppressed from the property representation.
@@ -113,12 +113,12 @@ The values of blob or clob properties are set/cleared using PUT (§C16.2) and DE
 The Content-Type header specifies the media type when being PUT (e.g. image/jpeg).
 A client can determine whether an implementation supports blobs/clobs by inspecting the version resource §B8.
 
-== 3.4Proto-persistent Objects
+== 3.4 Proto-persistent Objects
 
 As described in §2.2, a proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
 The ultimate persistence of the entity is therefore under the control of the client, which is done by POSTing to the Objects of Type resource, §B9.1. Support for proto-persistent objects is an optional capability because providing a general-purpose persistence capability may not be practicable for some implementations.
 
-== 3.5Object Deletion
+== 3.5 Object Deletion
 
 Persisted objects can be deleted through the DELETE Object resource, §C14.3. This is an optional capability because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
 If the implementation does support the capability then it must also determine that it is safe to delete the object.

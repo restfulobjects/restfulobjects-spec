@@ -1,4 +1,4 @@
-= 22	DOMAIN TYPE RESOURCE
+= 22 DOMAIN TYPE RESOURCE
 
 The domain type resource represents the type of a domain object instance, within the metamodel.
 Its representation links through to other elements of the metamodel which represent the domain type's properties, collections and actions.
@@ -15,17 +15,17 @@ where:
 
 * *is a built-in JSON type
 
-=== 22.1	HTTP GET
+== 22.1 HTTP GET
 
 Obtain a representation of a domain type within the metamodel.
 
-=== 22.1.1	Request
+=== 22.1.1 Request
 
-=== 22.1.1.1	Query String
+==== 22.1.1.1 Query String
 
 * none
 
-=== 22.1.1.2	Headers
+==== 22.1.1.2 Headers
 
 * Accept
 
@@ -33,15 +33,15 @@ Obtain a representation of a domain type within the metamodel.
 
 * *application/json;profile=".../domain-type"
 
-=== 22.1.1.3	Body
+==== 22.1.1.3 Body
 
 * N/A
 
-=== 22.1.2	Successful Response
+=== 22.1.2 Successful Response
 
 As per §20.1 (200); body as per §22.2.
 
-=== 22.2	Representation
+== 22.2 Representation
 
 The links from the domain type representation to other resources are as shown in the diagram below:
 

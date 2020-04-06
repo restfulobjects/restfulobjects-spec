@@ -1,8 +1,8 @@
-= 32	CODE SKETCH TO SUPPORT ADDRESSABLE VIEW MODELS
+= 32 CODE SKETCH TO SUPPORT ADDRESSABLE VIEW MODELS
 
 How framework implementations might define an API to allow developers to support view models for conneg and HATEOAS
 
-=== 32.1	Making View Models Addressable
+== 32.1 Making View Models Addressable
 
 As discussed in §A2.2, an addressable view model is a view model that, like a persistent domain entity, has an addressable resource, enabling it to expose actions.
 This implies that it has an object identifier and some sort of server-side state.

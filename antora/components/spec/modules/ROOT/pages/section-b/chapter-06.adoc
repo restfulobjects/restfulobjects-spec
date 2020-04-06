@@ -4,40 +4,40 @@ The 'user' resource represents the currently logged-in user.
 The endpoint URL for this resource is:
 /user r
 
-== 6.1HTTP GET
+== 6.1 HTTP GET
 
 Obtain representation of the currently logged-in user.
 
-=== 6.1.1GET Request
+=== 6.1.1 GET Request
 
-==== 6.1.1.1	Query String
+==== 6.1.1.1 Query String
 
 None
 
-==== 6.1.1.2	Headers
+==== 6.1.1.2 Headers
 
 * Accept o application/json o application/json;profile=".../user "
 
-==== 6.1.1.3	Body
+==== 6.1.1.3 Body
 
 * N/A
 
-=== 6.1.2GET Successful Response
+=== 6.1.2 GET Successful Response
 
-==== 6.1.2.1	Status Code
+==== 6.1.2.1 Status Code
 
 * 200 "OK"
 
-==== 6.1.2.2	Headers
+==== 6.1.2.2 Headers
 
 * Content-Type o application/json;profile=".../user"
 * Caching headers: SHORT, see §A2.13 o temporary caching of user details
 
-==== 6.1.2.3	Body
+==== 6.1.2.3 Body
 
 As per §6.2.
 
-== 6.2Representation
+== 6.2 Representation
 
 The links from the user representation to other resources are as shown in the diagram below:
 

@@ -1,4 +1,4 @@
-= 11	LIST REPRESENTATION
+= 11 LIST REPRESENTATION
 
 The List representation consists of a list of links to domain object §C14 or domain service §C15 resources.
 Typically it is obtained as the result of invoking a query action, when it is in-lined within the action result representation §C19.4. It is also be obtained directly from the Services resource §B7, when it provides a list of links to domain service resources; . the only difference is that the "href" will be a link to a domain service resource §C15 rather than a domain object resource §C14.

@@ -1,6 +1,6 @@
-= 31	CLIENT VS SERVER EVOLUTION
+= 31 CLIENT VS SERVER EVOLUTION
 When content negotiation is or is not needed.
-=== 31.1	Motivation
+== 31.1 Motivation
 One of the goals of REST is to enable both the client and server to evolve independently.
 In particular, a server should be able to be enhanced to offer new functionality but existing clients should carry on working and simply ignore (be unaware of) this new functionality.
 As clients require the new functionality, they can be updated and deployed separately from the server.
@@ -11,7 +11,7 @@ Sometimes, however, representations are restructured in a way that would break t
 For example, the developer might want to restructure the representation of a Customer such that the firstName, middleInitial and lastName are all moved onto an associated Name object.
 In this case any client expecting there to be a firstName or lastName property on Customer will break.
 
-=== 31.2	Content Negotiation
+== 31.2 Content Negotiation
 
 The standard solution is to version representations, using the media type as the identifier for a particular version of a representation.
 It can however be difficult to manage multiple versions of persisted entitities (v1.Customer, v2.Customer etc).
@@ -27,7 +27,7 @@ Restful Objects currently provides some of the infrastructure for conneg, throug
 However full content negotiation is not currently supported in the spec; the client cannot specify the "x-ro-domain-type" media parameter in the Accept header in order to request a specific representation (or if they do, it will be ignored).
 A future version of the spec is likely to include support, however; see §34.1.
 
-=== 31.3	When Conneg isn't required
+== 31.3 When Conneg isn't required
 
 While content negotiation and view models are undoubtedly important, they do bring with them a substantial maintenance overhead for the application developer.
 It's therefore worth understanding when they are not needed.

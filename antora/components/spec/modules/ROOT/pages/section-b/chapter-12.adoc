@@ -1,4 +1,4 @@
-= 12	SCALAR VALUE REPRESENTATION
+= 12 SCALAR VALUE REPRESENTATION
 
 The scalar value representation represents a single value that is not itself a domain object.
 This representation is never returned directly from a resource, but may appear in-lined within the representation of an action invocation §C19.4 if the action returned a scalar type such as a string or an integer.

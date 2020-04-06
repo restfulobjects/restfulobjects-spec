@@ -3,43 +3,43 @@
 The 'home page' is a well-known resource which acts as the starting point for any client.
 From it all other resources may be discovered.
 
-== 5.1HTTP GET
+== 5.1 HTTP GET
 
 Obtain the representation of the home page resource.
 The endpoint URL for this resource is:
 / (in other words the base directory).
 
-=== 5.1.1Request
+=== 5.1.1 Request
 
-==== 5.1.1.1	Query String
+==== 5.1.1.1 Query String
 
 None
 
-==== 5.1.1.2	Headers
+==== 5.1.1.2 Headers
 
 * Accept o application/json o application/json;profile=…/homepage
 
-==== 5.1.1.3	Body
+==== 5.1.1.3 Body
 
 * N/A
 
-=== 5.1.2Successful Response
+=== 5.1.2 Successful Response
 
-==== 5.1.2.1	Status Code
+==== 5.1.2.1 Status Code
 
 * 200 "OK"
 
-==== 5.1.2.2	Headers
+==== 5.1.2.2 Headers
 
 * Content-Type o application/json;profile=".../homepage"
 * Caching headers:
 o NON_EXPIRING, see §A2.13  since home page changes only on redeployment
 
-==== 5.1.2.3	Body
+==== 5.1.2.3 Body
 
 As per §5.2.
 
-== 5.2Representation
+== 5.2 Representation
 
 The links from the home page representation to other resources are as shown in the diagram below:
 

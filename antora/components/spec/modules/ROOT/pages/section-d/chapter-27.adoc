@@ -1,4 +1,4 @@
-= 27	DOMAIN TYPE ACTION INVOKE RESOURCE
+= 27 DOMAIN TYPE ACTION INVOKE RESOURCE
 
 The domain type action invoke resource represents an action that can be invoked on the domain type itself.
 Conceptually it is similar to the domain object action invoke resource, §C19, but the action is on the type rather than an instance of the type.
@@ -23,13 +23,13 @@ FIGURE 22: DOMAIN TYPE ACTION REPRESENTATION The representations returned by typ
 JSON-Property Description links list of links to other resources.
 links[rel=self]    link to a resource that can obtain this representation id the typeActionId of this action value the result of the action extensions map of additional information about the resource.
 
-=== 27.1	HTTP GET isSubtypeOf()
+== 27.1 HTTP GET isSubtypeOf()
 
 Obtain a representation resulting from the invocation of the isSubtypeOf() domain type action.
 
-=== 27.1.1	GET Request
+=== 27.1.1 GET Request
 
-=== 27.1.1.1	URL and Query String
+==== 27.1.1.1 URL and Query String
 
 The endpoint URL for this resource is:
 /domain-types/{domainType}/type-actions/isSubtypeOf/invoke This resource requires a parameter "supertype" which can be specified either in the simple style, or in the formal style.
@@ -42,7 +42,7 @@ Formal Style If query arguments are specified using the formal style (§A2.9.2) 
 For example:
 { "supertype": { "value": { "href": "http://~/domain-types/x.BasketOwner", } } Note that the value should be a link to the supertype, rather than simply the name of the supertype.
 
-=== 27.1.1.2	Headers
+==== 27.1.1.2 Headers
 
 * Accept
 
@@ -50,17 +50,17 @@ For example:
 
 * *application/json;profile=".../type-action-result"
 
-=== 27.1.1.3	Body
+==== 27.1.1.3 Body
 
 * N/A
 
-=== 27.1.2	GET Response
+=== 27.1.2 GET Response
 
-=== 27.1.2.1	Status Code
+==== 27.1.2.1 Status Code
 
 * 200 "OK"
 
-=== 27.1.2.2	Headers
+==== 27.1.2.2 Headers
 
 * Content-Type
 
@@ -70,7 +70,7 @@ For example:
 
 * *NON_EXPIRING, see §A2.13  the structure of a domain type will not vary between deployments
 
-=== 27.1.2.3	Body (representation)
+==== 27.1.2.3 Body (representation)
 
 The JSON representation returned The JSON representation returned is a type-action-result representation (as described earlier) with a scalar representation §B12 in-lined.
 For example, if checking that the Customers domain type is a subtype of BasketOwner interface type, then the returned representation might look something like:
@@ -80,13 +80,13 @@ For example, if checking that the Customers domain type is a subtype of BasketOw
 JSON-Property Description id the literal "isSubtypeOf" for this type action value a scalar boolean value.
 and other properties are as described earlier.
 
-=== 27.1.3	GET Not found Response
+=== 27.1.3 GET Not found Response
 
-=== 27.1.3.1	Status Code
+==== 27.1.3.1 Status Code
 
 * 404 "Not found"
 
-=== 27.1.3.2	Headers
+==== 27.1.3.2 Headers
 
 * Warning:
 
@@ -96,17 +96,17 @@ and other properties are as described earlier.
 
 * *No such super/subtype
 
-=== 27.1.3.3	Body
+==== 27.1.3.3 Body
 
 empty
 
-=== 27.2	HTTP GET isSupertypeOf()
+== 27.2 HTTP GET isSupertypeOf()
 
 Obtain a representation resulting from the invocation of the isSupertypeOf() domain type action.
 
-=== 27.2.1	GET Request
+=== 27.2.1 GET Request
 
-=== 27.2.1.1	URL and Query String
+==== 27.2.1.1 URL and Query String
 
 The endpoint URL for this resource is:
 /domain-types/{domainType}/type-actions/isSupertypeOf/invoke This resource requires a parameter "subtype" which can be specified either in the simple style, or in the formal style.
@@ -119,7 +119,7 @@ Formal Style If query arguments are specified using the formal style (§A2.9.2) 
 For example:
 { "subtype": { "value": { "href": "http://~/domain-types/CUS", } } } Note that the value should be a link to the subtype, rather than simply the name of the subtype.
 
-=== 27.2.1.2	Headers
+==== 27.2.1.2 Headers
 
 * Accept
 
@@ -127,17 +127,17 @@ For example:
 
 * *application/json;profile=".../type-action-result"
 
-=== 27.2.1.3	Body
+==== 27.2.1.3 Body
 
 * N/A
 
-=== 27.2.2	GET Response
+=== 27.2.2 GET Response
 
-=== 27.2.2.1	Status Code
+==== 27.2.2.1 Status Code
 
 * 200 "OK"
 
-=== 27.2.2.2	Headers
+==== 27.2.2.2 Headers
 
 * Content-Type
 
@@ -147,7 +147,7 @@ For example:
 
 * *NON_EXPIRING, see §A2.13  the structure of a domain type will not vary between deployments
 
-=== 27.2.2.3	Body (representation)
+==== 27.2.2.3 Body (representation)
 
 The JSON representation returned The JSON representation returned is a typeactionresult representation (as described earlier) with a scalar representation §B12 in-lined.
 For example, if checking that the BasketOwner domain type is a supertype of the Customer domain type, then the returned representation might look something like:
@@ -157,13 +157,13 @@ For example, if checking that the BasketOwner domain type is a supertype of the 
 JSON-Property Description id the literal "isSupertypeOf" for this type action value a scalar boolean value.
 and other properties are as described earlier.
 
-=== 27.2.3	GET Not found Response
+=== 27.2.3 GET Not found Response
 
-=== 27.2.3.1	Status Code
+==== 27.2.3.1 Status Code
 
 * 404 "Not found"
 
-=== 27.2.3.2	Headers
+==== 27.2.3.2 Headers
 
 * Warning:
 
@@ -173,7 +173,7 @@ and other properties are as described earlier.
 
 * *No such super/subtype
 
-=== 27.2.3.3	Body
+==== 27.2.3.3 Body
 
 empty
 

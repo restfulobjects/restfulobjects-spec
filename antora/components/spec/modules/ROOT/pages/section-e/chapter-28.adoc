@@ -1,7 +1,8 @@
-= 28	HATEOAS VS WEB APIS
+= 28 HATEOAS VS WEB APIS
+
 Comparing two styles of distributed system.
 
-=== 28.1	HATEOAS (Hypermedia Controls)
+== 28.1 HATEOAS (Hypermedia Controls)
 
 REST-based systems are typically designed to have a single or small number of starting (home page) resources, from which all other resources can be traversed.
 This is REST’s HATEOAS concept: hypertext as the engine of application state.
@@ -12,7 +13,7 @@ This style of REST is supported by Restful Objects in that all resources in Rest
 The rels are defined in §A2.7.1. All other resources can be obtained from the home page, for example by following the links that represent reference properties and collections between domain objects, or by invoking domain object or service actions that can return references to other objects.
 Links are only included in representations if it makes sense for the client to follow them.
 
-=== 28.2	Web APIs (Templated URIs)
+== 28.2 Web APIs (Templated URIs)
 
 Some practitioners take the view that a pure-HATEOAS design places too much responsibility on the part of the client (having to traverse through multiple sets of representations from the start page), and that this can result in slower performance (for much the same reasons).
 This isn't strictly true; a client is free to cache the value of a link between interactions (rather than find it out "from first principles" each time).

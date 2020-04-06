@@ -1,4 +1,4 @@
-= 25	DOMAIN TYPE ACTION DESCRIPTION RESOURCE
+= 25 DOMAIN TYPE ACTION DESCRIPTION RESOURCE
 
 The domain action description resource represents an action of a domain type, within the metamodel.
 Clients can use the domain action description's representation as hints when building a UI. For example, the representation of an object action may include a link to that action's return type.
@@ -14,17 +14,17 @@ where:
 
 * {actionId} identifies the action.
 
-=== 25.1	HTTP GET
+== 25.1 HTTP GET
 
 Obtain a representation of a description of a domain action, within the metamodel.
 
-=== 25.1.1	GET Request
+=== 25.1.1 GET Request
 
-=== 25.1.1.1	Query String
+==== 25.1.1.1 Query String
 
 * none
 
-=== 25.1.1.2	Headers
+==== 25.1.1.2 Headers
 
 * Accept
 
@@ -32,15 +32,15 @@ Obtain a representation of a description of a domain action, within the metamode
 
 * *application/json;profile=".../action-description"
 
-=== 25.1.1.3	Body
+==== 25.1.1.3 Body
 
 * N/A
 
-=== 25.1.2	Successful Response
+=== 25.1.2 Successful Response
 
 As per §20.1 (200); body as per §25.2.
 
-=== 25.2	Representation
+== 25.2 Representation
 
 The links from the domain action description representation to other resources are as shown in the diagram below:
 

@@ -1,8 +1,8 @@
-= 30	DEALING WITH UNTRUSTED CLIENTS
+= 30 DEALING WITH UNTRUSTED CLIENTS
 
 How implementations can avoid important information leaking out to untrusted clients
 
-=== 30.1	Securing HREFs
+== 30.1 Securing HREFs
 
 One possible deployment for Restful Objects systems is a Restful Objects server on the internet, serving up JSON to a JavaSript "single-page app".
 In these cases, the href json-properties in the links will provide information about the domain objects that an untrusted client might use to hack the system.
@@ -17,7 +17,7 @@ For additional security, this private key could even be re-generated either each
 Another scenario is that other clients on the network could be snooping for valid resource URLs.
 The standard mechanism to address this risk is to deploy the application over SSL (https protocol).
 
-=== 30.2	Avoiding accidental traversals
+== 30.2 Avoiding accidental traversals
 
 Under Restful Objects, a domain object's properties, collections and actions can be disabled or even hidden.
 Implementations are expected to manage this through a system of end-user roles and permissions.

@@ -1,4 +1,4 @@
-=== 16	PROPERTY RESOURCE & REPRESENTATION
+= 16 PROPERTY RESOURCE & REPRESENTATION
 
 The (domain object) property resource can be used to obtain the detailed domain object property representation §16.4 for a particular domain object instance.
 It also allows the value of that property to be modified (or to validate a proposed new value for a property).
@@ -12,15 +12,15 @@ where:
 
 * {propertyId} is the property identifier
 
-=== 16.1	HTTP GET
+== 16.1 HTTP GET
 
 Obtain a detailed representation of a property §16.4. This resource is typically requested as a result of following a link from the domain object representation §14.4.
 
-=== 16.1.1	Request (any property type)
+=== 16.1.1 Request (any property type)
 
 To return a representation §16.4 of the property; if a non-blobClob then this will include the property's current value, if a blob/clob then will include a link rel=".../attachment" by which the blob/clob can be retrieved, §16.1.2.
 
-=== 16.1.1.1	Query String
+==== 16.1.1.1 Query String
 
 * x-ro-domain-model (optional, §A3.1)
 
@@ -28,7 +28,7 @@ To return a representation §16.4 of the property; if a non-blobClob then this w
 
 * *"formal"
 
-=== 16.1.1.2	Headers
+==== 16.1.1.2 Headers
 
 * Accept
 
@@ -36,20 +36,20 @@ To return a representation §16.4 of the property; if a non-blobClob then this w
 
 * *application/json;profile=".../object-property"
 
-=== 16.1.1.3	Body
+==== 16.1.1.3 Body
 
 * N/A
 
-=== 16.1.2	Request (for blobClob attachment)
+=== 16.1.2 Request (for blobClob attachment)
 
 If the property is a blob/clob, then getting the property with an "application/json" Content-Type §16.1.1 will return a representation of the property §16.4 that include an rel=".../attachment" link.
 This link refers back to the same resource URL, but indicates the media type for the Accept header in order to obtain the actual blob/clob.
 
-=== 16.1.2.1	Query String
+==== 16.1.2.1 Query String
 
 * None
 
-=== 16.1.2.2	Headers
+==== 16.1.2.2 Headers
 
 * Accept
 
@@ -57,30 +57,29 @@ This link refers back to the same resource URL, but indicates the media type for
 
 * *eg image/pdf, image/jpeg, video/h264
 
-=== 16.1.2.3	Body
+==== 16.1.2.3 Body
 
 * Blob/clob resource
 
-=== 16.1.3	Success Response
+=== 16.1.3 Success Response
 
 As per §13.1 (200), returning an object property representation §16.4.
-
-=== 16.2	HTTP PUT
+== 16.2 HTTP PUT
 
 Update property value of an object, or check that the proposed new value for the property would be valid without making the change.
 The PUT method may be used to clear the property by passing in a null value, but the recommended practice is to use DELETE §C16.3 for that purpose.
 Properties that are blob/clobs support two different request formats.
 Non blob/clobs support only a single request format.
 
-=== 16.2.1	Request (for non-blobClobs)
+=== 16.2.1 Request (for non-blobClobs)
 
 Updating non-blobClob properties is performed by PUTting the value in-lined within a JSON map §A2.9.2.2.
 
-=== 16.2.1.1	Query String
+==== 16.2.1.1 Query String
 
 * None
 
-=== 16.2.1.2	Headers
+==== 16.2.1.2 Headers
 
 * Content-Type: application/json
 
@@ -88,7 +87,7 @@ Updating non-blobClob properties is performed by PUTting the value in-lined with
 
 * *timestamp digest  obtained from ETag header of representation  only validate the request, do not modify the property
 
-=== 16.2.1.3	Body
+==== 16.2.1.3 Body
 
 * should be formatted as a single argument node §A2.9.2.2. In addition, it may include the reserved query parameters:
 
@@ -102,16 +101,16 @@ Updating non-blobClob properties is performed by PUTting the value in-lined with
 
 * *"true"  only validate the request, do not modify the property
 
-=== 16.2.2	Request (if blobClobs)
+=== 16.2.2 Request (if blobClobs)
 
 Updating blobClob properties is performed by PUTting the actual value (e.g. image), with appropriate content type.
 Note that optional validation (x-ro-validate-only) and domain type metadata preferences (x-ro-domain-model) are not supported for blobClobs.
 
-=== 16.2.2.1	Query String
+==== 16.2.2.1 Query String
 
 * none
 
-=== 16.2.2.2	Headers
+==== 16.2.2.2 Headers
 
 * Content-Type: (depends on property type)
 
@@ -121,35 +120,35 @@ Note that optional validation (x-ro-validate-only) and domain type metadata pref
 
 * *timestamp digest  obtained from ETag header of representation  only validate the request, do not modify the property
 
-=== 16.2.2.3	Body
+==== 16.2.2.3 Body
 
 * a byte array (for blobs)
 
 * a character array (for clobs)
 
-=== 16.2.3	Success Response
+=== 16.2.3 Success Response
 
 As per §13.1 (200), returning an object property representation §16.4.
 
-=== 16.3	HTTP DELETE
+== 16.3 HTTP DELETE
 
 This is the recommended resource for clearing a property value, or for validating that a property can be cleared but without making the change.
 Strictly speaking the DELETE Object Property resource is redundant because it is also possible to clear a property using the PUT method, passing in a null value.
 However, the DELETE Object Property resource has been included in the spec because it offers a simpler syntax (no body to pass in) and because it is more ‘intentional’ (the intent of calling the resource is clearer to anyone reading the code).
 
-=== 16.3.1	Request
+=== 16.3.1 Request
 
-=== 16.3.1.1	Query Params
+==== 16.3.1.1 Query Params
 
 * None
 
-=== 16.3.1.2	Headers
+==== 16.3.1.2 Headers
 
 * If-Match
 
 * *timestamp digest  obtained from ETag header of representation  only validate the request, do not modify the property
 
-=== 16.3.1.3	Body
+==== 16.3.1.3 Body
 
 * x-ro-domain-model (optional, §A3.1)
 
@@ -161,11 +160,11 @@ However, the DELETE Object Property resource has been included in the spec becau
 
 * *"true"  only validate the request, do not modify the property
 
-=== 16.3.2	Success Response
+=== 16.3.2 Success Response
 
 As per §13.1 (200), returning an object property representation §16.4. Because the resource has mutated the state, there will be no self link (so that it cannot be bookmarked by clients).
 
-=== 16.4	Representation
+== 16.4 Representation
 
 The domain object property representation provides full details about a property of a domain object instance, and provides links to resources to allow the property to be modified (if it is not disabled).
 The Content-Type for the representation is:
@@ -187,7 +186,7 @@ links[rel=.../attachment]    (optional) link to resource returning property if a
 "links" and "extensions" Both the "links" and the "extensions" json-properties may contain domain model information; this is discussed in §16.4.3. Restful Objects defines no further standard child properties for the "extensions" json-property.
 Implementations are free to add further links/json-properties to "links" and "extensions" as they require.
 
-=== 16.4.1	Property values and choices
+=== 16.4.1 Property values and choices
 
 For value properties (other than blobs/clobs), the "value" and "choices" json-properties are directly parseable strings:
 { ...
@@ -202,7 +201,7 @@ Instead a link[rel=".../attachment"] json-property provides a link that can be f
 { "id": "scannedSignature", ..., "links": [
 { "rel": ".../attachment;property=\"scannedSignature\"", "href": "http://~/objects/CUS/123/property/scannedSignature", "type": "image/jpeg", "method": "GET" }, If the property is null, then there will be neither a "value" nor a "links[rel=.../attachment]" json-property.
 
-=== 16.4.2	Property modification
+=== 16.4.2 Property modification
 
 If the property is modifiable, then the "modify" and "clear" json-properties provide links to the resources used to change the property's state.
 For example:
@@ -218,18 +217,18 @@ If only validation is of a property is required, then specify the x ro-validate 
 } where:
 JSON-Property Description disabledReason indicates the reason why the property cannot be modified/cleared; only included if the property is disabled.
 
-=== 16.4.3	Domain model information
+=== 16.4.3 Domain model information
 
 Domain model information is available through either the "links" or the "extensions" json-properties.
 
-=== 16.4.3.1	Simple scheme
+==== 16.4.3.1 Simple scheme
 
 Implementations that support the simple scheme provide extra data in the "extensions" json-property.
 For example:
 "extensions": { "friendlyName": "Delivery Time", "description": "Time that the order will be delivered", "returnType": ...
 "optional": false, "format": ... // for string properties only "maxLength": ... // for string properties only "pattern": ... // for string properties only "memberOrder": 3 } See §A3.1.1 for the full definitions of these json-properties.
 
-=== 16.4.3.2	Formal scheme
+==== 16.4.3.2 Formal scheme
 
 Implementations that support the formal scheme §A3.1.2 provide an additional link only in the "links" json-property:
 "links": [

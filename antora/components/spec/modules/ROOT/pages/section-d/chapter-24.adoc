@@ -1,4 +1,4 @@
-= 24	DOMAIN TYPE COLLECTION DESCRIPTION RESOURCE
+= 24 DOMAIN TYPE COLLECTION DESCRIPTION RESOURCE
 
 The domain collection description resource represents a description of a domain collection, within the metamodel.
 Clients can use the domain collection description's representation as hints when building a UI. For example, there will be links back to the domain type representing the collection's element type; this can be used by a client to determine columns for a table view.
@@ -15,17 +15,17 @@ where:
 
 * {collectionId} identifies the collection.
 
-=== 24.1	HTTP GET
+== 24.1	HTTP GET
 
 Obtain a representation of a description of a domain collection, within the metamodel.
 
-=== 24.1.1	GET Request
+=== 24.1.1 GET Request
 
-=== 24.1.1.1	Query String
+==== 24.1.1.1 Query String
 
 * none
 
-=== 24.1.1.2	Headers
+==== 24.1.1.2 Headers
 
 * Accept
 
@@ -33,15 +33,15 @@ Obtain a representation of a description of a domain collection, within the meta
 
 * *application/json;profile=… /collection-description
 
-=== 24.1.1.3	Body
+==== 24.1.1.3 Body
 
 * N/A
 
-=== 24.1.2	Successful Response
+=== 24.1.2 Successful Response
 
 As per §20.1 (200); body as per §24.2.
 
-=== 24.2	Representation
+== 24.2 Representation
 
 The links from the domain collection description representation to other resources are as shown in the diagram below:
 
