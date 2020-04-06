@@ -15,7 +15,7 @@ where:
 
 * {collectionId} identifies the collection.
 
-== 24.1	HTTP GET
+== 24.1 HTTP GET
 
 Obtain a representation of a description of a domain collection, within the metamodel.
 

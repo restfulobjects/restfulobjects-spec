@@ -1,4 +1,4 @@
-= 10	ERROR REPRESENTATION
+= 10 ERROR REPRESENTATION
 
 The Error representation defines a standard means for returning detailed diagnostics, typically when a server-side error (status code 500) occurs.
 For example, the following might be the result of invoking an action where an exception occurred:

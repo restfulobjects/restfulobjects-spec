@@ -1,6 +1,9 @@
 = 31 CLIENT VS SERVER EVOLUTION
+
 When content negotiation is or is not needed.
+
 == 31.1 Motivation
+
 One of the goals of REST is to enable both the client and server to evolve independently.
 In particular, a server should be able to be enhanced to offer new functionality but existing clients should carry on working and simply ignore (be unaware of) this new functionality.
 As clients require the new functionality, they can be updated and deployed separately from the server.

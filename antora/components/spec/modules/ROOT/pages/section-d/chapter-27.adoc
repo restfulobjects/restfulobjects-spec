@@ -35,7 +35,7 @@ The endpoint URL for this resource is:
 /domain-types/{domainType}/type-actions/isSubtypeOf/invoke This resource requires a parameter "supertype" which can be specified either in the simple style, or in the formal style.
 Simple Style If query arguments are specified using the simple style (§A2.9.1 then the query string is simply:
 
-=== ?supertype=xxx
+?supertype=xxx
 
 where xxx is the domain type id of the supertype.
 Formal Style If query arguments are specified using the formal style (§A2.9.2) then the supertype should be specified as a map and then the map encoded as a URL (§A2.9.2.5).
@@ -112,7 +112,7 @@ The endpoint URL for this resource is:
 /domain-types/{domainType}/type-actions/isSupertypeOf/invoke This resource requires a parameter "subtype" which can be specified either in the simple style, or in the formal style.
 Simple Style If query arguments are specified using the simple style (§A2.9.1) then the query string is simply:
 
-=== ?subtype=xxx
+?subtype=xxx
 
 where xxx is the domain type id of the subtype.
 Formal Style If query arguments are specified using the formal style (§A2.9.2) then the subtype should be specified as a map and then the map encoded as a URL (§A2.9.2.5).

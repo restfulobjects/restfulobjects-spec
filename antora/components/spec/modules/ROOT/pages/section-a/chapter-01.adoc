@@ -20,7 +20,7 @@ They consist of:
 Beyond this, though, Restful Objects makes very few assumptions.
 In particular, Restful Objects does not prescribe the nature of the domain model.
 
-== 1.2A Uniform Interface
+== 1.2 A Uniform Interface
 
 Restful Objects defines a uniform interface to the domain objects.
 This uniformity is expressed in terms of:
@@ -36,7 +36,7 @@ application/json; profile="urn:org.restfulobjects:repr-types/object"; x-ro-domai
 * a small number of reserved query parameter names to influence behaviour (e.g. validation).
 Existing HTTP standards and supporting W3C standards have been used wherever possible.
 
-== 1.3Benefits
+== 1.3 Benefits
 
 Because the spec defines a generalized binding for any domain model, it allows the project team to focus on developing the domain model rather than worrying about the intricacies of following a RESTful style.
 For example, the debate becomes about whether an action is idempotent, not about whether to use HTTP PUT or HTTP POST. And debates about URI structure (should it be customers/{custId}/invoices or should it be invoices/for/{custId}?) disappear because the URL is determined by the responsibilities of the underlying domain objects.
@@ -57,7 +57,7 @@ A project team adopting such a framework can then focus solely on implementing b
 Any generic Restful client written to work with one framework implementation will also inter-operate across any other implementations.
 There is further discussion on how the specification enables the RESTful style (along with an FAQ) in §E.
 
-== 1.4Audience
+== 1.4 Audience
 
 This document is written for several audiences:
 
@@ -68,7 +68,7 @@ This document is written for several audiences:
 The specification adopts a semi-formal style; providing examples of representations rather than formal grammars.
 The intention is to make the specification accessible to all its target audiences.
 
-== 1.5Authorship and License
+== 1.5 Authorship and License
 
 Restful Objects was conceived by Dan Haywood, who is also the primary author of this document.
 Substantial contributions have been made by Richard Pawson and Stef Cascarini.
@@ -76,7 +76,7 @@ The specification is licensed under Creative Commons Attribution Share-Alike 3.0
 As such the document may be shared and adapted.
 However, any derivative work must be attributed back to the author of this document, and must be licensed under the same license to this one.
 
-== 1.6Style Conventions
+== 1.6 Style Conventions
 
 Restful Objects defines that URLs, when generated in resources, are absolute.
 Because the hostname is likely to be a long string and in any case will vary, in the spec it is shown by a ‘~’ placeholder:
@@ -92,16 +92,21 @@ Finally, Restful Objects defines a set of "rel" values for links.
 To distinguish these from IANA-specified links, these each have the prefix "urn:org.restfulobjects:rels/".
 This is abbreviated to ".../" in example representations.
 
-== 1.7Document Repository and History
+== 1.7 Document Repository and History
 
-The source for this document can be found at http://github.com/danhaywood/restfulobjects-spec.
+The source for this document can be found at http://github.com/restfulobjects/restfulobjects-spec.
 This document uses semantic versioning .
 Version Description v1.0.0 First release.
 Minor edits and clarifications from preceding version (0.69.0):
-- versioned using semver;
-- specVersion property;
-- x-ro-domain-model="selectable" behaviour;
-- href for persist link of proto-persistent entities; no longer any need to provide domaintype within arguments map;
-- typos Added reference to github repository.
+
+* versioned using semver;
+
+* specVersion property;
+
+* x-ro-domain-model="selectable" behaviour;
+
+* href for persist link of proto-persistent entities; no longer any need to provide domaintype within arguments map;
+
+* typos Added reference to github repository.
 Removed change history prior to v1.0.0 (see github repo for details, if required).
 

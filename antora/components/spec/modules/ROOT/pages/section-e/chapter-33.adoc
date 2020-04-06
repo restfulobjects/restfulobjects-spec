@@ -1,6 +1,9 @@
 = 33 FAQS
+
 == 33.1 "The spec defines URLs with a single instance identifier component. For objects that notionally have a 'composite primary key' (e.g. order line item) I'd rather separate out those parts out, (e.g. "objects/ORI/123/1" rather than "/objects/ORI/123-1/…")  Can I change the URL format in this way?"
-The short answer is: no, you can't change the URL format of the instance identifier. The slightly longer answer is: and you shouldn't care.
+
+The short answer is: no, you can't change the URL format of the instance identifier.
+The slightly longer answer is: and you shouldn't care.
 The primary reason that the specification does not allow the format of its URLs to be changed is to ensure that all the resources for all objects can be addressed in a uniform way.
 For example, the templated URL:
 http://~/objects/{domainType}/{instanceId}/properties/{propertyName}

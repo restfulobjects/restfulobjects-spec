@@ -105,7 +105,7 @@ This is to discourage clients from bookmarking the link.
 
 The representation will depend on the resource being requested.
 
-=== 13.2 Request succeeded, and generated representation of a new object
+== 13.2 Request succeeded, and generated representation of a new object
 
 === 13.2.1 Status code
 
@@ -137,7 +137,7 @@ The representation will depend on the resource being requested.
 
 Representation of a domain object, see §14.4.
 
-=== 13.3 Request succeeded, but generated no content
+== 13.3 Request succeeded, but generated no content
 
 This response is most often generated as the result of a validation succeeding (if x-ro-validate-only is supported, §A3.2).
 Note, by contrast, that invoking a void action DOES return a representation §19.4.4.
@@ -156,7 +156,7 @@ Note, by contrast, that invoking a void action DOES return a representation §19
 
 * empty
 
-=== 13.4 Bad request
+== 13.4 Bad request
 
 Generated either as the result of a syntactically invalid request
 
@@ -196,7 +196,7 @@ For example:
 
 * empty
 
-=== 13.6 Forbidden (user not authorized to access resource)
+== 13.6 Forbidden (user not authorized to access resource)
 
 If the user attempts to invoke a resource that is disabled.
 
@@ -331,7 +331,7 @@ If arguments §A2.9.2/properties (§14.2, §B9.1) are invalid, then the response
 For example:
 { "fromDate": ..., "toDate": ..., "x-ro-invalidReason": "To date cannot be before from date" } The json-property has the prefix "x-ro-" in this case in order to avoid clashes with the argument/property names
 
-=== 13.12 Precondition header missing
+== 13.12 Precondition header missing
 
 This represents a syntax error where a required precondition header (for example, If-Match if modifying state of a resource) was not included in the request.
 
@@ -349,7 +349,7 @@ This represents a syntax error where a required precondition header (for example
 
 * empty
 
-=== 13.13 Domain logic failed, or Implementation defect
+== 13.13 Domain logic failed, or Implementation defect
 
 === 13.13.1 Status code
 
