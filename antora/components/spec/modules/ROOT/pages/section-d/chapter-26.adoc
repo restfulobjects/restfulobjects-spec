@@ -1,0 +1,85 @@
+= 26	DOMAIN TYPE ACTION PARAMETER DESCRIPTION RESOURCE
+
+The domain action parameter description resource represents a description of a parameter of an action on a domain type, within the metamodel.
+Clients can use the domain action parameter description representations as hints when building a UI. For example, there will be links back to the domain type representing each of the action parameter return types; this might be used in order to select the appropriate widgets when building a UI. Or, the client can use information in the representation to apply client-side validation of declarative semantics (for example, mandatory parameters, or regex patterns).
+The endpoint URL for this resource is:
+/domain-types/{domainType}/actions/{actionId}/params/{paramName}
+where:
+•	{domainType} is either
+o	the domain type id, or
+o	is a built-in JSON type
+•	{actionId} identifies the action
+•	{paramName} is the named action parameter
+=== 26.1	HTTP GET
+Obtain a representation of a description of a domain action parameter, within the metamodel.
+=== 26.1.1	GET Request
+=== 26.1.1.1	Query String
+•	none
+=== 26.1.1.2	Headers
+•	Accept
+o	application/json
+o	application/json;profile=".../action-param-description"
+=== 26.1.1.3	Body
+•	N/A
+=== 26.1.2	Successful Response
+As per §20.1 (200); body as per §26.2.
+=== 26.2	Representation
+The links from the domain action parameter description representation to other resources are as shown in the diagram below:
+
+FIGURE 21: DOMAIN ACTION PARAMETER DESCRIPTION REPRESENTATION
+The JSON representation returned (for example, if the Order's submit action's first parameter is a "shipMethod" string parameter) might look something like:
+{
+"id": "submit-shipMethod",
+"number": 0,
+"name": "shipMethod",
+"friendlyName": "Ship Method",
+"description": ...,
+"optional": false,
+"format": ...          // for string params only
+"maxLength": ...       // for string params only
+"pattern": ...         // for string params only
+"links": [ {
+"rel": "self",
+...
+}, {
+"rel": "up",
+"href": "http://~/domain-types/ORD/actions/submit",
+"type":"application/json;profile=\".../action-description\"",
+"method": "GET"
+}, {
+"rel": ".../returntype",
+"href": "http://~/domain-types/string",
+"type": "application/json;profile=\".../domain-type\"",
+"method": "GET"
+}, {
+"rel": "help",
+"href":
+"http://~/videos/training/Order-submit-shipMethod.mpg ",
+"type": "audio/mpeg",
+"method": "GET"
+},
+...
+],
+"extensions": { ... }
+}
+where:
+JSON-Property	Description
+links	list of links to other resources.
+links[rel=self]	link to a resource that can obtain this representation
+id	the Id of this action parameter (typically a concatenation of the parent action Id with the parameter name)
+name	the name of the parameter
+number	the number of the parameter (starting from 0)
+friendlyName	the action parameter name, formatted for rendering in a UI.
+description	a description of the action parameter, e.g. to render as a tooltip.
+optional	indicates whether the action parameter is optional
+maxLength	for string action parameters, indicates the maximum allowable length. A value of 0 means unlimited.
+pattern	for string action parameters, indicates a regular expression for the property to match.
+format	for action parameters requiring a string or number value, indicates how to interpret that value §A2.5.
+links[rel=up]	link to the action that owns this parameter
+links[rel=…/return-type]	link to the action parameter's return type
+links[rel=help]	(optional) link to a media resource providing help about the action parameter
+extensions	map of additional information about the resource.
+"extensions"
+Restful Objects defines the no standard json-properties within "extensions",  but implementations are free to add further links or json-properties as they require.
+
+

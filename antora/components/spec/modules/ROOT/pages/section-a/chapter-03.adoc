@@ -1,0 +1,123 @@
+= 3	OPTIONAL CAPABILITIES
+
+While Restful Objects aims to define a consistent standard for RESTful interactions with domain models, some useful features might be easy for one framework to accomplish, but much more difficult for another.
+Therefore the specification defines a small number of capabilities that are optional.
+Implementations advertise the capabilities that they support through the "version" resource, §B8. In some cases, clients can vary the behaviour of these capabilities by providing optional query parameters.
+For example, if argument validation is supported by the implementation, then the client can use the "x-ro-validate-only" query parameter to suppress modification of the resource, and simply check values.
+In order to minimize clashes with other (application) parameters, the optional query parameters all have the "x-ro-" prefix: the "x-" is intended to indicate a non-standard parameter; the "ro-" to indicate that the parameter is specific to Restful Objects.
+If a framework has not implemented some optional aspect of the Restful Objects specification and can reasonably continue, then it should ignore the request.
+If there is no reasonable way to continue, then the framework should return a 501 "Not implemented" status code along with a Warning header explaining the feature that has not been implemented.
+The sections that follow each indicate the query parameter that is used to request the capability.
+
+== 3.1Domain Metadata (x-ro-domain-model)
+
+Some clients may wish to perform client-side validation before submitting changes to the server: examples include the enforcement of mandatory properties (or action parameters) and the enforcement of maximum string length.
+Such rules are applicable to any domain object instance of that given type, and so may be defined on the domain type Restful Objects defines two ways in which such domain type information may be represented: a "simple" scheme and a "formal" scheme, defined below.
+Common to both is that the information is accessible by way of links and extensions §2.11. A client may query the version resource §B8 to determine the server's support for domain metadata:
+• a value of "none" indicates that the implementation does not provide domain type information; • a value of "simple" or "formal" means that the server supports only that scheme • a value of "selectable" is for implementations that support both schemes.
+By default such implementations will return both simple and formal domain metadata, but the client can provide a reserved x-ro-domain-model query parameter to request either just "simple" or "formal" as it requires.
+
+=== 3.1.1Simple Scheme
+
+In the simple scheme, Restful Objects allows that implementations may in-line certain domain type information within the “extensions” json-property of the domain object representation.
+For example, the fact that a property is required (may not be left empty) is captured using:
+{ ...
+"extensions": { "optional": false, ...
+} } Restful Objects defines the following standard json-properties for the "simple" scheme:
+JSON-Property Values Applies to Description domainType string domain object unique identifier for the domain type friendlyName string domain object, property, collection, action, action param Version of the name suitable for use in a UI (e.g. as a label).
+pluralName string domain object Pluralized form of the friendly name, for use in a UI (e.g. as a label of a collection).
+collection action returning list Pluralized form of the element type within the collection/list.
+description string domain object, property, collection, action, action param Description, suitable for use in a UI (e.g. as a tooltip).
+isService boolean domain object whether this domain object is a domain service optional boolean property, action param. if false, then a value for the property / param must be provided.
+Default is implementation-specific.
+maxLength int string property, string action param the maximum number of characters that the string may contain.
+A value of 0 means unlimited.
+pattern string string property, string action param whether value must match the regular expression that any submitted value must match.
+returnType string property action (returning scalar or object) action param If scalar value returned, indicates its datatype §2.5 (in conjunction with'format' if 'string').
+If object returned, its domain type id.
+collection action (returning collection) Either 'list' or set'.
+action returning void 'void' format string when returnType if 'string' further qualifies the datatype §2.5. elementType string collection action returning collection of the domain type id for the type of the elements held within the collection.
+hasParams boolean action whether an action has parameters or not.
+This may, for example, be used by clients to render ellipsis (…) in their UI.
+memberOrder int property, collection, action a presentation hint indicating the recommended relative display order for each member.
+Discussed further below.
+Implementations are free to extend this list as they require.
+MemberOrder The "memberOrder" json-property is a presentation hint indicating the recommended display order for each member of the object relative to others.
+Note that clients are not obliged to adhere to member ordering.
+Irrespective of whether it is used, the "memberOrder" json-property must always be provided by the implementation.
+However, in the cases where no ordering information is available, the implementations may provide the same value for more than one member.
+For example, an implementation might return 0 for all unordered members (putting them joint first place in the list) or it might return a value of 999, say (putting them all joint last place).
+Alternatively, an implementation may choose to synthesise ordering information, for example based on the declaration order of its source code. , or on the alphabetic order of the member names.
+
+=== 3.1.2Formal Scheme
+
+The formal scheme of providing domain type information defines separate resources that generate representations of the domain metamodel.
+If this scheme is followed then such resources are obtained by rel="describedby" link in the "links" json-property.
+For example, suppose that the Customer class has an (int) "id" property, a date "since" property, and a "blacklist" action.
+In .NET, this could be written as:
+public class Customer { ...
+public int Id {get; set; } public DateTime Since {get; set; } public bool Blacklist(string reason) { ... } ...
+} while in Java it might look like:
+public class Customer { ...
+private int id; private Date since;
+
+  public int getId() { return this.id; }
+  public void setId(int id) { this.id = id; {}
+
+  public Date getSince() { return this.since; }
+  public void setSince(Date since) { this.since = since; }
+
+  public boolean blacklist(String reason) { ... }
+  ...
+}
+The resources to expose the metadata for an instance of this class are shown in §D.
+
+FIGURE 3: DOMAIN OBJECTS VS DOMAIN TYPES Domain type resources are pre-defined for the scalar types §D21.3. For non-scalar types, the domain type is the concatenation of "http://~/domain-types/"  + the domain type id.
+The link to the domain type resource is shown in the domain object representation as:
+{ ...
+"links": [ { "rel": "describedby", "href": "http://~/domain-types/CUS", "type": "application/json;profile=\".../domain-type\"", "method": "GET" }, ...
+]
+… } where the referenced domain type resource will return a representation that describes the domain object instance.
+Restricting access to formal metadata Implementations that implement the formal scheme should be aware that there is a potential security risk: clients will be able to ascertain the existence of an object's members, even if the member is not returned in any representation that they obtain of that member.
+For example, an Employee object might have a salary property that is only visible to users with certain permissions (e.g. an "HR" role).
+An ordinary user browsing representations of Employee objects would be able to view the name and phone, but the salary would be hidden from view.
+However, navigating to the formal domain type resource would show that a salary property does exist.
+Because domain types are intended to be cacheable, implementations should not attempt to alter the metadata representations on a user-by-user basis.
+If an implementation intends to support use cases where the above issue might be considered a security risk, then it should also offer the simple scheme and provide an implementation-specific mechanism to disable formal scheme support.
+
+== 3.2Validation (x-ro-validate-only)
+
+If validation logic has been defined for a property value, a collection reference, or an action’s parameter(s), then the server implementation is expected to perform that validation prior to initiating any change.
+For example, a Customer’s firstName property might disallow certain characters , or its showPayments() action might require that the toDate parameter is greater than the fromDate.
+A validation failure will generate a 422 "unprocessable entity" status code, and in addition, a warning message will be returned.
+This will either be a simple Warning header, or, dependent on the request, may be part of the response, in the form of an"invalidReason" json-property.
+x-ro-validate-only reserved query parameter On occasion a client may want to validate one or more property fields, before attempting to modify an object, or may want to validate arguments before attempting to invoke the action.
+Restful Objects defines an optional capability §B8 whereby the client can set the reserved x–ro-validate-only query param for the request to indicate that only validation should be performed:
+If the validation completes, then a 204 "No content " status code will be returned.
+If a validation failure occurs, then the response will be 422 "unprocessable entity" with corresponding Warning header / "invalidReason" json-properties.
+
+== 3.3Blobs/Clobs and Attachments
+
+As well as properties representing strings and dates, etc, the specification also defines optional support for properties whose value is a blob (binary large object) or a clob (character large object) §2.5. A typical example is a property representing a media item such as a picture or document.
+If an implementation does support blobs/clobs, then the value of the blob/clob is suppressed from the property representation.
+Instead, the representation includes a "rel"="…/attachment;" link.
+If followed, such a link returns a representation with the appropriate content-type, e.g. image/jpeg, application/pdf, etc For example, if a property is a blob representing an image, then its representation would include a link with a corresponding attachment:
+{ "links": [
+{ "rel": ".../attachment;property=\"photo\"", "href": "http://~/objects/CUS/123/properties/photo", "type": "image/jpeg", "method": "GET" } ...
+]
+} The href of this link should be the same as the property resource §C16.1, however the client should provide a different Accept header in order to obtain the attachment.
+The values of blob or clob properties are set/cleared using PUT (§C16.2) and DELETE (§C16.3), as for any other property.
+The Content-Type header specifies the media type when being PUT (e.g. image/jpeg).
+A client can determine whether an implementation supports blobs/clobs by inspecting the version resource §B8.
+
+== 3.4Proto-persistent Objects
+
+As described in §2.2, a proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
+The ultimate persistence of the entity is therefore under the control of the client, which is done by POSTing to the Objects of Type resource, §B9.1. Support for proto-persistent objects is an optional capability because providing a general-purpose persistence capability may not be practicable for some implementations.
+
+== 3.5Object Deletion
+
+Persisted objects can be deleted through the DELETE Object resource, §C14.3. This is an optional capability because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
+If the implementation does support the capability then it must also determine that it is safe to delete the object.
+A 405 ("method not allowed") error will be returned otherwise.
+

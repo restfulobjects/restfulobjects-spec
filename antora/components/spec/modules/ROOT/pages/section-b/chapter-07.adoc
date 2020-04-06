@@ -1,0 +1,44 @@
+= 7	DOMAIN SERVICES RESOURCE
+
+Returns a list §11 of (links to) domain service resources §C15. The endpoint URL for this resource is:
+/services
+
+== 7.1HTTP GET
+
+=== 7.1.1GET Request
+
+==== 7.1.1.1	Query String
+
+None
+
+==== 7.1.1.2	Headers
+
+• Accept o application/json o application/json;profile=".../list "
+
+==== 7.1.1.3	Body
+
+• N/A
+
+=== 7.1.2GET Successful Response
+
+==== 7.1.2.1	Status Code
+
+• 200 "OK"
+
+==== 7.1.2.2	Headers
+
+• Content-Type o application/json;profile=".../list ";x-ro-element-type="yyy"  where "yyy" is the domain type id for the services (most likely a type representing a common base class for all services, eg Object) • Caching headers:
+o NON_EXPIRING, see §A2.13  list of available services will not change between deployments
+
+==== 7.1.2.3	Body
+
+As per §7.2.
+
+== 7.2Representation
+
+The returned representation is a simple list §11, but with an additional link with a rel="up" referring back to the homepage resource §5. For example:
+{ "links" : [ { "rel": "self", "href" : "http://~/services", "method" : "GET", "type" : "application/json;profile=\".../services\"" }, { "rel": "up", "href": "http://~/", "type": "application/json;profile=\".../homepage\"", "method": "GET" }, ...
+} ], "value" : [ { "rel": ".../service;serviceId="toDoItems", "href" : "http://~/services/toDoItems", "method" : "GET", "type" : "application/json;profile=\".../object\"", "title": To Do Items" }, { "rel": ".../service;serviceId="categories", "href" : "http://~/services/categories", "method" : "GET", "type" : "application/json;profile=\".../object\"", "title": "Categories" }, ...
+], "extensions": { ... } } The links from the services representation to other resources are as shown in the diagram below:
+
+FIGURE 6: SERVICES REPRESENTATION Note that the links in this list will point to domain service resources §C15, rather than to domain object resources §C14.

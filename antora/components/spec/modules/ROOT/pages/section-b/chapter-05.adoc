@@ -1,0 +1,54 @@
+= 5	HOME PAGE RESOURCE & REPRESENTATION
+
+The 'home page' is a well-known resource which acts as the starting point for any client.
+From it all other resources may be discovered.
+
+== 5.1HTTP GET
+
+Obtain the representation of the home page resource.
+The endpoint URL for this resource is:
+/ (in other words the base directory).
+
+=== 5.1.1Request
+
+==== 5.1.1.1	Query String
+
+None
+
+==== 5.1.1.2	Headers
+
+• Accept o application/json o application/json;profile=…/homepage
+
+==== 5.1.1.3	Body
+
+• N/A
+
+=== 5.1.2Successful Response
+
+==== 5.1.2.1	Status Code
+
+• 200 "OK"
+
+==== 5.1.2.2	Headers
+
+• Content-Type o application/json;profile=".../homepage" • Caching headers:
+o NON_EXPIRING, see §A2.13  since home page changes only on redeployment
+
+==== 5.1.2.3	Body
+
+As per §5.2.
+
+== 5.2Representation
+
+The links from the home page representation to other resources are as shown in the diagram below:
+
+FIGURE 4: HOME PAGE REPRESENTATION The link to the domain types resource is only present if the formal scheme (§A3.1.2) capability is supported.
+The JSON representation is as follows:
+{ "links": [ { "rel": "self", "href": "http://~/", "type": "application/json;profile=\".../homepage\"", "method": "GET" }, { "rel": ".../user", "href": "http://~/user", "type": "application/json;profile=\".../user\"", "method": "GET" }, { "rel": ".../services", "href": "http://~/services", "type": "application/json;profile=\".../list\"", "method": "GET" }, { "rel": ".../version", "href": "http://~/version", "type": "application/json;profile=\".../version\"", "method": "GET" }, { "rel": ".../domain-types", "href": "http://~/domain-types", "type": "application/json;profile=\".../type-list\"", "method": "GET" }, ...
+], "extensions": { ... } } where:
+JSON-Property Description links list of links to resources.
+link[rel=self]    link back to the resource that generated this representation.
+link[rel=…/user]    link to the user resource §6 link[rel=…/services]    link to the services resource §7 link[rel=…/version]    link to the version resource §8 link[rel=…/types]    link to the domain types resource §D21 extensions additional information about the resource.
+Restful Objects defines no standard json-properties for "extensions".
+Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require.
+

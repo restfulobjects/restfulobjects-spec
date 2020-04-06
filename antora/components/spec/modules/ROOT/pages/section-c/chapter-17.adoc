@@ -1,0 +1,257 @@
+= 17	COLLECTION RESOURCE & REPRESENTATION
+
+The (domain object) collection resource can be used to obtain the detailed domain object collection representation §17.5 for a particular domain object instance. It also allows elements to be added to, or removed from, the collection (or optionally to validate the adding and removal of elements without modifying the collection).
+
+The endpoint URL for this resource is:
+/objects/{domainType}/{instanceId}/collections/{collectionId}
+where:
+•	{domainType} uniquely identifies the object's type, and
+•	{instanceId} uniquely identifies an object instance of that type
+•	{collectionId} is the collection identifier
+=== 17.1	HTTP GET
+Obtain a detailed representation of a collection §17.5.
+This resource is typically requested as a result of following a link from the domain object representation §14.4.
+=== 17.1.1	Request
+=== 17.1.1.1	Query String
+•	x-ro-domain-model (optional, §A3.1)
+o	"simple"
+o	"formal"
+=== 17.1.1.2	Headers
+•	Accept
+o	application/json
+o	application/json;profile=".../object-collection"
+=== 17.1.1.3	Body
+•	N/A
+=== 17.1.2	Success Response
+As per §13.1 (200), returning an object collection representation §17.5.  Note that the Content-Type will include an "x-ro-element-type" parameter.
+=== 17.2	HTTP PUT
+Add an object to a collection, or alternatively validate that the proposed object may be added to the collection is valid but without making the change.
+This method is valid only if the collection has Set semantics (the most common case, where duplicate entries are not permitted).
+=== 17.2.1	Request
+=== 17.2.1.1	Query String
+•	x-ro-domain-model (if domain metadata is "selectable", §A3.1)
+o	"simple"
+o	"formal"
+=== 17.2.1.2	Headers
+•	If-Match
+o	timestamp digest
+	obtained from ETag header of representation
+=== 17.2.1.3	Body
+•	should be formatted as a single argument node §A2.9.2.2.
+In addition:
+•	x-ro-domain-model (optional, §A3.1)
+o	"simple"
+o	"formal"
+•	x-ro-validate-only (optional, §A3.2)
+o	"true"
+	only validate the request, do not modify the collection
+=== 17.2.2	Success Response
+As per §13.1 (200), returning an object collection representation §17.5.  Note that the Content-Type will include an "x-ro-element-type" parameter.
+=== 17.3	HTTP POST
+Add an object to a collection, or alternatively validate that the proposed object to add to the collection is valid but do not modify the collection.
+This method is valid only if the collection has List semantics (where duplicate entries are permitted).
+=== 17.3.1	Request
+=== 17.3.1.1	Query String
+•	None
+=== 17.3.1.2	Headers
+•	If-Match
+o	timestamp digest
+	obtained from ETag header of representation
+=== 17.3.1.3	Body
+•	should be formatted as a single argument node §A2.9.2.2.
+In addition:
+•	x-ro-domain-model (optional, §A3.1)
+o	"simple"
+o	"formal"
+•	x-ro-validate-only (optional, §A3.2)
+o	"true"
+	only validate the request, do not modify the collection
+=== 17.3.2	Success Response
+As per §13.1 (200), returning an object collection representation §17.5.  Note that the Content-Type will include an "x-ro-element-type" parameter.
+=== 17.4	HTTP DELETE
+Remove an object from a collection, or validate that an object may be removed from the collection but without making the change.
+=== 17.4.1	Request
+=== 17.4.1.1	Query String
+A single query argument should be formatted as a single argument node §A2.9.2.2 referencing the object to remove:
+{
+"value": {
+"href": "http://~/objects/XXX/yyyy"
+}
+}
+In addition:
+•	x-ro-domain-model (optional, §A3.1)
+o	"simple"
+o	"formal"
+•	x-ro-validate-only (optional, §A3.2)
+o	"true"
+	only validate the request, do not modify the collection
+=== 17.4.1.2	Headers
+•	If-Match
+o	timestamp digest
+	obtained from ETag header of representation
+=== 17.4.1.3	Body
+•	None
+=== 17.4.2	Success Response
+As per §13.1 (200), returning an object collection representation §17.5. Because the resource has mutated the state, there will be no self link (so that it cannot be bookmarked by clients).
+=== 17.5	Representation
+The domain object collection representation provides full details of a collection of a domain object, and provides links to resources that can modify the contents of the collection, if allowable.
+The Content-Type for the representation is:
+application/json;
+profile=".../object-collection;
+x-ro-element-type=yyy"
+where yyy indicates the domain type:
+•	the domain type id (if simple scheme)
+•	URI of domain type (if formal scheme)
+The links from the object collection representation to other resources are as shown in the diagram below:
+
+FIGURE 10: OBJECT COLLECTION REPRESENTATION
+For example, the representation of an Order’s items collection might be:
+{
+"id": items",
+"value": [ ... ],
+"disabledReason": ...,
+"links": [ {
+"rel": "self",
+"href": "http://~/objects/ORD/123/collections/items",
+"type": "application/json;profile=\".../object-collection\"",
+"method": "GET",
+}, {
+"rel": ".../addTo;collection=\"items\"",
+...
+}. {
+"rel": ".../removeFrom;collection=\"items\"",
+...
+}, {
+"rel": "up",
+...
+}
+...
+],
+"extensions": { ... }
+}
+where:
+JSON-Property	Description
+links	list of links to other resources.
+links[rel=self]	link to a resource that can obtain this representation
+id	collection ID, to use when building templated URIs
+value	list of links to the domain objects referenced by the collection, §17.5.1.
+disabledReason	(optional) if populated then indicates the reason why the collection cannot be modified.
+links[rel=.../add-to]	(optional) link back to self to add item to collection; discussed below, §17.5.2.
+links[rel=…/remove-from]	(optional) link back to self to remove item from collection; discussed below, §17.5.2.
+links[rel=up]	link to the object that is the owner of this collection.
+extensions	additional information about the resource.
+Both the "links" and the "extensions" json-properties may contain domain model information; this is discussed in §17.5.3.
+Restful Objects defines no further standard child properties for the "extensions" json-property.  Implementations are free to add further links/json-properties to "links" and "extensions" as they require.
+=== 17.5.1	Collection values
+The value of a collection is a list of links to other objects e.g.:
+"value": [
+{
+"rel": ".../value;collection=\"items\"",
+"href": "http://~/objects/ORI/123-1",
+"type": "application/json;profile=\".../object\"",
+"method": "GET",
+"title": "Harry Potter and the Goblet of Fire"
+},
+{
+"rel": ".../value;collection=\"items\"",
+"href": "http://~/objects/ORI/123-2",
+"type": "application/json;profile=\".../object\"",
+"method": "GET",
+"title": "Rubiks Cube"
+},
+{
+"rel": ".../value;collection=\"items\"",
+"href": "http://~/objects/ORI/123-3",
+"type": "application/json;profile=\".../object\"",
+"method": "GET",
+"title": "Xbox"
+}
+]
+=== 17.5.2	Collection modification
+If the collection is a modifiable (by the current user), then the "addTo" and "removeFrom" links will be provided.
+If the collection is a Set (the common case, where entries cannot be duplicated), then the "addTo" link will be a PUT:
+{
+...
+"links": [ {
+"rel": ".../addTo;collection=\"items\"",
+"href": "http://~/objects/ORD/123/collections/items",
+"type": "application/json;profile=\".../object-collection\"",
+"method": "PUT",
+"arguments": {
+"value": null
+},
+...
+],
+...
+}
+If the collection is a List (the rarer case, where entries can be duplicated), then the "addTo" link will be a POST:
+{
+...
+"links": [ {
+"rel": ".../addTo;collection=\"items\"",
+"href":"http://~/objects/ORD/123/collections/items",
+"type": "application/json;profile=\".../object-collection\"",
+"method": "POST"
+"arguments": {
+"value": null
+}
+},
+...
+],
+...
+}
+In both cases, the "removeFrom" link will be a DELETE:
+{
+...
+"links": [ {
+"rel": ".../removeFrom;collection=\"items\"",
+"href": "http://~/objects/ORD/123/collections/items",
+"type": "application/json;profile=\".../object-collection\"",
+"method": "DELETE"
+"arguments": {
+"value": null
+}
+...
+],
+...
+}
+To summarize:
+JSON-Property	Description
+links[rel=.../add-to]	link back to self to add to collection; not included if the collection is disabled
+links[rel=.../remove-from]	link back to self to remove from collection; not included if the collection is disabled
+If the collection is NOT modifiable (by the current user), then the representation will include a "disabledReason" json-property to indicate the reason (or just the literal "disabled") why the contents of the collection cannot be modified:
+{
+...
+"disabledReason":
+"Cannot add items to order that has already shipped",
+...
+}
+where:
+JSON-Property	Description
+disabledReason	indicates the reason why the collection cannot be added to/removed from; only included if the collection is disabled
+=== 17.5.3	Domain model information
+Domain model information is available through either the "links" or the "extensions" json-properties.
+=== 17.5.3.1	Simple scheme
+Implementations that support the simple scheme provide extra data in the "extensions" json-properties. For example:
+"extensions": {
+"friendlyName": "items",
+"description": "Line items (details) of the order",
+"returnType": "list",
+"elementType": "ORI",
+"pluralForm": "Order Items"
+}
+Note that the combination of the "size" json-property and the "pluralForm" json-property make it easy for a client to render useful summary information (e.g. "3 Customers").
+See §A3.1.1 for the full definitions of these json-properties.
+=== 17.5.3.2	Formal scheme
+Implementations that support the formal scheme §A3.1.2 provide an additional link only in the "links" json-property:
+"links": [
+{
+"rel": "describedby",
+"href": "http://~/domain-types/ORD/collections/items",
+"type": "application/json;profile=\".../type-collection\"",
+"method": "GET"
+},
+...
+]
+which links to the domain collection description resource §D23.2 corresponding to this domain object collection.
+

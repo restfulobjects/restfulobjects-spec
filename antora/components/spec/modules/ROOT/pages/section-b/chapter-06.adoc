@@ -1,0 +1,54 @@
+= 6	USER RESOURCE & REPRESENTATION
+
+The 'user' resource represents the currently logged-in user.
+The endpoint URL for this resource is:
+/user r
+
+== 6.1HTTP GET
+
+Obtain representation of the currently logged-in user.
+
+=== 6.1.1GET Request
+
+==== 6.1.1.1	Query String
+
+None
+
+==== 6.1.1.2	Headers
+
+• Accept o application/json o application/json;profile=".../user "
+
+==== 6.1.1.3	Body
+
+• N/A
+
+=== 6.1.2GET Successful Response
+
+==== 6.1.2.1	Status Code
+
+• 200 "OK"
+
+==== 6.1.2.2	Headers
+
+• Content-Type o application/json;profile=".../user" • Caching headers: SHORT, see §A2.13 o temporary caching of user details
+
+==== 6.1.2.3	Body
+
+As per §6.2.
+
+== 6.2Representation
+
+The links from the user representation to other resources are as shown in the diagram below:
+
+FIGURE 5: USER REPRESENTATION The JSON representation is:
+{ "links": [ { "rel": "self", "href": "http://~/user", "type": "application/json;profile=\".../user\"", "method": "GET" }, { "rel": "up", "href": "http://~/", "type": "application/json;profile=\".../homepage\"", "method": "GET" }, ...
+], "userName": "joebloggs", "friendlyName": "Joe Bloggs", "email": "joe@bloggs.com", "roles": [
+"role1", "role2", ...
+], "extensions": { ... } } where:
+JSON-Property Description links list of links to resources.
+links[rel=self]    link to a resource that can generate this representation links[rel=up]    link to the homepage resource, §5. userName a unique user name friendlyName (optional) the user's name in a form suitable to be rendered in a UI.
+email (optional) the user's email address, if known roles list of unique role names that apply to this user (may be empty).
+extensions additional metadata about the resource.
+Restful Objects defines no standard json-properties for "extensions".
+Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require.
+

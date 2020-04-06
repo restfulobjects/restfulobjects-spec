@@ -1,0 +1,88 @@
+= 1	INTRODUCTION
+
+Restful Objects is a public specification for a set of RESTful resources by which a client application can interact with a domain model on a server using HTTP. These resources generate JSON representations along with corresponding media types.
+This chapter discusses further the goals and approach taken by the spec.
+
+== 1.1 Goals
+
+The goal of Restful Objects is to allow domain models to be accessed through HTTP resources, returning a set of JSON representations.
+These representations can then be consumed by any client (e.g. Javascript, Java, .NET, Ruby, Python).
+Both the resources and representations are generalized so that they can be applied to any domain model, and by default all representations have media types designed to allow a completely generic client to be written, capable of working, unmodified, with any domain model that has a Restful Objects interface..
+Alternatively, the developer may write a custom client that has some shared knowledge of the domain being exposed, and render the information in a more specific fashion.
+Restful Objects also defines that representations are served up with parameterized media types.
+This allows clients to use content negotiation to ensure that representations do not change in a breaking fashion, enabling server and client to evolve independently.
+The Restful Objects specification is at a higher-level of abstraction than, say, the JAX-RS specifications for Java platform, or the WCF specifications on .NET. Specifically, the domain classes that it exposes are represented in a very general form.
+They consist of:
+• properties (fields), each holding either a scalar value or reference to another object; • collections, each holding a vector reference to other entities; • actions (operations/methods), whereby the object can execute business logic.
+Beyond this, though, Restful Objects makes very few assumptions.
+In particular, Restful Objects does not prescribe the nature of the domain model.
+
+== 1.2A Uniform Interface
+
+Restful Objects defines a uniform interface to the domain objects.
+This uniformity is expressed in terms of:
+• the format of URLs used to access the domain object resources (though URLs can also be treated as opaque); • the standard HTTP methods used (GET, POST, PUT, DELETE) to call the resource URLs; • the standard HTTP headers supported for both request and response; • the use of standard HTTP status return codes; • standardized, parameterized media types to fully describe the representation, e.g.:
+application/json; profile="urn:org.restfulobjects:repr-types/object"; x-ro-domain-type="com.mycompany.myapp.v2.PlaceOrderViewModel" • standard properties within JSON representations; • a standard representation of links between resources; • a small number of reserved query parameter names to influence behaviour (e.g. validation).
+Existing HTTP standards and supporting W3C standards have been used wherever possible.
+
+== 1.3Benefits
+
+Because the spec defines a generalized binding for any domain model, it allows the project team to focus on developing the domain model rather than worrying about the intricacies of following a RESTful style.
+For example, the debate becomes about whether an action is idempotent, not about whether to use HTTP PUT or HTTP POST. And debates about URI structure (should it be customers/{custId}/invoices or should it be invoices/for/{custId}?) disappear because the URL is determined by the responsibilities of the underlying domain objects.
+Further specific benefits include:
+• Testing.
+Since all business logic is expressed only in domain classes, such business logic may be tested using fast and cheap in-memory unit tests.
+In contrast, if a RESTful API is custom-written and tuned to specific use cases, then it can only be effectively tested through (slower) integration tests running across a webserver.
+• Documentation.
+Restful Objects eliminates the need for the project team to explicitly document the RESTful API to their system, because consumers can infer the structure either directly from the underlying domain classes, or by querying the domain metamodel resources §D.
+• Common server code.
+Restful Objects is intended to enourage frameworks to be written that implement the spec (indeed, such frameworks already exist ).
+A project team adopting such a framework can then focus solely on implementing business logic through domain classes, and know that the business logic will be exposed in a standard and consistent fashion.
+• Common client code.
+Any generic Restful client written to work with one framework implementation will also inter-operate across any other implementations.
+There is further discussion on how the specification enables the RESTful style (along with an FAQ) in §E.
+
+== 1.4Audience
+
+This document is written for several audiences:
+• for developers intending to write a bespoke domain-driven system and want a guidance on how to expose the domain in a RESTful style; • for developers intending to write a bespoke domain-driven system intended to be hosted on a general-purpose framework that implements this spec; • for developers intending to write a generic or custom client against a domain object model exposed using Restful Objects; • for developers intending to write their own general-purpose framework implementation of the specification.
+The specification adopts a semi-formal style; providing examples of representations rather than formal grammars.
+The intention is to make the specification accessible to all its target audiences.
+
+== 1.5Authorship and License
+
+Restful Objects was conceived by Dan Haywood, who is also the primary author of this document.
+Substantial contributions have been made by Richard Pawson and Stef Cascarini.
+The specification is licensed under Creative Commons Attribution Share-Alike 3.0 (the same license as Wikipedia).
+As such the document may be shared and adapted.
+However, any derivative work must be attributed back to the author of this document, and must be licensed under the same license to this one.
+
+== 1.6Style Conventions
+
+Restful Objects defines that URLs, when generated in resources, are absolute.
+Because the hostname is likely to be a long string and in any case will vary, in the spec it is shown by a ‘~’ placeholder:
+http://~/
+At some points in the spec the fully qualified class name appears.
+In a Java implementation, this would be a string such as com.mycompany.myapp.Customer.
+In a .NET implementation, meanwhile, this might instead be MyCompany.MyApp.Customer.
+Other platforms are likely to have their own equivalent conventions.
+For conciseness, this has been shown by an "x" placeholder: x.Customer.
+There are two important concepts in the spec that both have the name "property": a domain object property, and a property within a JSON representation (the key value of a JSON map).
+The spec always refers to the former as a "property", and to the latter as a “json-property”.
+Finally, Restful Objects defines a set of "rel" values for links.
+To distinguish these from IANA-specified links, these each have the prefix "urn:org.restfulobjects:rels/".
+This is abbreviated to ".../" in example representations.
+
+== 1.7Document Repository and History
+
+The source for this document can be found at http://github.com/danhaywood/restfulobjects-spec.
+This document uses semantic versioning .
+Version Description v1.0.0 First release.
+Minor edits and clarifications from preceding version (0.69.0):
+- versioned using semver;
+- specVersion property;
+- x-ro-domain-model="selectable" behaviour;
+- href for persist link of proto-persistent entities; no longer any need to provide domaintype within arguments map;
+- typos Added reference to github repository.
+Removed change history prior to v1.0.0 (see github repo for details, if required).
+

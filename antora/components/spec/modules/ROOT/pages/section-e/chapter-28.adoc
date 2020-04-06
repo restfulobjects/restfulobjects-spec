@@ -1,0 +1,17 @@
+= 28	HATEOAS VS WEB APIS
+Comparing two styles of distributed system.
+
+=== 28.1	HATEOAS (Hypermedia Controls)
+REST-based systems are typically designed to have a single or small number of starting (home page) resources, from which all other resources can be traversed. This is REST’s HATEOAS concept: hypertext as the engine of application state. When you use a web browser you can click through links to get to the next page; HATEOAS says that a REST client should be able to do likewise to follow a link to another resource.
+Said more generally, links are an example of a hypermedia control by which the REST client can navigate the resources. The client knows what the link represents through its "rel" (relation) property; however the value of the URL is opaque.
+This style of REST is supported by Restful Objects in that all resources in Restful Objects are discoverable from the Home Page resource §B5, acting as a well-known starting point. The rels are defined in §A2.7.1.
+All other resources can be obtained from the home page, for example by following the links that represent reference properties and collections between domain objects, or by invoking domain object or service actions that can return references to other objects. Links are only included in representations if it makes sense for the client to follow them.
+=== 28.2	Web APIs (Templated URIs)
+Some practitioners take the view that a pure-HATEOAS design places too much responsibility on the part of the client (having to traverse through multiple sets of representations from the start page), and that this can result in slower performance (for much the same reasons).
+This isn't strictly true; a client is free to cache the value of a link between interactions (rather than find it out "from first principles" each time). Said another way: clients may bookmark links in order to move from one representation to the next (though they should be prepared to recover if the link is no longer valid).
+Even so, many prefer a system that defines a set templated URIs in the form:
+path/{pathParam1}/pathPart/{pathParam2}/…
+So long as the client has arguments for each of the {pathParam}'s then it can directly construct the URL and invoke it.
+It is highly debatable whether this style of system should be called REST; a better name is probably an HTTP-based web API. Nevertheless it is popular, and it is practicable.  It is also supported by Restful Objects; the URLs for each of the resources included in the specification are well-defined, and the information needed to construct the URLs (such as the object identifiers) are provided as properties in the JSON representations.
+Implementations of the spec may also choose to provide additional support - for example leveraging the capabilities of lower-level frameworks such as JBoss RESTEasy (http://www.jboss.org/resteasy) that provide explicit support for client-side templated URIs.
+

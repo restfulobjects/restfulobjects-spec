@@ -1,0 +1,57 @@
+r= 8	VERSION RESOURCE & REPRESENTATION
+
+This resource allows a client to dynamically determine which version of the Restful Objects spec a particular implementation supports, the version of the implementation (code) itself, and which of the optional capabilities §A3 it provides.
+The endpoint URL for this resource is:
+/version
+
+== 8.1HTTP GET
+
+Obtain a representation of the implementation's version and optional capabilities.
+
+=== 8.1.1GET Request
+
+==== 8.1.1.1	Query String
+
+• none
+
+==== 8.1.1.2	Headers
+
+• Accept o application/json o application/json;profile=".../version"
+
+==== 8.1.1.3	Body
+
+• N/A
+
+=== 8.1.2GET Response
+
+==== 8.1.2.1	Status Code
+
+• 200 "OK"
+
+==== 8.1.2.2	Headers
+
+• Content-Type o application/json;profile=".../version" • Caching headers:
+o NON_EXPIRING, see §A2.13  version and capabilities will not change between deployments
+
+==== 8.1.2.3	Body
+
+As per §8.2.
+
+== 8.2Representation
+
+The links from the version representation to other resources are as shown in the diagram below:
+
+FIGURE 7: VERSION REPRESENTATION The JSON representation is:
+{ "links": [ { "rel": "self", "href": "http://~/version", "type": "application/json;profile=\".../version\"", "method": "GET" }, { "rel": "up", "href": "http://~/", "type": "application/json;profile=\".../homepage\"", "method": "GET" }, ...
+], "specVersion": "1.0", "implVersion": “xxx”, "optionalCapabilities": { "blobsClobs": "attachments", "deleteObjects": "no", "domainModel": "formal", "protoPersistentObjects": "yes", "validateOnly": "no" }, "extensions": { ...
+} } where:
+JSON-Property Description links list of links to resources.
+links[rel=self]    link to a resource that can generate this representation.
+links[rel=up]    link to the home page resource, §5. specVersion The "major.minor" parts of the version of the spec supported by this implementation, e.g. “1.0” implVersion (optional) Version of the implementation itself (format is specific to the implementation).
+optionalCapabilities map representing the optional capabilities §A3 supported by this implementation (see below) extensions additional metadata about the resource.
+"specVersion" The specVersion json-property only specifies the major.minor parts of the spec.
+An trivial update to the spec (eg 1.0.0 to 1.0.1) will not require implementations issuing a corresponding update.
+"optionalCapabilities" The "optionalCapabilities" json-property holds a map of child properties describing the functionality supported by the implementation.
+Capability Value type String value The implementation's support for… blobsClobs boolean --- blobs/clobs see §A3.3. deleteObjects boolean --- deletion of persisted objects through the DELETE Object resource §C14.3, see §A3.5 domainModel string none simple formal selectable different domain metadata representations.
+A value of "selectable" means that the reserved x-domain-model query parameter is supported, see §A3.1 protoPersistentObjects boolean --- proto-persistent objects are supported, see §A3.4 validateOnly boolean --- the reserved x-ro-validate-only query parameter, see §A3.2 "links" and "extensions" Restful Objects defines no standard links/json-properties for "links" and "extensions", but implementations are free to add to their own links/json-properties as they require.
+

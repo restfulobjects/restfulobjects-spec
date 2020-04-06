@@ -1,0 +1,46 @@
+= 32	CODE SKETCH TO SUPPORT ADDRESSABLE VIEW MODELS
+
+How framework implementations might define an API to allow developers to support view models for conneg and HATEOAS
+=== 32.1	Making View Models Addressable
+As discussed in §A2.2, an addressable view model is a view model that, like a persistent domain entity, has an addressable resource, enabling it to expose actions.
+This implies that it has an object identifier and some sort of server-side state. However, unlike a persistent domain entity, there is no database row, and so its state must be recreated on the fly.
+There are several ways that an implementation of Restful Objects could do this, but a simple solution is to derive all state from the instance identifier of the resource's URL.
+For example, the representation of a CustomerViewModel could contain the following link to an action:
+http://~/objects/CVM/123/actions/findRecentOrders
+Here the domainType is "CVM", and the instanceId is "123". The implementation will determine from its metamodel that the domainType "CVM" corresponds to CustomerViewModel. Next, the implementation could instantiate the view model and initialize it with the value of the instance identifier string "123".
+The new view model in turn would use parse this instance identifier in order to recreate the rest of its state. For example, "123" might correspond to a (persistent) Customer object with id=123; the CustomerViewModel could look this up using an injected CustomerRepository domain service.
+What about the creation of the instance identifier in the first place?  Well, this could be the same process, but in reverse, with the view model providing the value. Both the setting and getting of the oid could be defined by the interface.
+Putting the above together, in Java this would be:
+public interface AddressableViewModel {
+String getInstanceIdentifier();
+void setInstanceIdentifier(String instanceIdentifier);
+}
+where:
+•	getInstanceIdentifier() is used by the implementation to manufacture URLs in the representations
+•	setInstanceIdentifier() is used by the view model to recreate its state
+The implementation of the view model would then be something like:
+public class CustomerViewModel implements AddressableViewModel {
+
+  String getInstanceIdentifier() {
+    return "" + getCustomer().getId();
+  }
+  public void setInstanceIdentifier(String instanceIdentifier) {
+    int customerId = Integer.parseInt(instanceIdentifier);
+    setCustomer(customerRepository.findById(customerId));
+  }
+
+  ...
+
+  @Hidden
+  public Customer getCustomer() { ... }
+  public void setCustomer(Customer customer) { ... }
+
+  // CustomerRepository injected
+  ...
+}
+From the developers' perspective, if the intent of using a view model is to provide a stable API for clients (as exposed by the "x-ro-domain-type" media-type parameter §A2.4.2), care should be taken to:
+•	ensure that the view model is versioned (to allow breaking changes to be introduced over time), and
+•	ensure that its representation never "leaks" out non-versioned properties.
+The first can be accomplished by using a version number in the package/namespace, eg:
+com.mycompany.myapp.viewmodels.customer.v2.CustomerViewModel
+The second can be accomplished by ensuring that all visible properties are either scalar types §A2.5, or are other versioned view models. Any references to domain entities (such as Customer, above) should be hidden.
