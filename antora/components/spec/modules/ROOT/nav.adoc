@@ -1,16 +1,43 @@
+* xref:section-a.adoc[SECTION A: CONCEPTS AND BUILDING BLOCKS]
+** xref:section-a/chapter-01.adoc[1	INTRODUCTION]
+** xref:section-a/chapter-02.adoc[2	CONCEPTS]
+** xref:section-a/chapter-03.adoc[3	OPTIONAL CAPABILITIES]
+** xref:section-a/chapter-04.adoc[4	SPECIFIED ELEMENTS]
 
-:Notice: Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at. http://www.apache.org/licenses/LICENSE-2.0 . Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR  CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+* xref:section-b.adoc[SECTION B: SUPPORTING RESOURCES AND REPRESENTATIONS]
+** xref:section-b/chapter-05.adoc[5	HOME PAGE RESOURCE & REPRESENTATION]
+** xref:section-b/chapter-06.adoc[6	USER RESOURCE & REPRESENTATION]
+** xref:section-b/chapter-07.adoc[7	DOMAIN SERVICES RESOURCE]
+** xref:section-b/chapter-08.adoc[8 VERSION RESOURCE & REPRESENTATION]
+** xref:section-b/chapter-09.adoc[9 OBJECTS OF TYPE RESOURCE]
+** xref:section-b/chapter-10.adoc[10 ERROR REPRESENTATION]
+** xref:section-b/chapter-11.adoc[11 LIST REPRESENTATION]
+** xref:section-b/chapter-12.adoc[12 SCALAR VALUE REPRESENTATION]
 
-* 2020
+* xref:section-c.adoc[SECTION C: DOMAIN OBJECT RESOURCES & REPRESENTATIONS]
+** xref:section-c/chapter-13.adoc[13 RESPONSE SCENARIOS]
+** xref:section-c/chapter-14.adoc[14 DOMAIN OBJECT RESOURCE & REPRESENTATION]
+** xref:section-c/chapter-15.adoc[15 DOMAIN SERVICE RESOURCE]
+** xref:section-c/chapter-16.adoc[16 PROPERTY RESOURCE & REPRESENTATION]
+** xref:section-c/chapter-17.adoc[17 COLLECTION RESOURCE & REPRESENTATION]
+** xref:section-c/chapter-18.adoc[18 ACTION RESOURCE & REPRESENTATION]
+** xref:section-c/chapter-19.adoc[19 ACTION INVOKE RESOURCE]
 
-** xref:relnotes:ROOT:2020/2.0.0-M3/relnotes.adoc[2.0.0-M3]
+* xref:section-d.adoc[SECTION D: DOMAIN TYPE RESOURCES]
+** xref:section-d/chapter-20.adoc[20 RESPONSE SCENARIOS]
+** xref:section-d/chapter-21.adoc[21 DOMAIN TYPES RESOURCE]
+** xref:section-d/chapter-22.adoc[22 DOMAIN TYPE RESOURCE]
+** xref:section-d/chapter-23.adoc[23 DOMAIN TYPE PROPERTY DESCRIPTION RESOURCE]
+** xref:section-d/chapter-24.adoc[24 DOMAIN TYPE COLLECTION DESCRIPTION RESOURCE]
+** xref:section-d/chapter-25.adoc[25 DOMAIN TYPE ACTION DESCRIPTION RESOURCE]
+** xref:section-d/chapter-26.adoc[26 DOMAIN TYPE ACTION PARAMETER DESCRIPTION RESOURCE]
+** xref:section-d/chapter-27.adoc[27 DOMAIN TYPE ACTION INVOKE RESOURCE]
 
-* 2019
-
-** xref:relnotes:ROOT:2019/2.0.0-M2/relnotes.adoc[2.0.0-M2]
-
-* 2018
-
-** xref:relnotes:ROOT:2018/2.0.0-M1/relnotes.adoc[2.0.0-M1]
-
-
+* xref:section-e.adoc[SECTION E: DISCUSSIONS]
+** xref:section-e/chapter-28.adoc[28 HATEOAS VS WEB APIS]
+** xref:section-e/chapter-29.adoc[29 PERSONAL VS SHARED STATE]
+** xref:section-e/chapter-30.adoc[30 DEALING WITH UNTRUSTED CLIENTS]
+** xref:section-e/chapter-31.adoc[31 CLIENT VS SERVER EVOLUTION]
+** xref:section-e/chapter-32.adoc[32 CODE SKETCH TO SUPPORT ADDRESSABLE VIEW MODELS]
+** xref:section-e/chapter-33.adoc[33 FAQS]
+** xref:section-e/chapter-34.adoc[34 IDEAS FOR FUTURE EXTENSIONS TO THE SPECIFICATION]

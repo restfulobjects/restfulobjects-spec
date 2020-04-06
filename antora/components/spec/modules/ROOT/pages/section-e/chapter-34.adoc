@@ -3,6 +3,7 @@
 Ideas for extending the scope of the specification
 
 == 34.1 Content Negotiation
+
 Although representations of domain objects indicate the type of the object in the Content-Type header (through the x-ro-domain-type media parameter §A2.4.2), this parameter is ignored when set on the Accept header.
 This means that a client cannot insist that a particular representation is of a certain type.
 This idea is for the spec to be extended so that the x-ro-domain-type from an Accept header is checked when invoking an object or service action, and is used as a hint to ensure that a representation of the correct type is returned to the client.

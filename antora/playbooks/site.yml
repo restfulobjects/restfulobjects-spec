@@ -1,20 +1,23 @@
 site:
   title: Restful Objects Spec
   url: https://restfulobjects.org/
-  start_page: docs:ROOT:about.adoc
+  start_page: spec:ROOT:about.adoc
 
 content:
   sources:
 
 # antora
     - url: .
-      start_path: antora/components/docs
+      start_path: antora/components/archive
       branches: HEAD
     - url: .
       start_path: antora/components/impl
       branches: HEAD
     - url: .
       start_path: antora/components/spec
+      branches: HEAD
+    - url: .
+      start_path: antora/components/support
       branches: HEAD
 
 ui:

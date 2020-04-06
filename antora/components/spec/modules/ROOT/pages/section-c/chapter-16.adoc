@@ -64,6 +64,7 @@ This link refers back to the same resource URL, but indicates the media type for
 === 16.1.3 Success Response
 
 As per §13.1 (200), returning an object property representation §16.4.
+
 == 16.2 HTTP PUT
 
 Update property value of an object, or check that the proposed new value for the property would be valid without making the change.

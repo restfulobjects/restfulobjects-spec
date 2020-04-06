@@ -1,1 +1,1 @@
-* xref:nof:about.adoc[Naked Objects Framework]
+include::impl:ROOT:partial$component-nav.adoc[]

@@ -13,7 +13,9 @@ The specification does not mandate the format of either the domainType or the in
 /objects/customers/123 /objects/myApp.Customer/123 /objects/CUS/123 /objects/ORD/123-456 /objects/countries/USA
 
 == 14.1 HTTP GET
-Obtain a summary representation of a domain object §14.4.  The intention is that enough information is provided to render the object in the client's UI.
+
+Obtain a summary representation of a domain object §14.4. The intention is that enough information is provided to render the object in the client's UI.
+
 === 14.1.1 Request
 
 ==== 14.1.1.1 Query String

@@ -1,5 +1,5 @@
-name: docs
-title: " "
+name: support
+title: "Support"
 version: latest
 start_page: ROOT:about.adoc
 nav:

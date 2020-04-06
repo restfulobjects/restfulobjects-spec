@@ -1,5 +1,5 @@
-name: impl
-title: "Implementations"
+name: archive
+title: "Archive"
 version: latest
 start_page: ROOT:about.adoc
 nav:
