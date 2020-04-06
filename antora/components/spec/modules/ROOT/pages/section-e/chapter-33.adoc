@@ -38,9 +38,13 @@ In other words, Restful Objects lets you add in layering as and when it's justif
 === 33.5	I prefer having an application service layer that exposes use cases and views. Doesn't Restful Objects simply move the design work that I would normally have done in my resources back a level".
 Yes, it does.
 But the benefits of doing so are that:
-•	it reduces the learning curve for new developers
-•	it separates responsibilities of your system
-•	it eliminates the need to explicitly document the REST API, and
-•	it makes the domain classes easier/faster to test.
+
+* it reduces the learning curve for new developers
+
+* it separates responsibilities of your system
+
+* it eliminates the need to explicitly document the REST API, and
+
+* it makes the domain classes easier/faster to test.
 There's further discussion on all this in §A1.3.
 

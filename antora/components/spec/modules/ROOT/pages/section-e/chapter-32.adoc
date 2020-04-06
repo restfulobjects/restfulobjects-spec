@@ -16,8 +16,10 @@ String getInstanceIdentifier();
 void setInstanceIdentifier(String instanceIdentifier);
 }
 where:
-•	getInstanceIdentifier() is used by the implementation to manufacture URLs in the representations
-•	setInstanceIdentifier() is used by the view model to recreate its state
+
+* getInstanceIdentifier() is used by the implementation to manufacture URLs in the representations
+
+* setInstanceIdentifier() is used by the view model to recreate its state
 The implementation of the view model would then be something like:
 public class CustomerViewModel implements AddressableViewModel {
 
@@ -39,8 +41,10 @@ public class CustomerViewModel implements AddressableViewModel {
   ...
 }
 From the developers' perspective, if the intent of using a view model is to provide a stable API for clients (as exposed by the "x-ro-domain-type" media-type parameter §A2.4.2), care should be taken to:
-•	ensure that the view model is versioned (to allow breaking changes to be introduced over time), and
-•	ensure that its representation never "leaks" out non-versioned properties.
+
+* ensure that the view model is versioned (to allow breaking changes to be introduced over time), and
+
+* ensure that its representation never "leaks" out non-versioned properties.
 The first can be accomplished by using a version number in the package/namespace, eg:
 com.mycompany.myapp.viewmodels.customer.v2.CustomerViewModel
 The second can be accomplished by ensuring that all visible properties are either scalar types §A2.5, or are other versioned view models. Any references to domain entities (such as Customer, above) should be hidden.

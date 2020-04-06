@@ -13,21 +13,26 @@ None
 
 ==== 7.1.1.2	Headers
 
-• Accept o application/json o application/json;profile=".../list "
+
+* Accept o application/json o application/json;profile=".../list "
 
 ==== 7.1.1.3	Body
 
-• N/A
+
+* N/A
 
 === 7.1.2GET Successful Response
 
 ==== 7.1.2.1	Status Code
 
-• 200 "OK"
+
+* 200 "OK"
 
 ==== 7.1.2.2	Headers
 
-• Content-Type o application/json;profile=".../list ";x-ro-element-type="yyy"  where "yyy" is the domain type id for the services (most likely a type representing a common base class for all services, eg Object) • Caching headers:
+
+* Content-Type o application/json;profile=".../list ";x-ro-element-type="yyy"  where "yyy" is the domain type id for the services (most likely a type representing a common base class for all services, eg Object)
+* Caching headers:
 o NON_EXPIRING, see §A2.13  list of available services will not change between deployments
 
 ==== 7.1.2.3	Body

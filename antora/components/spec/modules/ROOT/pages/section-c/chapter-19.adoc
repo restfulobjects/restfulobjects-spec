@@ -5,14 +5,19 @@ The action invoke resource is used to either invoke an action on a particular do
 The endpoint URL for this resource for a domain service is:
 /services/{serviceId}/actions/{actionId}/invoke
 where:
-•	{serviceId} is a unique identifier for the service
-•	{actionId} is the action identifier
+
+* {serviceId} is a unique identifier for the service
+
+* {actionId} is the action identifier
 The endpoint URL for this resource for a domain object is:
 /objects/{domainType}/{instanceId}/actions/{actionId}/invoke
 where:
-•	{domainType} uniquely identifies the object's type, and
-•	{instanceId} uniquely identifies an object instance of that type
-•	{actionId} is the action identifier
+
+* {domainType} uniquely identifies the object's type, and
+
+* {instanceId} uniquely identifies an object instance of that type
+
+* {actionId} is the action identifier
 === 19.1	HTTP GET
 Invoke an action and return a representation. Alternatively, validate the query arguments without invoking the action.
 The action invoked must be query-only (does not modify any persisted objects); a typical example is to search for objects from a domain service repository.
@@ -22,41 +27,62 @@ The request can either be to invoke the action, or to request validation of argu
 === 19.1.1.1	Query String
 Query arguments should be formatted as a map (§A2.9.2), and encoded in the URL (§A2.9.2.5). Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob) .
 In addition, the following may optionally be included in the map:
-•	x-ro-domain-model (optional, §A3.1)
-o	"simple"
-o	"formal"
-•	x-ro-validate-only (optional, §A3.2)
-o	"true"
+
+* x-ro-domain-model (optional, §A3.1)
+
+* *"simple"
+
+* *"formal"
+
+* x-ro-validate-only (optional, §A3.2)
+
+* *"true"
 	the argument map can be incomplete; only those arguments provided will be validated.
 === 19.1.1.2	Headers
-•	Accept
-o	application/json
-o	application/json;profile=".../action-result"
+
+* Accept
+
+* *application/json
+
+* *application/json;profile=".../action-result"
 There is no need to pass If-Match for query-only actions.
 === 19.1.1.3	Body
-•	N/A
+
+* N/A
 === 19.1.2	Success Response
 === 19.1.2.1	Status code
-•	200 "OK"
+
+* 200 "OK"
 === 19.1.2.2	Headers
-•	Content-Length:
-o	size of the entity body
-•	Content-Type (if returning a domain object):
-o	application/json;profile=".../action-result";x-ro-domain-type="yyy"
+
+* Content-Length:
+
+* *size of the entity body
+
+* Content-Type (if returning a domain object):
+
+* *application/json;profile=".../action-result";x-ro-domain-type="yyy"
 	where yyy indicates the domain type (for object representations, §2.4.2);
 	the domain type id (if simple scheme)
 	URI of domain type (if formal scheme)
-•	Content-Type (if returning a list of domain objects):
-o	application/json;profile=".../action-result";x-ro-element-type="yyy"
+
+* Content-Type (if returning a list of domain objects):
+
+* *application/json;profile=".../action-result";x-ro-element-type="yyy"
 	where yyy indicates the domain type (for object representations, §2.4.2);
 	the domain type id (if simple scheme)
 	URI of domain type (if formal scheme)
-•	Content-Type (if returning a scalar or void):
-o	application/json;profile=".../action-result"
-•	Caching headers:
-o	TRANSACTIONAL, see §A2.13
+
+* Content-Type (if returning a scalar or void):
+
+* *application/json;profile=".../action-result"
+
+* Caching headers:
+
+* *TRANSACTIONAL, see §A2.13
 	if the object is transactional
-o	NON_EXPIRING, see §A2.13
+
+* *NON_EXPIRING, see §A2.13
 	if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
 Note that an ETag is never returned for an action result. A client that wishes to modify the returned domain object must therefore re-retrieve it explicitly.
 === 19.1.2.3	Body
@@ -66,22 +92,33 @@ Invoke an action and return a representation if the action returns a result. Alt
 The action invoked must be idempotent (though may have side-effects). An example might be Order#submit(), which (depending on how the application logic is written) might have the same post-conditions irrespective of whether the order has  already been submitted or not.
 === 19.2.1	Request
 === 19.2.1.1	Query String
-•	none
+
+* none
 === 19.2.1.2	Headers
-•	Accept
-o	application/json
-o	application/json;profile=".../action-result"
-•	If-Match
-o	timestamp digest
+
+* Accept
+
+* *application/json
+
+* *application/json;profile=".../action-result"
+
+* If-Match
+
+* *timestamp digest
 	obtained from ETag header of representation
 === 19.2.1.3	Body
 Arguments should be formatted as a map (§A2.9.2), and sent as the body (§A2.9.2.5). Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob).
 In addition:
-•	x-ro-domain-model (optional, §A3.1)
-o	"simple"
-o	"formal"
-•	x-ro-validate-only (optional, §A3.2)
-o	"true"
+
+* x-ro-domain-model (optional, §A3.1)
+
+* *"simple"
+
+* *"formal"
+
+* x-ro-validate-only (optional, §A3.2)
+
+* *"true"
 	only validate the request, do not invoke the action
 === 19.2.2	Success Response
 As per §19.1.2.
@@ -90,60 +127,91 @@ Invoke an action, and return a representation if the action returns a result. Al
 The action invoked can have side effects and need not be idempotent.
 === 19.3.1	Request
 === 19.3.1.1	Query String
-•	none
+
+* none
 === 19.3.1.2	Headers
-•	Accept
-o	application/json
-o	application/json;profile=".../action-result"
-•	If-Match
-o	timestamp digest
+
+* Accept
+
+* *application/json
+
+* *application/json;profile=".../action-result"
+
+* If-Match
+
+* *timestamp digest
 	obtained from ETag header of representation
 === 19.3.1.3	Body
 Arguments should be formatted as a map (§A2.9.2), and sent as the body (§A2.9.2.5). Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob).
 In addition:
-•	x-ro-domain-model (optional, §A3.1)
-o	"simple"
-o	"formal"
-•	x-ro-validate-only (optional, §A3.2)
-o	"true"
+
+* x-ro-domain-model (optional, §A3.1)
+
+* *"simple"
+
+* *"formal"
+
+* x-ro-validate-only (optional, §A3.2)
+
+* *"true"
 	only validate the request, do not invoke the action
 === 19.3.2	Success Response
 === 19.3.2.1	Status code
 Successfully invoking an action with possible side effects can return either a 200 or a 201.
-•	200 "OK"
-o	the action was successfully executed.
-•	201 "Created"
-o	only permitted when the action returns a domain object (that is "resultType" json-property is "object")
-o	indicates that this object was newly created.
+
+* 200 "OK"
+
+* *the action was successfully executed.
+
+* 201 "Created"
+
+* *only permitted when the action returns a domain object (that is "resultType" json-property is "object")
+
+* *indicates that this object was newly created.
 === 19.3.2.2	Headers
-•	Location: (if returning 201)
-o	URL of the newly-created action
-•	Content-Length:
-o	size of the entity body
-•	Content-Type (if returning a domain object):
-o	application/json;profile=".../action-result";x-ro-domain-type="yyy"
+
+* Location: (if returning 201)
+
+* *URL of the newly-created action
+
+* Content-Length:
+
+* *size of the entity body
+
+* Content-Type (if returning a domain object):
+
+* *application/json;profile=".../action-result";x-ro-domain-type="yyy"
 	where yyy indicates the domain type (for object representations, §2.4.2);
 	the domain type id (if simple scheme)
 	URI of domain type (if formal scheme)
-•	Content-Type (if returning a list of domain objects):
-o	application/json;profile=".../action-result";x-ro-element-type="yyy"
+
+* Content-Type (if returning a list of domain objects):
+
+* *application/json;profile=".../action-result";x-ro-element-type="yyy"
 	where yyy indicates the domain type (of the objects referenced in the list, §2.4.2);
 	the domain type id (if simple scheme)
 	URI of domain type (if formal scheme)
-•	Content-Type (if returning a scalar or void):
-o	application/json;profile=".../action-result"
-•	Caching headers:
-o	TRANSACTIONAL, see §A2.13
+
+* Content-Type (if returning a scalar or void):
+
+* *application/json;profile=".../action-result"
+
+* Caching headers:
+
+* *TRANSACTIONAL, see §A2.13
 	if the object is transactional
-o	NON_EXPIRING, see §A2.13
+
+* *NON_EXPIRING, see §A2.13
 	if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
 Note that an ETag is never returned for an action result. A client that wishes to modify the returned domain object must therefore follow the self link on the in-lined object to retrieve that object directly as an object representation (which will then have an Etag).
 === 19.3.2.3	Body
 As per §19.4. If a 201 is returned, the "resultType" json-property must be "object".
 === 19.4	Representation
 If the "x-ro-validate-only" query parameter was passed in and the validation succeeded, then no representation will be returned. Instead:
-•	if the validation succeeded, then a 204 (success, no content) is returned
-•	If the validation failed then a representation will be returned, with a status code 400 (bad request).
+
+* if the validation succeeded, then a 204 (success, no content) is returned
+
+* If the validation failed then a representation will be returned, with a status code 400 (bad request).
 See §13 for further details.
 Otherwise (ie, if the invocation was not validate-only), then all action invocations will return an actionresult representation. This representation provides details of the action invocation, and (for non-void actions) also in-lines the representation of the result of the invocation.
 For example:
@@ -207,10 +275,14 @@ For example, the following might be the result of invoking an action representin
 "extensions": { ... }
 }
 Note that this representation has two "self" links:
-•	links[rel=self]
-o	is the link to the action invocation.
-•	result.links[rel=self]
-o	is the link to the returned domain object.
+
+* links[rel=self]
+
+* *is the link to the action invocation.
+
+* result.links[rel=self]
+
+* *is the link to the returned domain object.
 If the action returned null, then the "result" json-property will still be present, but set to the JSON value null:
 {
 ...

@@ -7,20 +7,30 @@ This section describes the main concepts that underpin Restful Objects.
 The following diagram shows the RESTful resources defined by the specification, along with the representations that they generate:
 
 FIGURE 1: RESOURCES AND REPRESENTATIONS In this diagram:
-• Each shaded box indicates a resource that can be invoked.
-The colour indicates the part of the spec where the resource is defined; yellow is supporting resources §B, pink is domain object resources §C, blue is domain type resources §D; • The circles on the corner of each shaded box indicate the HTTP methods (GET, PUT, POST, DELETE) supported by that resource; Most of the resources show a dotted-arrow pointing to a (white) document icon, to indicate the representation returned by the resource.
+
+* Each shaded box indicates a resource that can be invoked.
+The colour indicates the part of the spec where the resource is defined; yellow is supporting resources §B, pink is domain object resources §C, blue is domain type resources §D;
+* The circles on the corner of each shaded box indicate the HTTP methods (GET, PUT, POST, DELETE) supported by that resource; Most of the resources show a dotted-arrow pointing to a (white) document icon, to indicate the representation returned by the resource.
 Some resources return their own, unique, representation (e.g. the home page resource, the user resource).
 However, some representations (most notably the object representation) may be returned by several different resources.
-• Dotted lines from a representation to a resource indicate that the representation contains a link to another resource Most of the significant GET links are shown; to reduce visual clutter most PUT, DELETE and PUT links are not shown; • In-lined representations (of object, lists, or scalars within an action result) are shown by a dash-dot-dash line.
+
+* Dotted lines from a representation to a resource indicate that the representation contains a link to another resource Most of the significant GET links are shown; to reduce visual clutter most PUT, DELETE and PUT links are not shown;
+* In-lined representations (of object, lists, or scalars within an action result) are shown by a dash-dot-dash line.
 Resource Relationships The home page resource §B5 is intended to act as a start page: a well-known location from which a client can start to interact with the server.
 The representation returned by this resource provides links to three further resources:
-• The user resource §B6 represents the currently logged-in user; the returned User Representation provides details such as their user name and roles.
-• The domain services resource §B7 returns a list representation §B11, which contains a link to each domain service resource §C15. A domain service is a singleton object that has actions but no state.
+
+* The user resource §B6 represents the currently logged-in user; the returned User Representation provides details such as their user name and roles.
+
+* The domain services resource §B7 returns a list representation §B11, which contains a link to each domain service resource §C15. A domain service is a singleton object that has actions but no state.
 The representation returned by a service resource is an object representation, but with content clearly indicating that the object it represents is a service.
-• The version resource §B8 provides a mechanism for the client to discover the version of the spec and of the implementation, as well as querying any optional capabilities of the implementation (e.g. whether it supports direct deletion of persisted objects).
+
+* The version resource §B8 provides a mechanism for the client to discover the version of the spec and of the implementation, as well as querying any optional capabilities of the implementation (e.g. whether it supports direct deletion of persisted objects).
 The domain object representation §C14.4 is the most important representation within Restful Objects; from it various sub-resources can be accessed.
 The most immediate such sub- resources are for:
-• each property of the object (§C16.4) • each collection of the object (§C17.5), and • each action of the object (§C18.2).
+
+* each property of the object (§C16.4)
+* each collection of the object (§C17.5), and
+* each action of the object (§C18.2).
 Following these links it is possible to walk the graph to other domain object resources associated via properties or collections, and/or to modify the contents of properties and collections.
 An action on an object may be invoked through its ‘action invoke’ sub-resource (§C19); the HTTP method to use is dependent on the action's semantics.
 The representation returned by invoking the action will either be a scalar value §B12, a representation of the returned domain object §C14.4, or a list §B11 (linking to multiple domain object resources §C14) As well as providing access to sub-resources, the domain object resource also allows multiple properties to be updated, and objects to be deleted in a single transaction.
@@ -33,7 +43,12 @@ Restful Objects also defines a general mechanism to enable new domain object ins
 == 2.2Domain Object Ontology
 
 The representations defined by Restful Objects are RESTful in the sense that they provide relevant links to other resources that the client can follow: this is Restful Objects' support for HATEOAS §E28.1. Depending on the nature of the domain object being represented, links may or may not be present:
-• to properties §C16.1 and collections §C17.1 of the object • to actions §C18.1on the object • to update all properties §C14.2 of the object • to persist the object §B9.1 • to delete the object §C14.3 The following sections describe how the different types of domain object will result in the presence or absence of specific links.
+
+* to properties §C16.1 and collections §C17.1 of the object
+* to actions §C18.1on the object
+* to update all properties §C14.2 of the object
+* to persist the object §B9.1
+* to delete the object §C14.3 The following sections describe how the different types of domain object will result in the presence or absence of specific links.
 (Note that in all cases, a link is only ever provided if the client has the correct security permissions for that capability).
 Persistent domain entity The most common type of domain object that Restful Objects deals with is a persistent domain entity: an object instance that exists from one interaction to the next, whose state is stored in a database (for example in an RDBMS table) and which is potentially visible to all clients.
 Typically a representation of a persistent domain entity includes links to the entity's state (its properties and collections).
@@ -121,15 +136,20 @@ Objects/
 {IID}/ Actions/
 {Action}/ invoke GET n/a – 405 object summary, member summary, property values property details and value collection details and content action prompt invoke (action known to be query-only) PUT n/a – 405 update or clear multiple property values update or clear value add object (if Set semantics) n/a – 405 invoke (action known to be idempotent) DELETE n/a – 405 delete object clear value remove object n/a – 405 n/a – 405 POST persist instance n/a – 405 n/a - 405 add object (if List semantics) n/a – 405 invoke (action not known to be idempotent) The columns indicate the domain object resources shown in the Figure 1, plus the Objects Of Type resource §B9 used for persisting new object instances.
 The header row indicates the resources as templated URIs :
-•    {DType} is the domain type identifier that uniquely represents the domain type.
+
+*    {DType} is the domain type identifier that uniquely represents the domain type.
 Depending on the implementation this may take an abbreviated form e.g. "CUS" for Customer, or could be the fully qualified class name, eg “com.mycompany.myapp.Customer”.
-The spec requires only that the value is unique; •    {IID} is the instance identifier that uniquely identifies an object instance within its type: e.g. "123" for customer with id=123; •    {Property}, {Collection} and {Action} are unique identifiers for a property, collection or action of the object, e.g. "firstName", "orders", or "placeOrder" For brevity, the combination of domain type/instance identifier {DType}/{IID} is also termed the object identifier, or oid.
+The spec requires only that the value is unique;
+*    {IID} is the instance identifier that uniquely identifies an object instance within its type: e.g. "123" for customer with id=123;
+*    {Property}, {Collection} and {Action} are unique identifiers for a property, collection or action of the object, e.g. "firstName", "orders", or "placeOrder" For brevity, the combination of domain type/instance identifier {DType}/{IID} is also termed the object identifier, or oid.
 The body of the table indicates which HTTP methods may be used to access these resources.
 The HTTP GET method is the most widely supported across the various resources, and is used to obtain a summary representation of an object §C14.4 (e.g. a Customer instance), or detailed information about a specific property of an object §C16.4 (e.g. Customer.firstName) or about a specific collection §C17.5 (e.g. Customer.orders).
 In addition, HTTP GET is used to obtain a representation of an object action §C18.2, such as the Customer's placeOrder() action.
 Getting the representation of an action does not invoke the action; rather the returned representation describes the action, providing such information as the arguments and the HTTP method required to invoke the action.
 Modifying the state of a domain object is performed through resources supporting HTTP PUT, DELETE or POST. The HTTP method to use to request the modification depends upon the resource's semantics:
-• if the resource being called is idempotent, meaning that it will change persisted objects but calling that same resource again (with the same inputs) will have no further effect , then either HTTP PUT or HTTP DELETE is used • if the resource being called is not idempotent, then HTTP POST is used Whether HTTP PUT or DELETE is used depends on context: if a new data value is being provided then PUT is used, if a value is being cleared or data removed in some way then DELETE is used.
+
+* if the resource being called is idempotent, meaning that it will change persisted objects but calling that same resource again (with the same inputs) will have no further effect , then either HTTP PUT or HTTP DELETE is used
+* if the resource being called is not idempotent, then HTTP POST is used Whether HTTP PUT or DELETE is used depends on context: if a new data value is being provided then PUT is used, if a value is being cleared or data removed in some way then DELETE is used.
 So, properties can be set to a new value using HTTP PUT §C16.2, or can be set to null using HTTP DELETE §C16.3. Modifying multiple properties is accomplished using an HTTP PUT to the object resource §C14.2. For collections things are a little more involved because the HTTP method to use depends upon the collection's semantics.
 The most common situation is where the collection follows ‘Set’ semantics (in other words, it does not allow duplicates to be added).
 In this case the HTTP PUT §C17.2 is used; if the object exists then the request to add it is ignored, so this is idempotent.
@@ -218,8 +238,11 @@ application/json; profile="urn:org.restfulobjects:repr-types/action-result"; x-r
 The HTTP protocol defines the Accept request header for the client to specify which media types it can consume; the server then indicates the actual media type using the Content-Type response header.
 If the server is unable to return the requested type, then it must return a 406 "not acceptable" status return code.
 Restful Objects defines the following behaviour:
-• if the client provides no Accept header, then the server may serve up a representation of any content type • if the client provides an Accept header of */*, or application/*, then any representation may be returned.
-In this case any "profile" parameter will be ignored • if the client specifies one or more "profile" parameters, then the server must ensure that the returned representation is one of those that is acceptable.
+
+* if the client provides no Accept header, then the server may serve up a representation of any content type
+* if the client provides an Accept header of */*, or application/*, then any representation may be returned.
+In this case any "profile" parameter will be ignored
+* if the client specifies one or more "profile" parameters, then the server must ensure that the returned representation is one of those that is acceptable.
 If it is not, then a 406 must be returned.
 Note however that if the client specifies the "x-ro-domain-type" parameter, then this is ignored by the server.
 This means that the client cannot currently use this parameter to ensure that, for example, v1 of a view model is returned rather than v2. Support for content negotiation through the "x-ro-domain-type" parameter in this way is likely to be introduced in a future version of the spec, see §E34.1. If the client does elect to specify "profile" parameters, then it should take care to always include the error profile.
@@ -240,23 +263,38 @@ Even if Accept header validation has been suppressed, the Content-Type returned 
 == 2.5Scalar datatypes and formats
 
 JSON defines only the following scalar datatypes :
-• Number (double precision floating-point format) • String (double-quoted Unicode, UTF-8 by default) • Boolean (true or false) The JSON schema specification also defines:
-• Integer (a number with no floating-point value) Most notably, JSON does not define a native datatype to represent date, time or date/time.
+
+* Number (double precision floating-point format)
+* String (double-quoted Unicode, UTF-8 by default)
+* Boolean (true or false) The JSON schema specification also defines:
+
+* Integer (a number with no floating-point value) Most notably, JSON does not define a native datatype to represent date, time or date/time.
 Also, it does not define datatypes to represent arbitrarily accurate decimal or integer numbers.
 Therefore, representing values of these datatypes requires that the information be encoded in some way within a JSON string value.
 The Restful Objects spec defines the "format" json-property as an additional modifier to describe how to interpret the value of a string or number json-property.
 The values of the "format" json-property for string values are :
-• string o The value should simply be interpreted as a string.
-This is also the default if the "format" json-property is omitted (or if no domain metadata is available) • date-time o A date in ISO 8601 format of YYYY-MM-DDThh:mm:ssZ in UTC time.
-• date o A date in the format of YYYY-MM-DD.
-• time o A time in the format of hh:mm:ss.
-• utc-millisec o The difference, measured in milliseconds, between the specified time and midnight, 00:00 of January 1, 1970 UTC.
-• big-integer(n) o The value should be parsed as an integer, scale n.
-• big-decimal(s,p) o The value should be parsed as a big decimal, scale n, precicion p.
-• blob o "binary large object": the string is a base-64 encoded sequence of bytes.
-• clob o "character large object": the string is a large array of characters, for example an HTML resource The values of the "format" json-property for number values are:
-• decimal o the number should be interpreted as a float-point decimal.
-• int o the number should be interpreted as an integer.
+
+* string o The value should simply be interpreted as a string.
+This is also the default if the "format" json-property is omitted (or if no domain metadata is available)
+* date-time o A date in ISO 8601 format of YYYY-MM-DDThh:mm:ssZ in UTC time.
+
+* date o A date in the format of YYYY-MM-DD.
+
+* time o A time in the format of hh:mm:ss.
+
+* utc-millisec o The difference, measured in milliseconds, between the specified time and midnight, 00:00 of January 1, 1970 UTC.
+
+* big-integer(n) o The value should be parsed as an integer, scale n.
+
+* big-decimal(s,p) o The value should be parsed as a big decimal, scale n, precicion p.
+
+* blob o "binary large object": the string is a base-64 encoded sequence of bytes.
+
+* clob o "character large object": the string is a large array of characters, for example an HTML resource The values of the "format" json-property for number values are:
+
+* decimal o the number should be interpreted as a float-point decimal.
+
+* int o the number should be interpreted as an integer.
 If there is no "format" json-property or domain metadata, then the value is interpreted according to standard Javascript rules, as documented in the Ecmascript standard . In essence: if there is NO decimal point and the number is in the range [-9,007,199,254,740,992, +9,007,199,254,740,992], then it is an integer.
 Otherwise, the number is a 64-bit IEE754 floating point number.
 Note that the internationalization of dates (e.g. formatting a date as MM/DD/YYYY for the en_US locale) is a responsibility of the client, not the server implementation.
@@ -306,7 +344,10 @@ Discussed further in §2.8. up Link from member to parent object/type, or from a
 
 The format of Restful Objects-specified rel values is:
 urn:org.restfulobjects:rels/xxx[;yyy=zzz;www=vvv]
-where • urn:org.restfulobjects:rels/ o is a fixed prefix indicating that the rel is defined by the Restful Objects specification • xxx o is a unique value for the rel within the above namespace • yyy=zzz, www=vvv o are additional parameters that are used for some rel values to disambiguate the link The optional parameters are modelled after the optional parameters of media types (§2.4.1, §2.4.2).
+where
+* urn:org.restfulobjects:rels/ o is a fixed prefix indicating that the rel is defined by the Restful Objects specification
+* xxx o is a unique value for the rel within the above namespace
+* yyy=zzz, www=vvv o are additional parameters that are used for some rel values to disambiguate the link The optional parameters are modelled after the optional parameters of media types (§2.4.1, §2.4.2).
 Using them clients can, for example, distinguish a link more precisely without having to rely on the location of the link within the JSON representation.
 For example:
 urn.org.restfulobjects:rels/details;property=\"deliveryOption\" is the rel value of a link to property details resource, §C16.1. The table below lists all the supported rel values defined by Restul Objects.
@@ -377,7 +418,11 @@ This form of arguments also cannot be used when updating multiple properties §C
 
 Although simple arguments §2.9.1 are convenient to use, their applicability is limited.
 For all other cases arguments must be provided using a more formal syntax, either as a single argument node, or as a map or argument nodes:
-• resources that require a single value (§C16.2, §C17.2) take a single argument node; • the action resource methods (§C19.1, §C19.2, §C19.3) take a map of argument nodes; • the update of multiple properties §C14.2 takes a map of argument nodes (the arguments representing the property values) • the persist of a new object (§B9) also takes a map-like structure but in this case the map is based on a cut-down version of the object representation, §C14.4) Treating property values and action arguments in the same way simplifies matters, but it does require that action resources provide a unique name for each of their arguments (rather than merely by a position, as in a list).
+
+* resources that require a single value (§C16.2, §C17.2) take a single argument node;
+* the action resource methods (§C19.1, §C19.2, §C19.3) take a map of argument nodes;
+* the update of multiple properties §C14.2 takes a map of argument nodes (the arguments representing the property values)
+* the persist of a new object (§B9) also takes a map-like structure but in this case the map is based on a cut-down version of the object representation, §C14.4) Treating property values and action arguments in the same way simplifies matters, but it does require that action resources provide a unique name for each of their arguments (rather than merely by a position, as in a list).
 For implementations that support named parameters this will simply be the parameter name.
 For implementations that do not support named parameters, the recommendation is to manufacture one either using existing metadata where available (e.g. a UI hint), or otherwise to use the type name of the parameter (string, int etc).
 If the action takes more than one argument of a given type, then the implementation can disambiguate using integer suffixes (string1, string2 and so on).
@@ -386,7 +431,9 @@ Note that the representations defined here, although they may look like the body
 ==== 2.9.2.1	Argument node structure
 
 The structure of an argument node fulfils a number of inter-related requirements:
-• it allows the value for the argument to be specified; • if any of the argument values supplied are found to be invalid, it allows the same representation to be returned in the response, with an "invalidReason" json-property for those argument(s) that are invalid If validation is being requested, then the map need only contain arguments for those to be validated; other arguments can be omitted.
+
+* it allows the value for the argument to be specified;
+* if any of the argument values supplied are found to be invalid, it allows the same representation to be returned in the response, with an "invalidReason" json-property for those argument(s) that are invalid If validation is being requested, then the map need only contain arguments for those to be validated; other arguments can be omitted.
 Note that the client can request validation of a null value by providing an argument node, whose value just happens to be null.
 Argument nodes take the following structure:
 { "value": ... , "invalidReason": "xxx" } where:
@@ -501,13 +548,19 @@ Unless there is a good reason to do otherwise, it is recommended that implementa
 == 2.1	Caching (Cache-Control and other headers)
 REST-based systems cache  representations of certain resources  to reduce the number of round-trips. This is analogous to how a web browser might cache images, CSS, or Javascript, without necessarily caching the HTML page itself.
 To facilitate this Restful Objects specifies that all responses must indicate whether they may be cached or not. The spec distinguishes three cases:
-•	No caching: suitable for transactional resources such as domain objects and domain object members;
-•	Short-term caching: suitable for user resources that might encapsulate the users' credentials. Such resources might typically be cached for 1 hour (3600 seconds).
-•	Long-term caching: suitable for read-only resources such as domain model resources. Such resources might typically be cached for 1 day or longer (86400 seconds).
+
+* No caching: suitable for transactional resources such as domain objects and domain object members;
+
+* Short-term caching: suitable for user resources that might encapsulate the users' credentials. Such resources might typically be cached for 1 hour (3600 seconds).
+
+* Long-term caching: suitable for read-only resources such as domain model resources. Such resources might typically be cached for 1 day or longer (86400 seconds).
 Implementations are expected to provide their own configuration settings to allow these values to be tuned. In the remainder of the spec the placeholders "TRANSACTIONAL", "USER_INFO" and "NON_EXPIRING" are used:
-•	"TRANSACTIONAL" is for resources that are frequently updated, for example a Customer;
-•	"USER_INFO" is for resources that represent a user's credentials, and so might change over time but not often;
-•	" NON_EXPIRING" is for resources that are not expected to change over time
+
+* "TRANSACTIONAL" is for resources that are frequently updated, for example a Customer;
+
+* "USER_INFO" is for resources that represent a user's credentials, and so might change over time but not often;
+
+* " NON_EXPIRING" is for resources that are not expected to change over time
 In the spec these placeholders map onto the HTTP 1.1 Cache-Control header. In addition, HTTP 1.0 Pragma, Date and Expires headers should also be set in order to support any legacy HTTP 1.0 proxies.
 The table below summarizes the values to be set:
 Caching	Cache-Control	Pragma	Date	Expires
@@ -515,7 +568,8 @@ TRANSACTIONAL
 (low volume scenario)	non-cache	No-Cache	(current date/time)	0
 TRANSACTIONAL
 (high volume scenario)	max-age: 2		(current date/time)	Date + #seconds
-USER_INFO	max-age: 3600		(current date/time)	Date + #seconds
+USER_INF
+* *max-age: 3600		(current date/time)	Date + #seconds
 NON_EXPIRING	max-age: 86400		(current date/time)	Date + #seconds
 As can be seen, in a high-volume environment implementations are permitted to specify a small degree of caching for "TRANSACTIONAL" resources in order to support reverse proxying.  The means by which the amount of caching is set is implementation-specific.
 == 2.1	Security

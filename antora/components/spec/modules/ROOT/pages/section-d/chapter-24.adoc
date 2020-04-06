@@ -5,21 +5,30 @@ Clients can use the domain collection description's representation as hints when
 The endpoint URL for this resource is:
 /domain-types/{domainType}/collections/{collectionId}
 where:
-•	{domainType} is either
-o	the domain type id, or
-o	is a built-in JSON type
-•	{collectionId} identifies the collection.
+
+* {domainType} is either
+
+* *the domain type id, or
+
+* *is a built-in JSON type
+
+* {collectionId} identifies the collection.
 === 24.1	HTTP GET
 Obtain a representation of a description of a domain collection, within the metamodel.
 === 24.1.1	GET Request
 === 24.1.1.1	Query String
-•	none
+
+* none
 === 24.1.1.2	Headers
-•	Accept
-o	application/json
-o	application/json;profile=… /collection-description
+
+* Accept
+
+* *application/json
+
+* *application/json;profile=… /collection-description
 === 24.1.1.3	Body
-•	N/A
+
+* N/A
 === 24.1.2	Successful Response
 As per §20.1 (200); body as per §24.2.
 === 24.2	Representation

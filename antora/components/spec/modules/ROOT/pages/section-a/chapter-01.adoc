@@ -13,7 +13,10 @@ Restful Objects also defines that representations are served up with parameteriz
 This allows clients to use content negotiation to ensure that representations do not change in a breaking fashion, enabling server and client to evolve independently.
 The Restful Objects specification is at a higher-level of abstraction than, say, the JAX-RS specifications for Java platform, or the WCF specifications on .NET. Specifically, the domain classes that it exposes are represented in a very general form.
 They consist of:
-• properties (fields), each holding either a scalar value or reference to another object; • collections, each holding a vector reference to other entities; • actions (operations/methods), whereby the object can execute business logic.
+
+* properties (fields), each holding either a scalar value or reference to another object;
+* collections, each holding a vector reference to other entities;
+* actions (operations/methods), whereby the object can execute business logic.
 Beyond this, though, Restful Objects makes very few assumptions.
 In particular, Restful Objects does not prescribe the nature of the domain model.
 
@@ -21,8 +24,16 @@ In particular, Restful Objects does not prescribe the nature of the domain model
 
 Restful Objects defines a uniform interface to the domain objects.
 This uniformity is expressed in terms of:
-• the format of URLs used to access the domain object resources (though URLs can also be treated as opaque); • the standard HTTP methods used (GET, POST, PUT, DELETE) to call the resource URLs; • the standard HTTP headers supported for both request and response; • the use of standard HTTP status return codes; • standardized, parameterized media types to fully describe the representation, e.g.:
-application/json; profile="urn:org.restfulobjects:repr-types/object"; x-ro-domain-type="com.mycompany.myapp.v2.PlaceOrderViewModel" • standard properties within JSON representations; • a standard representation of links between resources; • a small number of reserved query parameter names to influence behaviour (e.g. validation).
+
+* the format of URLs used to access the domain object resources (though URLs can also be treated as opaque);
+* the standard HTTP methods used (GET, POST, PUT, DELETE) to call the resource URLs;
+* the standard HTTP headers supported for both request and response;
+* the use of standard HTTP status return codes;
+* standardized, parameterized media types to fully describe the representation, e.g.:
+application/json; profile="urn:org.restfulobjects:repr-types/object"; x-ro-domain-type="com.mycompany.myapp.v2.PlaceOrderViewModel"
+* standard properties within JSON representations;
+* a standard representation of links between resources;
+* a small number of reserved query parameter names to influence behaviour (e.g. validation).
 Existing HTTP standards and supporting W3C standards have been used wherever possible.
 
 == 1.3Benefits
@@ -30,22 +41,30 @@ Existing HTTP standards and supporting W3C standards have been used wherever pos
 Because the spec defines a generalized binding for any domain model, it allows the project team to focus on developing the domain model rather than worrying about the intricacies of following a RESTful style.
 For example, the debate becomes about whether an action is idempotent, not about whether to use HTTP PUT or HTTP POST. And debates about URI structure (should it be customers/{custId}/invoices or should it be invoices/for/{custId}?) disappear because the URL is determined by the responsibilities of the underlying domain objects.
 Further specific benefits include:
-• Testing.
+
+* Testing.
 Since all business logic is expressed only in domain classes, such business logic may be tested using fast and cheap in-memory unit tests.
 In contrast, if a RESTful API is custom-written and tuned to specific use cases, then it can only be effectively tested through (slower) integration tests running across a webserver.
-• Documentation.
+
+* Documentation.
 Restful Objects eliminates the need for the project team to explicitly document the RESTful API to their system, because consumers can infer the structure either directly from the underlying domain classes, or by querying the domain metamodel resources §D.
-• Common server code.
+
+* Common server code.
 Restful Objects is intended to enourage frameworks to be written that implement the spec (indeed, such frameworks already exist ).
 A project team adopting such a framework can then focus solely on implementing business logic through domain classes, and know that the business logic will be exposed in a standard and consistent fashion.
-• Common client code.
+
+* Common client code.
 Any generic Restful client written to work with one framework implementation will also inter-operate across any other implementations.
 There is further discussion on how the specification enables the RESTful style (along with an FAQ) in §E.
 
 == 1.4Audience
 
 This document is written for several audiences:
-• for developers intending to write a bespoke domain-driven system and want a guidance on how to expose the domain in a RESTful style; • for developers intending to write a bespoke domain-driven system intended to be hosted on a general-purpose framework that implements this spec; • for developers intending to write a generic or custom client against a domain object model exposed using Restful Objects; • for developers intending to write their own general-purpose framework implementation of the specification.
+
+* for developers intending to write a bespoke domain-driven system and want a guidance on how to expose the domain in a RESTful style;
+* for developers intending to write a bespoke domain-driven system intended to be hosted on a general-purpose framework that implements this spec;
+* for developers intending to write a generic or custom client against a domain object model exposed using Restful Objects;
+* for developers intending to write their own general-purpose framework implementation of the specification.
 The specification adopts a semi-formal style; providing examples of representations rather than formal grammars.
 The intention is to make the specification accessible to all its target audiences.
 

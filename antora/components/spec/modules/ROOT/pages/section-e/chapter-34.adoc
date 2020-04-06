@@ -70,7 +70,8 @@ Note that the "sortedBy" json-property would need to be a list (rather than a ma
 This suggestion is for the Restful Objects specification to define the capability (probably optional §B8) to allow object lists §B11 (as returned from action invocations) to be paginated.
 If supported, the client could optionally request that a returned list be paginated, by setting a reserved x-ro-page query parameter to specify which page of objects is being requested, and a x-ro-page-size query parameter to specify the size of each page.
 For example:
-•	x-ro-page=3&x-ro-page-size=25
+
+* x-ro-page=3&x-ro-page-size=25
 would specify returning a representation for objects 51~75 in the list.
 To indicate which page set has been returned, the representation would include a "pagination" json-property, which has the requested "page" and  "pageSize" json-properties. It would also include the "numPages" for the specified page size, as well as the "totalCount". In addition, the represntationn would provide a "links" json-property that has links to the rel=previous and rel=next pages.
 For example:
@@ -101,8 +102,10 @@ Using this information the client could manage the paging, for example enabling/
 While HTTP caching §A2.13 works well enough for non-transactional resources, most of the resources served up by Restful Objects will be transactional. This suggestion is for the Restful Objects spec to define a capability (probably optional §B8) to support ‘eager following’ of links.
 This capability would be specified by setting a reserved x-ro-follow-links query parameter. This would act as a hint to the server to generate in its response a representation that includes additional information as a result of following links.
 For example, the client could use this query parameter to:
-•	obtain additional property details for the object resource, eg, to support an "object edit" use case
-•	obtain details of objects referenced in a collection, eg, to support rendering the collection in table view format
+
+* obtain additional property details for the object resource, eg, to support an "object edit" use case
+
+* obtain details of objects referenced in a collection, eg, to support rendering the collection in table view format
 The query argument would typically be a semi-colon separated list of strings, each element being the json-property of a link within the representation to be followed.
 For example, the domain object representation §C14.4 has links to each member of the object:
 "members": {
@@ -143,24 +146,30 @@ For example, the domain object representation §C14.4 has links to each member o
 }
 ]
 A common use for the proposed  x-ro-follow-links would be to request the population of a "value" json-property for any node in the map. For example:
-•	members.items
+
+* members.items
 
 would populate the "value" json-property of the items collection.
 
-•	members[memberType=property].links[rel=urn:org.restfulobjects:rels/details]
+
+* members[memberType=property].links[rel=urn:org.restfulobjects:rels/details]
 
 would follow the "details" link of every object property
 
-•	members.confirm.links[rel=urn:org.restfulobjects:rels/details]
+
+* members.confirm.links[rel=urn:org.restfulobjects:rels/details]
 
 would follow the details link of the confirm() action
 In all these cases the identified elements are links; the returned representation would include a "value" json-property for the identified links.
 As an alternative to using paths, the x-ro-follow-links could specify a well-defined ("precanned") value that is defined by that resource. For example, the GET Object resource §C14.1could  define "ObjectEdit" as a hint to additionally include property details.
 If the parameter were present and contained a value that did not represent a link or were otherwise not understood by the server, then the server would silently ignore the query parameter.
 The x-ro-follow-links query parameter could also be used to influence the loading of collections:
-•	setting the query parameter to "links[rel=.../details]" could cause the details link to be populated, from which full information about the contents of the collection can be obtained;
-•	setting the query parameter to "value" could cause the optional "value" to be returned, holding a list of links to the actual elements. These links would have their "title" json-property §A4.1 populated;
-•	setting the query parameter to "size" could cause the optional "size" to be returned. This is useful if the client needs to know only the number of elements in a collection.
+
+* setting the query parameter to "links[rel=.../details]" could cause the details link to be populated, from which full information about the contents of the collection can be obtained;
+
+* setting the query parameter to "value" could cause the optional "value" to be returned, holding a list of links to the actual elements. These links would have their "title" json-property §A4.1 populated;
+
+* setting the query parameter to "size" could cause the optional "size" to be returned. This is useful if the client needs to know only the number of elements in a collection.
 These three values for x-ro-follow-links should be considered as mutually exclusive (since: details => value => size).
 From the client's perspective, note that this means that the contents of the collection would be available either in the "value" json-property, or could be in the in-lined details representation "links[rel=.../details].value" json-property.
 === 34.5	Partial Arguments
@@ -213,11 +222,16 @@ If the server found that the argument provided was invalid, then it would indica
 === 34.6	Internationalisation
 This suggestion is for the Restful Objects specification to define support for internationalization. This would probably be an optional capability §B8.
 The Restful Objects spec could support internationalization as follows:
-•	json-property keys in representations are never internationalized
-•	json-property values for selected keys are internationalized; and these are explicitly identified in the spec detail.
-•	Internationalized values would be with respect to the Accept-Language HTTP header.
-•	Broadly speaking, those json-properties that are internationized either represent "friendly" names, or descriptions, or are invalidity/disabled reasons.
-•	The json-properties that are internationalized will only ever be simple strings (with a "format" of "string", §A2.5). Strings with other formats (e.g. decimal numbers, or dates) are never internationalised.
+
+* json-property keys in representations are never internationalized
+
+* json-property values for selected keys are internationalized; and these are explicitly identified in the spec detail.
+
+* Internationalized values would be with respect to the Accept-Language HTTP header.
+
+* Broadly speaking, those json-properties that are internationized either represent "friendly" names, or descriptions, or are invalidity/disabled reasons.
+
+* The json-properties that are internationalized will only ever be simple strings (with a "format" of "string", §A2.5). Strings with other formats (e.g. decimal numbers, or dates) are never internationalised.
 === 34.7	Listable Instances
 This suggestion is to allow the ~/objects/{domainType} resource to support the GET method. Doing so would return all instances of that type, as a list representation §B11.
 For example,
@@ -227,15 +241,24 @@ Not every domain type is likely to be listable; it wouldn't be feasible or desir
 === 34.8	Addressable Parent Resources
 Although URLs should be considered opaque, nevertheless there is often an expectation that for any given URL, all parent URLs are defined.
 This is not currently the case with Restful Objects, as there are no definitions for resources that represent all members of a certain member type:
-•	~/objects/{domainType}
-o	except for POST; see also §34.7.
-•	~/objects/{domainType}/{instanceId}/properties
-•	~/objects/{domainType}/{instanceId}/collections
-•	~/objects/{domainType}/{instanceId}/actions
-•	~/services/{serviceId}/actions
-•	~/domain-types/{domainType}/properties
-•	~/domain-types/{domainType}/collections
-•	~/domain-types/{domainType}/actions
+
+* ~/objects/{domainType}
+
+* *except for POST; see also §34.7.
+
+* ~/objects/{domainType}/{instanceId}/properties
+
+* ~/objects/{domainType}/{instanceId}/collections
+
+* ~/objects/{domainType}/{instanceId}/actions
+
+* ~/services/{serviceId}/actions
+
+* ~/domain-types/{domainType}/properties
+
+* ~/domain-types/{domainType}/collections
+
+* ~/domain-types/{domainType}/actions
 One obvious definition for these resources is to be a subset of the parent object or domainType resource, restricted to the member type in question.
 For example,
 ~/objects/{domainType}/{instanceId}/properties
@@ -248,16 +271,26 @@ Currently the action-results representation §C19.4 can return an in-lined domai
 An alternative design  would be to have the action-result return a 303 "see other" in this situation, and include a reference to the object.
 The desired behaviour could be made tunable, akin to the optional capability that the spec provides for domain model schemes.
 The "actionResult" optional capability would return:
-•	"in-line"
-o	return a representation of the domain object in-line
-o	ie the current behaviour
-•	"seeOther"
-o	return a 303 response to the returned domain object
-o	ie the behaviour suggested above
-•	"selectable"
-o	as requested by the client
+
+* "in-line"
+
+* *return a representation of the domain object in-line
+
+* *ie the current behaviour
+
+* "seeOther"
+
+* *return a 303 response to the returned domain object
+
+* *ie the behaviour suggested above
+
+* "selectable"
+
+* *as requested by the client
 If the last option were supported, the client could then use a new "x ro action-result" query parameter to indicate its preference:
-•	"in-line"
-•	"seeOther"
+
+* "in-line"
+
+* "seeOther"
 If not specified, then the default would be "in-line".
 

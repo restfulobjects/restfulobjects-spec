@@ -10,10 +10,14 @@ to determine if a domain type is a supertype of (or the same as) a given type.
 The endpoint URL for this resource is:
 /domain-types/{domainType}/type-actions/{typeactionId}/invoke
 where:
-•	{domainType} is either
-o	the domain type id or
-o	is a built-in JSON type
-•	{typeactionId} identifies the action
+
+* {domainType} is either
+
+* *the domain type id or
+
+* *is a built-in JSON type
+
+* {typeactionId} identifies the action
 Both of the defined type actions take a single argument representing a link to the supertype.
 As for the invocation of object actions (§C19), type actions return a representation that links back to the type action and also to the result of the action. Both the currently defined type actions return a scalar §B12.
 The links from the domain type action result representation to other resources are as shown in the diagram below:
@@ -52,19 +56,28 @@ For example:
 }
 Note that the value should be a link to the supertype, rather than simply the name of the supertype.
 === 27.1.1.2	Headers
-•	Accept
-o	application/json
-o	application/json;profile=".../type-action-result"
+
+* Accept
+
+* *application/json
+
+* *application/json;profile=".../type-action-result"
 === 27.1.1.3	Body
-•	N/A
+
+* N/A
 === 27.1.2	GET Response
 === 27.1.2.1	Status Code
-•	200 "OK"
+
+* 200 "OK"
 === 27.1.2.2	Headers
-•	Content-Type
-o	application/json;profile=".../type-action-result"
-•	Caching headers:
-o	NON_EXPIRING, see §A2.13
+
+* Content-Type
+
+* *application/json;profile=".../type-action-result"
+
+* Caching headers:
+
+* *NON_EXPIRING, see §A2.13
 	the structure of a domain type will not vary between deployments
 === 27.1.2.3	Body (representation)
 The JSON representation returned The JSON representation returned is a type-action-result representation (as described earlier) with a scalar representation §B12 in-lined.
@@ -81,12 +94,17 @@ value	a scalar boolean value.
 and other properties are as described earlier.
 === 27.1.3	GET Not found Response
 === 27.1.3.1	Status Code
-•	404 "Not found"
+
+* 404 "Not found"
 === 27.1.3.2	Headers
-•	Warning:
-o	No such domain type {domainType}.
-o	No such domain type action { actionId} in domain type {domainType}
-o	No such super/subtype
+
+* Warning:
+
+* *No such domain type {domainType}.
+
+* *No such domain type action { actionId} in domain type {domainType}
+
+* *No such super/subtype
 === 27.1.3.3	Body
 empty
 === 27.2	HTTP GET isSupertypeOf()
@@ -112,19 +130,28 @@ For example:
 }
 Note that the value should be a link to the subtype, rather than simply the name of the subtype.
 === 27.2.1.2	Headers
-•	Accept
-o	application/json
-o	application/json;profile=".../type-action-result"
+
+* Accept
+
+* *application/json
+
+* *application/json;profile=".../type-action-result"
 === 27.2.1.3	Body
-•	N/A
+
+* N/A
 === 27.2.2	GET Response
 === 27.2.2.1	Status Code
-•	200 "OK"
+
+* 200 "OK"
 === 27.2.2.2	Headers
-•	Content-Type
-o	application/json;profile=".../type-action-result"
-•	Caching headers:
-o	NON_EXPIRING, see §A2.13
+
+* Content-Type
+
+* *application/json;profile=".../type-action-result"
+
+* Caching headers:
+
+* *NON_EXPIRING, see §A2.13
 	the structure of a domain type will not vary between deployments
 === 27.2.2.3	Body (representation)
 The JSON representation returned The JSON representation returned is a typeactionresult representation (as described earlier) with a scalar representation §B12 in-lined.
@@ -141,12 +168,17 @@ value	a scalar boolean value.
 and other properties are as described earlier.
 === 27.2.3	GET Not found Response
 === 27.2.3.1	Status Code
-•	404 "Not found"
+
+* 404 "Not found"
 === 27.2.3.2	Headers
-•	Warning:
-o	No such domain type {domainType}.
-o	No such domain type action { actionId} in domain type {domainType}
-o	No such super/subtype
+
+* Warning:
+
+* *No such domain type {domainType}.
+
+* *No such domain type action { actionId} in domain type {domainType}
+
+* *No such super/subtype
 === 27.2.3.3	Body
 empty
 

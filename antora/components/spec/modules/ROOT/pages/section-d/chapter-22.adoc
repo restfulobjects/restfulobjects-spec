@@ -6,20 +6,28 @@ Server implementations are free to extend the representation as required, for ex
 The endpoint URL for this resource is:
 /domain-types/{domainType}
 where:
-•	{domainType} is either
-o	the domain type id, or
-o	is a built-in JSON type
+
+* {domainType} is either
+
+* *the domain type id, or
+
+* *is a built-in JSON type
 === 22.1	HTTP GET
 Obtain a representation of a domain type within the metamodel.
 === 22.1.1	Request
 === 22.1.1.1	Query String
-•	none
+
+* none
 === 22.1.1.2	Headers
-•	Accept
-o	application/json
-o	application/json;profile=".../domain-type"
+
+* Accept
+
+* *application/json
+
+* *application/json;profile=".../domain-type"
 === 22.1.1.3	Body
-•	N/A
+
+* N/A
 === 22.1.2	Successful Response
 As per §20.1 (200); body as per §22.2.
 === 22.2	Representation

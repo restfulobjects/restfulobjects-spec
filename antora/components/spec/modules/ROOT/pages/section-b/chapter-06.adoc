@@ -16,21 +16,26 @@ None
 
 ==== 6.1.1.2	Headers
 
-• Accept o application/json o application/json;profile=".../user "
+
+* Accept o application/json o application/json;profile=".../user "
 
 ==== 6.1.1.3	Body
 
-• N/A
+
+* N/A
 
 === 6.1.2GET Successful Response
 
 ==== 6.1.2.1	Status Code
 
-• 200 "OK"
+
+* 200 "OK"
 
 ==== 6.1.2.2	Headers
 
-• Content-Type o application/json;profile=".../user" • Caching headers: SHORT, see §A2.13 o temporary caching of user details
+
+* Content-Type o application/json;profile=".../user"
+* Caching headers: SHORT, see §A2.13 o temporary caching of user details
 
 ==== 6.1.2.3	Body
 

@@ -5,21 +5,30 @@ Clients can use the domain action description's representation as hints when bui
 The endpoint URL for this resource is:
 /domain-types/{domainType}/actions/{actionId}
 where:
-•	{domainType} is either
-o	the domain type id, or
-o	is a built-in JSON type
-•	{actionId} identifies the action.
+
+* {domainType} is either
+
+* *the domain type id, or
+
+* *is a built-in JSON type
+
+* {actionId} identifies the action.
 === 25.1	HTTP GET
 Obtain a representation of a description of a domain action, within the metamodel.
 === 25.1.1	GET Request
 === 25.1.1.1	Query String
-•	none
+
+* none
 === 25.1.1.2	Headers
-•	Accept
-o	application/json
-o	application/json;profile=".../action-description"
+
+* Accept
+
+* *application/json
+
+* *application/json;profile=".../action-description"
 === 25.1.1.3	Body
-•	N/A
+
+* N/A
 === 25.1.2	Successful Response
 As per §20.1 (200); body as per §25.2.
 === 25.2	Representation

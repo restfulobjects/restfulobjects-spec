@@ -4,8 +4,10 @@ The scalar value representation represents a single value that is not itself a d
 This representation is never returned directly from a resource, but may appear in-lined within the representation of an action invocation §C19.4 if the action returned a scalar type such as a string or an integer.
 
 The media type for a scalar representation will always be one of:
-•	application/json;profile="…/action-result"
-o	for the representation of an action invocation that returned a scalar value
+
+* application/json;profile="…/action-result"
+
+* *for the representation of an action invocation that returned a scalar value
 The representation itself consists of the following json-properties:
 {
 "value": ...,

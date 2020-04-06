@@ -14,7 +14,10 @@ The sections that follow each indicate the query parameter that is used to reque
 Some clients may wish to perform client-side validation before submitting changes to the server: examples include the enforcement of mandatory properties (or action parameters) and the enforcement of maximum string length.
 Such rules are applicable to any domain object instance of that given type, and so may be defined on the domain type Restful Objects defines two ways in which such domain type information may be represented: a "simple" scheme and a "formal" scheme, defined below.
 Common to both is that the information is accessible by way of links and extensions §2.11. A client may query the version resource §B8 to determine the server's support for domain metadata:
-• a value of "none" indicates that the implementation does not provide domain type information; • a value of "simple" or "formal" means that the server supports only that scheme • a value of "selectable" is for implementations that support both schemes.
+
+* a value of "none" indicates that the implementation does not provide domain type information;
+* a value of "simple" or "formal" means that the server supports only that scheme
+* a value of "selectable" is for implementations that support both schemes.
 By default such implementations will return both simple and formal domain metadata, but the client can provide a reserved x-ro-domain-model query parameter to request either just "simple" or "formal" as it requires.
 
 === 3.1.1Simple Scheme

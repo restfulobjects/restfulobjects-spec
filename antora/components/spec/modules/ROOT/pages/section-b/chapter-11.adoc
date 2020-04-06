@@ -3,10 +3,14 @@
 The List representation consists of a list of links to domain object §C14 or domain service §C15 resources. Typically it is obtained as the result of invoking a query action, when it is in-lined within the action result representation §C19.4. It is also be obtained directly from the Services resource §B7, when it provides a list of links to domain service resources; . the only difference is that the "href" will be a link to a domain service resource §C15 rather than a domain object resource §C14.
 
 The media type for a list representation will always be one of:
-•	application/json;profile="…/list"
-o	for a list of references to domain services
-•	application/json;profile="…/action-result";x-ro-element-type="…"
-o	when in-lined within an action result (ie the representation of an action invocation that returned a list)
+
+* application/json;profile="…/list"
+
+* *for a list of references to domain services
+
+* application/json;profile="…/action-result";x-ro-element-type="…"
+
+* *when in-lined within an action result (ie the representation of an action invocation that returned a list)
 Lists of references to domain objects also appear in the object-collection representation; that representation is described in full in §17.5.
 The representation itself consists of the following json-properties:
 {
