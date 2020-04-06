@@ -3,11 +3,15 @@
 The domain types resource provides a list of all the domain types that are known to the system.
 The endpoint URL for this resource is simply:
 /domain-types/
+
 === 21.1	HTTP GET
+
 === 21.1.1	Request
+
 === 21.1.1.1	Query String
 
 * none
+
 === 21.1.1.2	Headers
 
 * Accept
@@ -15,57 +19,43 @@ The endpoint URL for this resource is simply:
 * *application/json
 
 * *application/json;profile=".../type-list"
+
 === 21.1.1.3	Body
 
 * N/A
+
 === 21.1.2	Successful Response
+
 As per §20.1 (200); body as per §21.2.
+
 === 21.2	Representation
+
 The links from the typelist representation to other resources are as shown in the diagram below:
 
-FIGURE 16: DOMAIN TYPE LIST REPRESENTATION
-For example, the JSON representation of the list of domain types for a system looks something like:
-{   "links" : [ {     "rel": "self",     "href" : "http://localhost:8080/domain-types",     "method" : "GET",     "type" : "application/json;profile=\".../type-list\""     }, {
-"rel": "up",
-"href": "http://~/",
-"type": "application/json;profile=\".../homepage\"",
-"method": "GET"
-}
-],   "value" : [ {     "rel": ".../domain-type",     "href" : "http://~/domain-types/CUS",     "method" : "GET",     "type" : "application/json;profile=\".../domain-type\""   }, {     "rel": ".../domain-type",     "href" : "http://~/domain-types/ORD",     "method" : "GET",     "type" : "application/json; profile=\".../domain-type\""   },
-...
-"extensions" : { ... } }
-where:
-JSON-Property	Description
-links	list of links to resources
-links[rel=self]	link to a resource that can obtain this representation
-links[rel=up]	link to the homepage resource, B5.
-values	List of links to domain types, §22
-extensions	map of additional information about the resource.
+FIGURE 16: DOMAIN TYPE LIST REPRESENTATION For example, the JSON representation of the list of domain types for a system looks something like:
+{ "links" : [ { "rel": "self", "href" : "http://localhost:8080/domain-types", "method" : "GET", "type" : "application/json;profile=\".../type-list\"" }, { "rel": "up", "href": "http://~/", "type": "application/json;profile=\".../homepage\"", "method": "GET" }
+], "value" : [ { "rel": ".../domain-type", "href" : "http://~/domain-types/CUS", "method" : "GET", "type" : "application/json;profile=\".../domain-type\"" }, { "rel": ".../domain-type", "href" : "http://~/domain-types/ORD", "method" : "GET", "type" : "application/json; profile=\".../domain-type\"" }, ...
+"extensions" : { ... } } where:
+JSON-Property Description links list of links to resources links[rel=self]    link to a resource that can obtain this representation links[rel=up]    link to the homepage resource, B5. values List of links to domain types, §22 extensions map of additional information about the resource.
+
 === 21.3	Predefined Domain Types
+
 There are a number of predefined "formal" domain type resources that correspond either to the built-in scalar types described §A2.5, or to lists and sets (for collections), or to void (for actions with void return type).
 The following table shows the correlation in these cases:
-Type	Simple scheme
-JSON datatype 	Simple scheme 'format'	Formal scheme
-predefined type
-string	String	string
-(the default)	http://~/domain-types/string
-boolean	Boolean		http://~/domain-types/boolean
-date-time	String	date-time	http://~/domain-types/date-time
-date	String	date	http://~/domain-types/date
-time	String	time	http://~/domain-types/time
-epoch ms 	String	utc-millisec	http://~/domain-types/utc-millisec
-big integer	String	big-integer(n)	http://~/domain-types/big-integer(n)
-big decimal	String	big-decimal(s,p)	http://~/domain-types/big-decimal(s,p)
-blob	String	blob	http://~/domain-types/blob
-clob	String	clob	http://~/domain-types/clob
-decimal	Number	decimal	http://~/domain-types/decimal
-int	Number	integer	http://~/domain-types/integer
-list	---	---	http://~/domain-types/list
-set	---	---	http://~/domain-types/set
-void	---	---	http://~/domain-types/void
-If the "format" json-property is omitted for a number, then the rules for interpreting that number as a float-point decimal or as an integer are as documented in the ECMAscript standard, §A2.5.
-For large numbers, big-integer(n) specifies the scale n, while big-decimal(s,p) specifies the scale s and the precision p.
-For example, big-integer(10) is numbers in the range 0 to 9,999,999,999, while big-decimal(10.2) is numbers in the range 0.00 to 99,999,999.99.
-No representations are returned
-No representations are defined for any of the predefined domain type resources listed above; instead, a 204 (no content) will be returned. Clients are expected to have built-in support for these domain types (e.g. a calendar widget to render dates; a checkbox widget to render Booleans, and so on).
+Type Simple scheme JSON datatype Simple scheme 'format' Formal scheme predefined type string String string (the default)    http://~/domain-types/string
+boolean Boolean        http://~/domain-types/boolean
+date-time String date-time    http://~/domain-types/date-time
+date String date    http://~/domain-types/date
+time String time    http://~/domain-types/time
+epoch ms String utc-millisec    http://~/domain-types/utc-millisec
+big integer String big-integer(n)    http://~/domain-types/big-integer(n) big decimal String big-decimal(s,p)    http://~/domain-types/big-decimal(s,p) blob String blob    http://~/domain-types/blob
+clob String clob    http://~/domain-types/clob
+decimal Number decimal    http://~/domain-types/decimal
+int Number integer    http://~/domain-types/integer
+list --- ---    http://~/domain-types/list
+set --- ---    http://~/domain-types/set
+void --- ---    http://~/domain-types/void
+If the "format" json-property is omitted for a number, then the rules for interpreting that number as a float-point decimal or as an integer are as documented in the ECMAscript standard, §A2.5. For large numbers, big-integer(n) specifies the scale n, while big-decimal(s,p) specifies the scale s and the precision p.
+For example, big-integer(10) is numbers in the range 0 to 9,999,999,999, while big-decimal(10.2) is numbers in the range 0.00 to 99,999,999.99. No representations are returned No representations are defined for any of the predefined domain type resources listed above; instead, a 204 (no content) will be returned.
+Clients are expected to have built-in support for these domain types (e.g. a calendar widget to render dates; a checkbox widget to render Booleans, and so on).
 

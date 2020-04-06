@@ -1,6 +1,8 @@
 = 22	DOMAIN TYPE RESOURCE
 
-The domain type resource represents the type of a domain object instance, within the metamodel.  Its representation links through to other elements of the metamodel which represent the domain type's properties, collections and actions. These link back in turn to other domain type resources, for example representing the property type or an action's parameter types.
+The domain type resource represents the type of a domain object instance, within the metamodel.
+Its representation links through to other elements of the metamodel which represent the domain type's properties, collections and actions.
+These link back in turn to other domain type resources, for example representing the property type or an action's parameter types.
 Clients can use the domain type to, for example, render a data element using a particular UI widget (datetime picker, textfield, spinner).
 Server implementations are free to extend the representation as required, for example providing links to additional media (icons, videos and so forth).
 The endpoint URL for this resource is:
@@ -12,12 +14,17 @@ where:
 * *the domain type id, or
 
 * *is a built-in JSON type
+
 === 22.1	HTTP GET
+
 Obtain a representation of a domain type within the metamodel.
+
 === 22.1.1	Request
+
 === 22.1.1.1	Query String
 
 * none
+
 === 22.1.1.2	Headers
 
 * Accept
@@ -25,107 +32,48 @@ Obtain a representation of a domain type within the metamodel.
 * *application/json
 
 * *application/json;profile=".../domain-type"
+
 === 22.1.1.3	Body
 
 * N/A
+
 === 22.1.2	Successful Response
+
 As per §20.1 (200); body as per §22.2.
+
 === 22.2	Representation
+
 The links from the domain type representation to other resources are as shown in the diagram below:
 
-FIGURE 17: DOMAIN TYPE REPRESENTATION
-For example, the JSON representation (for a Customer type) might look something like:
-{
-"name": "x.Customer",
-"domainType": "CUS",
-"friendlyName": "Customer",
-"pluralName": "Customers",
-"description": "A customer with a registered account and confirmed billing details. ",
-"isService": false
-"members": {
-"firstName": {
-"rel": ".../property",
-"href":
-"http://~/domain-types/CUS/properties/firstName",
-"type":
-"application/json;profile=\".../property-description\"",
-"method": "GET"
-},
-"recentOrders": {
-"rel": ".../collection",
-"href":
-"http://~/domain-types/CUS/collections/recentOrders",
-"type":
-"application/json;profile=\".../collection-description\"",
-"method": "GET"
-},
-"blacklist": {
-"rel": ".../action",
-"href":
-"http://~/domain-types/CUS/actions/blackList",
-"type":
-"application/json;profile=\".../action-description\"",
-"method": "GET"
-},
-...
-},
-"typeActions" : {     "isSubtypeOf": {
-"rel": ".../invoke;typeaction=\"isSubtypeOf\"",       "href":
-"http://~/domain types/CUS/type actions/isSubtypeOf/invoke",       "method" : "GET",       "type":
-"application/json;profile=\".../type-action-result\"",       "arguments" : {         "supertype" : {           "href" : null         }     },
-"isSupertypeOf": {
-"rel": ".../invoke;typeaction=\"isSupertypeOf\"",
-"href":
-"http://~/domain types/CUS/type actions/isSupertypeOf/invoke",       "method" : "GET",       "type" :
-"application/json;profile=\".../type-action-result\"",       "arguments" : {         "subtype" : {           "href" : null         }       }
-},
-...
-},
-"links": [ {
-"rel": "self",
-...
-}, {
-"rel": "icon",
-...
-},
-...
-],
-"extensions": {
-...
-}
-}
-where:
-JSON-Property	Description
-links	list of links to resources
-links[rel=self]	link to a resource that can obtain this representation
-links[rel=icon]	(optional) link to an image representing a scalable icon for this type
-links[rel=help]	(optional) link to a media resource providing help about the type
-name	the fully qualified class name (or JSON type, if there is an equivalent)
-domainType	the domainType id, i.e. the string used within templated URLs to access instances of this type (see resources in §C).
-friendlyName	the singular form of the type, as would be suitable for rendering in a UI.
-pluralName	the plural form of the type, as would be suitable for rendering in a UI.
-description	a description of the type, e.g. to render as a tooltip.
-isService	indicates whether the type is a domain service or not
-typeActions	map of type action invocation resources, §27.
-members	map of links to resources representing a description of a domain object property §D23.1, a domain object collection §D23.2, or a domain object action §D24.2.
-extensions	map of additional information about the resource.
-"links"
-The "links" list may contain links to a number of optional resources. For example:
-"links": [ {
-"rel": "icon",
-"href": "http://~/images/Customer-32x32.jpg",
-"type": "image/jpg",
-"method": "GET"
-}, {
-"rel": "help",
-"href": "http://~/videos/training/Customer-walkthru.mpg",
-"type": "audio/mpeg",
-"method": "GET"
-},
-...
+FIGURE 17: DOMAIN TYPE REPRESENTATION For example, the JSON representation (for a Customer type) might look something like:
+{ "name": "x.Customer", "domainType": "CUS", "friendlyName": "Customer", "pluralName": "Customers", "description": "A customer with a registered account and confirmed billing details.
+", "isService": false "members": { "firstName": { "rel": ".../property", "href":
+"http://~/domain-types/CUS/properties/firstName", "type":
+"application/json;profile=\".../property-description\"", "method": "GET" }, "recentOrders": { "rel": ".../collection", "href":
+"http://~/domain-types/CUS/collections/recentOrders", "type":
+"application/json;profile=\".../collection-description\"", "method": "GET" }, "blacklist": { "rel": ".../action", "href":
+"http://~/domain-types/CUS/actions/blackList", "type":
+"application/json;profile=\".../action-description\"", "method": "GET" }, ...
+}, "typeActions" : { "isSubtypeOf": { "rel": ".../invoke;typeaction=\"isSubtypeOf\"", "href":
+"http://~/domain types/CUS/type actions/isSubtypeOf/invoke", "method" : "GET", "type":
+"application/json;profile=\".../type-action-result\"", "arguments" : { "supertype" : { "href" : null } }, "isSupertypeOf": { "rel": ".../invoke;typeaction=\"isSupertypeOf\"", "href":
+"http://~/domain types/CUS/type actions/isSupertypeOf/invoke", "method" : "GET", "type" :
+"application/json;profile=\".../type-action-result\"", "arguments" : { "subtype" : { "href" : null } } }, ...
+}, "links": [ { "rel": "self", ...
+}, { "rel": "icon", ...
+}, ...
+], "extensions": { ...
+} } where:
+JSON-Property Description links list of links to resources links[rel=self]    link to a resource that can obtain this representation links[rel=icon]    (optional) link to an image representing a scalable icon for this type links[rel=help]    (optional) link to a media resource providing help about the type name the fully qualified class name (or JSON type, if there is an equivalent) domainType the domainType id, i.e. the string used within templated URLs to access instances of this type (see resources in §C).
+friendlyName the singular form of the type, as would be suitable for rendering in a UI.
+pluralName the plural form of the type, as would be suitable for rendering in a UI.
+description a description of the type, e.g. to render as a tooltip.
+isService indicates whether the type is a domain service or not typeActions map of type action invocation resources, §27. members map of links to resources representing a description of a domain object property §D23.1, a domain object collection §D23.2, or a domain object action §D24.2. extensions map of additional information about the resource.
+"links" The "links" list may contain links to a number of optional resources.
+For example:
+"links": [ { "rel": "icon", "href": "http://~/images/Customer-32x32.jpg", "type": "image/jpg", "method": "GET" }, { "rel": "help", "href": "http://~/videos/training/Customer-walkthru.mpg", "type": "audio/mpeg", "method": "GET" }, ...
 ]
 Implementations are free to add their own resources to this list as they require.
-"extensions"
-Restful Objects defines no standard json-properties for the "extensions" json-property,  but implementations are free to add further links or extension json-properties to "links" and "extensions" as they require.
+"extensions" Restful Objects defines no standard json-properties for the "extensions" json-property, but implementations are free to add further links or extension json-properties to "links" and "extensions" as they require.
 
 

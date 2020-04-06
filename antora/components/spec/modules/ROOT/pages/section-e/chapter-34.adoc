@@ -1,151 +1,95 @@
 = 34	IDEAS FOR FUTURE EXTENSIONS TO THE SPECIFICATION
 Ideas for extending the scope of the specification
 == 34.1	Content Negotiation
-Although representations of domain objects indicate the type of the object in the Content-Type header (through the x-ro-domain-type media parameter §A2.4.2), this parameter is ignored when set on the Accept header.  This means that a client cannot insist that a particular representation is of a certain type.
-This idea is for the spec to be extended so that the x-ro-domain-type from an Accept header is checked when invoking an object or service action, and is used as a hint to ensure that a representation of the correct type is returned to the client.  In this way the spec would support content negotiation (conneg).
-In theory, this functionality could be applied to any domain type, either a persistent entity or an (addressable) view model.  In practice, though, supporting different versions of persistent entities (v2.Customer, v3.Customer) may well be difficult, and so implementations may choose to restrict support to actions that return addressable view models, §32.1.
-For example, given a versioned CustomerViewModel, a client would set the Accept request header to:
-Accept: application/json;
-profile="urn:org.restfulobjects:repr-types/object";
-x ro domain type=
-"http://~/domain-types/x.viewmodels.v2.CustomerViewModel"
+Although representations of domain objects indicate the type of the object in the Content-Type header (through the x-ro-domain-type media parameter §A2.4.2), this parameter is ignored when set on the Accept header.
+This means that a client cannot insist that a particular representation is of a certain type.
+This idea is for the spec to be extended so that the x-ro-domain-type from an Accept header is checked when invoking an object or service action, and is used as a hint to ensure that a representation of the correct type is returned to the client.
+In this way the spec would support content negotiation (conneg).
+In theory, this functionality could be applied to any domain type, either a persistent entity or an (addressable) view model.
+In practice, though, supporting different versions of persistent entities (v2.Customer, v3.Customer) may well be difficult, and so implementations may choose to restrict support to actions that return addressable view models, §32.1. For example, given a versioned CustomerViewModel, a client would set the Accept request header to:
+Accept: application/json; profile="urn:org.restfulobjects:repr-types/object"; x ro domain type= "http://~/domain-types/x.viewmodels.v2.CustomerViewModel"
 The server would then either serve up a representation with a matching Content-Type, or would return a 406 error code ("Not acceptable") to indicate that the domain type required is not (or is no longer) supported.
-It is easy enough for the framework implementation to parse the x-ro-domain-type and determine the corresponding domain type (e.g. java.lang.Class on a Java implementation, or System.Type on a .NET implementation).  The remaining question is how to ensure that this required type is returned?
-Domain Model Agnostic
-One approach could be for the domain model to remain ignorant of the required return type, and for the framework implementation to instead define an API that allows converters to be registered. These would be responsible for preserving backward compatibility, manufacturing previous versions of domain types as required:
-public interface Converter {
-public <F, T> T convert(F from, Class<T> to);
-}
-For example, suppose the Accept header requests that a v2.CustomerViewModel be returned, but the action invoked is on a Customer that always returns the current (in this case v3) CustomerViewModel:
-public class Customer {
-...
-x.v3.CustomerViewModel summarize() { ... }
-}
-Because the representation of this returned object would be incompatible with the requested type, the framework instead looks for a registered converter:
-Class<?> requiredReturnType;
-Object objectToReturn = ...;
+It is easy enough for the framework implementation to parse the x-ro-domain-type and determine the corresponding domain type (e.g. java.lang.Class on a Java implementation, or System.Type on a .NET implementation).
+The remaining question is how to ensure that this required type is returned?
+Domain Model Agnostic One approach could be for the domain model to remain ignorant of the required return type, and for the framework implementation to instead define an API that allows converters to be registered.
+These would be responsible for preserving backward compatibility, manufacturing previous versions of domain types as required:
+public interface Converter { public <F, T> T convert(F from, Class<T> to); } For example, suppose the Accept header requests that a v2.CustomerViewModel be returned, but the action invoked is on a Customer that always returns the current (in this case v3) CustomerViewModel:
+public class Customer { ...
+x.v3.CustomerViewModel summarize() { ... } } Because the representation of this returned object would be incompatible with the requested type, the framework instead looks for a registered converter:
+Class<?> requiredReturnType; Object objectToReturn = ...;
 
-Converter converter = converterRegistory.find(
-objectToReturn.getClass(), requiredReturnType);
+Converter converter = converterRegistory.find( objectToReturn.getClass(), requiredReturnType);
 
-if (converter == null) { ... throw a 406 ... }
-return converter.convert(objectToReturn, requiredReturnType);
-Domain Model Aware
-An alternative design is for the domain object to be told which implementation of the view model to return.  In .NET, for example, this could be done with a generic type:
-public class Customer {
-...
-public T summarize<T>() where T: ViewModel { ... }
-}
-Here the framework could reflectively invoke the method with the appropriate value for T as determined from the x-ro-domain-type parameter.  The method body could use this type parameter (eg in a switch statement) to create and return an object of the appropriate type.
+if (converter == null) { ... throw a 406 ... } return converter.convert(objectToReturn, requiredReturnType); Domain Model Aware An alternative design is for the domain object to be told which implementation of the view model to return.
+In .NET, for example, this could be done with a generic type:
+public class Customer { ...
+public T summarize<T>() where T: ViewModel { ... } } Here the framework could reflectively invoke the method with the appropriate value for T as determined from the x-ro-domain-type parameter.
+The method body could use this type parameter (eg in a switch statement) to create and return an object of the appropriate type.
+
 == 34.2	Sorting (x-ro-sort-by)
-This suggestion is for the Restful Objects spec to define the capability (probably optional §B8) to allow sorting of returned lists §B11 or object collections §C17.5.
-If supported, the order in which links are returned within the list may be influenced using a reserved x-ro-sort-by query param. If present, this parameter would specify a comma separated list of sort properties, indicating ascending or descending for each (similar to an ORDER BY statement in SQL).
+
+This suggestion is for the Restful Objects spec to define the capability (probably optional §B8) to allow sorting of returned lists §B11 or object collections §C17.5. If supported, the order in which links are returned within the list may be influenced using a reserved x-ro-sort-by query param.
+If present, this parameter would specify a comma separated list of sort properties, indicating ascending or descending for each (similar to an ORDER BY statement in SQL).
 For example, for a resource returning a list of links to Customers, setting x ro sort by to:
-mostRecentOrder.placedOn desc, lastName, firstName
-would order those links by the Customer's mostRecentOrder's placedOn date in descending order, then by the Customer's lastName ascending, then by firstName ascending. Note that multipart property keys could be supported (that is: ordering is not on a direct property of Customer, it is on the property of an Order which is in turn one of the properties of Customer).
-To indicate that sorting has occurred, the representation would include the "sortedBy" json-property.  This wouild contain the original requested value, along with the value in a "normalized" form. For example:
-{
-"sortedBy":
+mostRecentOrder.placedOn desc, lastName, firstName would order those links by the Customer's mostRecentOrder's placedOn date in descending order, then by the Customer's lastName ascending, then by firstName ascending.
+Note that multipart property keys could be supported (that is: ordering is not on a direct property of Customer, it is on the property of an Order which is in turn one of the properties of Customer).
+To indicate that sorting has occurred, the representation would include the "sortedBy" json-property.
+This wouild contain the original requested value, along with the value in a "normalized" form.
+For example:
+{ "sortedBy":
 "requested":
-"mostRecentOrder.placedOn desc, lastName, firstName",
-"normalized": [{
-"clause": "mostRecentOrder.placedOn",
-"direction": "desc"
-}, {
-"clause": "lastName",
-"direction": "asc"
-}, {
-"clause": "firstName",
-"direction": "asc"
-},
-...
+"mostRecentOrder.placedOn desc, lastName, firstName", "normalized": [{ "clause": "mostRecentOrder.placedOn", "direction": "desc" }, { "clause": "lastName", "direction": "asc" }, { "clause": "firstName", "direction": "asc" }, ...
 ]
 }.
 "value": [
 ...
 ]
-}
-Note that the "sortedBy" json-property would need to be a list (rather than a map) because the order of keys in a JSON map is not guaranteed.
+} Note that the "sortedBy" json-property would need to be a list (rather than a map) because the order of keys in a JSON map is not guaranteed.
+
 === 34.3	Pagination (x-ro-page, x-ro-page-size)
+
 This suggestion is for the Restful Objects specification to define the capability (probably optional §B8) to allow object lists §B11 (as returned from action invocations) to be paginated.
 If supported, the client could optionally request that a returned list be paginated, by setting a reserved x-ro-page query parameter to specify which page of objects is being requested, and a x-ro-page-size query parameter to specify the size of each page.
 For example:
 
-* x-ro-page=3&x-ro-page-size=25
-would specify returning a representation for objects 51~75 in the list.
-To indicate which page set has been returned, the representation would include a "pagination" json-property, which has the requested "page" and  "pageSize" json-properties. It would also include the "numPages" for the specified page size, as well as the "totalCount". In addition, the represntationn would provide a "links" json-property that has links to the rel=previous and rel=next pages.
+* x-ro-page=3&x-ro-page-size=25 would specify returning a representation for objects 51~75 in the list.
+To indicate which page set has been returned, the representation would include a "pagination" json-property, which has the requested "page" and "pageSize" json-properties.
+It would also include the "numPages" for the specified page size, as well as the "totalCount".
+In addition, the represntationn would provide a "links" json-property that has links to the rel=previous and rel=next pages.
 For example:
-{
-...
-"pagination": {
-"page": 3,
-"pageSize": 25,
-"numPages": 4,
-"totalCount": 82,
-"links": [ {
-"rel": "previous",
-"href": ...,
-"type": ...,
-}, {
-"rel": "next",
-"href": ...,
-"type": ...,
-}
+{ ...
+"pagination": { "page": 3, "pageSize": 25, "numPages": 4, "totalCount": 82, "links": [ { "rel": "previous", "href": ..., "type": ..., }, { "rel": "next", "href": ..., "type": ..., }
 ]
-}
-"value": [
+} "value": [
 ...
 ]
-}
-Using this information the client could manage the paging, for example enabling/disabling next and previous buttons in its UI.
+} Using this information the client could manage the paging, for example enabling/disabling next and previous buttons in its UI.
+
 === 34.4	Minimizing Round-trips (x-ro-follow-links)
-While HTTP caching §A2.13 works well enough for non-transactional resources, most of the resources served up by Restful Objects will be transactional. This suggestion is for the Restful Objects spec to define a capability (probably optional §B8) to support ‘eager following’ of links.
-This capability would be specified by setting a reserved x-ro-follow-links query parameter. This would act as a hint to the server to generate in its response a representation that includes additional information as a result of following links.
+
+While HTTP caching §A2.13 works well enough for non-transactional resources, most of the resources served up by Restful Objects will be transactional.
+This suggestion is for the Restful Objects spec to define a capability (probably optional §B8) to support ‘eager following’ of links.
+This capability would be specified by setting a reserved x-ro-follow-links query parameter.
+This would act as a hint to the server to generate in its response a representation that includes additional information as a result of following links.
 For example, the client could use this query parameter to:
 
 * obtain additional property details for the object resource, eg, to support an "object edit" use case
 
-* obtain details of objects referenced in a collection, eg, to support rendering the collection in table view format
-The query argument would typically be a semi-colon separated list of strings, each element being the json-property of a link within the representation to be followed.
+* obtain details of objects referenced in a collection, eg, to support rendering the collection in table view format The query argument would typically be a semi-colon separated list of strings, each element being the json-property of a link within the representation to be followed.
 For example, the domain object representation §C14.4 has links to each member of the object:
-"members": {
-"createdOn": {
-"memberType": "property",
-"value": ...,
-"links": [ {
-"rel": ".../details;property=\"createdOn\"",
-"href": "...",
-...
+"members": { "createdOn": { "memberType": "property", "value": ..., "links": [ { "rel": ".../details;property=\"createdOn\"", "href": "...", ...
 }, ... ]
-},
-"customer": {
-"memberType": "property",
-"value": ...,
-"links": [ {
-"rel": ".../details;property=\"customer\"",
-"href": "...",
-...
+}, "customer": { "memberType": "property", "value": ..., "links": [ { "rel": ".../details;property=\"customer\"", "href": "...", ...
 }, ...]
-},
-"items": {
-"memberType": "collection",
-"links": [ {
-"rel": ".../details;collection=\"items\"",
-"href": "...",
-...
+}, "items": { "memberType": "collection", "links": [ { "rel": ".../details;collection=\"items\"", "href": "...", ...
 }, ...]
-},
-"confirm": {
-"memberType": "action",
-"links": [ {
-"rel": ".../details;action=\"confirm\"",
-"href": "...",
-...
+}, "confirm": { "memberType": "action", "links": [ { "rel": ".../details;action=\"confirm\"", "href": "...", ...
 }, ...]
 ...
 }
 ]
-A common use for the proposed  x-ro-follow-links would be to request the population of a "value" json-property for any node in the map. For example:
+A common use for the proposed x-ro-follow-links would be to request the population of a "value" json-property for any node in the map.
+For example:
 
 * members.items
 
@@ -159,69 +103,45 @@ would follow the "details" link of every object property
 
 * members.confirm.links[rel=urn:org.restfulobjects:rels/details]
 
-would follow the details link of the confirm() action
-In all these cases the identified elements are links; the returned representation would include a "value" json-property for the identified links.
-As an alternative to using paths, the x-ro-follow-links could specify a well-defined ("precanned") value that is defined by that resource. For example, the GET Object resource §C14.1could  define "ObjectEdit" as a hint to additionally include property details.
+would follow the details link of the confirm() action In all these cases the identified elements are links; the returned representation would include a "value" json-property for the identified links.
+As an alternative to using paths, the x-ro-follow-links could specify a well-defined ("precanned") value that is defined by that resource.
+For example, the GET Object resource §C14.1could define "ObjectEdit" as a hint to additionally include property details.
 If the parameter were present and contained a value that did not represent a link or were otherwise not understood by the server, then the server would silently ignore the query parameter.
 The x-ro-follow-links query parameter could also be used to influence the loading of collections:
 
 * setting the query parameter to "links[rel=.../details]" could cause the details link to be populated, from which full information about the contents of the collection can be obtained;
 
-* setting the query parameter to "value" could cause the optional "value" to be returned, holding a list of links to the actual elements. These links would have their "title" json-property §A4.1 populated;
+* setting the query parameter to "value" could cause the optional "value" to be returned, holding a list of links to the actual elements.
+These links would have their "title" json-property §A4.1 populated;
 
-* setting the query parameter to "size" could cause the optional "size" to be returned. This is useful if the client needs to know only the number of elements in a collection.
+* setting the query parameter to "size" could cause the optional "size" to be returned.
+This is useful if the client needs to know only the number of elements in a collection.
 These three values for x-ro-follow-links should be considered as mutually exclusive (since: details => value => size).
 From the client's perspective, note that this means that the contents of the collection would be available either in the "value" json-property, or could be in the in-lined details representation "links[rel=.../details].value" json-property.
+
 === 34.5	Partial Arguments
-This suggestion is for the Restful Objects specification to define support for partial arguments. This would probably be an optional capability §B8.
-The idea is that the action resource §C18 would accept a partial argument map, and use this to tailor the choices available for other, non-constrained arguments. The main use case is for actions that take multiple parameters where the valid choices for one parameter depend on the value of another parameter; for example category/subcategory or country/region.
+
+This suggestion is for the Restful Objects specification to define support for partial arguments.
+This would probably be an optional capability §B8. The idea is that the action resource §C18 would accept a partial argument map, and use this to tailor the choices available for other, non-constrained arguments.
+The main use case is for actions that take multiple parameters where the valid choices for one parameter depend on the value of another parameter; for example category/subcategory or country/region.
 In the example introduced above, if an object has an action listProducts(Category category, Subcategory subcategory), then the following partial argument maps could be provided as the query string to the action resource:
-{
-"category": {
-"value": {
-"href": "http://~/objects/CGY-BOOKS"
-}
-}
-}
-The returned response would restrict the "choices" json-property of the subcategory to be those relevant for the category of books:
-{
-"category": {
-"value": {
-"href": "http://~/objects/CGY/BOOKS"
-}
-},
-"subcategory": {
-"choices": [
-{ "href": "http://~/objects/SCY/Fiction" },
-{ "href": "http://~/objects/SCY/Childrens" },
-{ "href": "http://~/objects/SCY/Computer" },
-{ "href": "http://~/objects/SCY/Business" }
+{ "category": { "value": { "href": "http://~/objects/CGY-BOOKS"
+} } } The returned response would restrict the "choices" json-property of the subcategory to be those relevant for the category of books:
+{ "category": { "value": { "href": "http://~/objects/CGY/BOOKS"
+} }, "subcategory": { "choices": [
+{ "href": "http://~/objects/SCY/Fiction" }, { "href": "http://~/objects/SCY/Childrens" }, { "href": "http://~/objects/SCY/Computer" }, { "href": "http://~/objects/SCY/Business" }
 ]
-}
-}
-Validating argument sets
-The client can also request the validation of arguments; this is done by providing the reserved x-ro-validate-only param (§A3.2) .
+} } Validating argument sets The client can also request the validation of arguments; this is done by providing the reserved x-ro-validate-only param (§A3.2) .
 For example, to validate the category by itself (for example, when the user tabs from the category field in the UI), it would provide only the category argument:
-{
-"category": {
-"value": {
-"href": "http://~/objects/CGY/BOOK"
-}
-},
-"x-ro-validate-only": true
-}
-If the server found that the argument provided was invalid, then it would indicate it in its response using the "invalidReason" json-property:
-{
-"category": {
-"value": {
-"href": "http://~/objects/CGY/BOOK"
-},
-"invalidReason": "not permitted to select from this category "
-}
-}
+{ "category": { "value": { "href": "http://~/objects/CGY/BOOK"
+} }, "x-ro-validate-only": true } If the server found that the argument provided was invalid, then it would indicate it in its response using the "invalidReason" json-property:
+{ "category": { "value": { "href": "http://~/objects/CGY/BOOK"
+}, "invalidReason": "not permitted to select from this category " } }
+
 === 34.6	Internationalisation
-This suggestion is for the Restful Objects specification to define support for internationalization. This would probably be an optional capability §B8.
-The Restful Objects spec could support internationalization as follows:
+
+This suggestion is for the Restful Objects specification to define support for internationalization.
+This would probably be an optional capability §B8. The Restful Objects spec could support internationalization as follows:
 
 * json-property keys in representations are never internationalized
 
@@ -231,14 +151,18 @@ The Restful Objects spec could support internationalization as follows:
 
 * Broadly speaking, those json-properties that are internationized either represent "friendly" names, or descriptions, or are invalidity/disabled reasons.
 
-* The json-properties that are internationalized will only ever be simple strings (with a "format" of "string", §A2.5). Strings with other formats (e.g. decimal numbers, or dates) are never internationalised.
+* The json-properties that are internationalized will only ever be simple strings (with a "format" of "string", §A2.5).
+Strings with other formats (e.g. decimal numbers, or dates) are never internationalised.
+
 === 34.7	Listable Instances
-This suggestion is to allow the ~/objects/{domainType} resource to support the GET method. Doing so would return all instances of that type, as a list representation §B11.
-For example,
-~/objects/ORS
-might return all instances of the OrderStatus class
-Not every domain type is likely to be listable; it wouldn't be feasible or desirable to return a representation for a type that has millions of instances. Therefore the domain type representation §D22 would indicate whether a type is "listable" (as a new json-property). Instances that are not listable would return a 405.
+
+This suggestion is to allow the ~/objects/{domainType} resource to support the GET method.
+Doing so would return all instances of that type, as a list representation §B11. For example, ~/objects/ORS might return all instances of the OrderStatus class Not every domain type is likely to be listable; it wouldn't be feasible or desirable to return a representation for a type that has millions of instances.
+Therefore the domain type representation §D22 would indicate whether a type is "listable" (as a new json-property).
+Instances that are not listable would return a 405.
+
 === 34.8	Addressable Parent Resources
+
 Although URLs should be considered opaque, nevertheless there is often an expectation that for any given URL, all parent URLs are defined.
 This is not currently the case with Restful Objects, as there are no definitions for resources that represent all members of a certain member type:
 
@@ -258,17 +182,16 @@ This is not currently the case with Restful Objects, as there are no definitions
 
 * ~/domain-types/{domainType}/collections
 
-* ~/domain-types/{domainType}/actions
-One obvious definition for these resources is to be a subset of the parent object or domainType resource, restricted to the member type in question.
-For example,
-~/objects/{domainType}/{instanceId}/properties
-could return the same representation as
-~/objects/{domainType}/{instanceId}
+* ~/domain-types/{domainType}/actions One obvious definition for these resources is to be a subset of the parent object or domainType resource, restricted to the member type in question.
+For example, ~/objects/{domainType}/{instanceId}/properties could return the same representation as ~/objects/{domainType}/{instanceId}
 except that only the properties would be included in the "members" list.
 Another simpler option might be to define these resources as returning a 303 "See Other", in effect redirecting the client to the parent object or domainType resource.
+
 === 34.9	See other for action-results
-Currently the action-results representation §C19.4 can return an in-lined domain object. This is intended to be a convenience; the ETag header is suppressed.
-An alternative design  would be to have the action-result return a 303 "see other" in this situation, and include a reference to the object.
+
+Currently the action-results representation §C19.4 can return an in-lined domain object.
+This is intended to be a convenience; the ETag header is suppressed.
+An alternative design would be to have the action-result return a 303 "see other" in this situation, and include a reference to the object.
 The desired behaviour could be made tunable, akin to the optional capability that the spec provides for domain model schemes.
 The "actionResult" optional capability would return:
 
@@ -286,11 +209,9 @@ The "actionResult" optional capability would return:
 
 * "selectable"
 
-* *as requested by the client
-If the last option were supported, the client could then use a new "x ro action-result" query parameter to indicate its preference:
+* *as requested by the client If the last option were supported, the client could then use a new "x ro action-result" query parameter to indicate its preference:
 
 * "in-line"
 
-* "seeOther"
-If not specified, then the default would be "in-line".
+* "seeOther" If not specified, then the default would be "in-line".
 

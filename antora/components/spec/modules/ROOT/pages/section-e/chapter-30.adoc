@@ -1,14 +1,26 @@
 = 30	DEALING WITH UNTRUSTED CLIENTS
 
 How implementations can avoid important information leaking out to untrusted clients
+
 === 30.1	Securing HREFs
-One possible deployment for Restful Objects systems is a Restful Objects server on the internet, serving up JSON to a JavaSript  "single-page app". In these cases, the href json-properties in the links will provide information about the domain objects that an untrusted client might use to hack the system.
-For example, suppose that an end-user uses a domain service to look up their Customer details. This might result in a href:
+
+One possible deployment for Restful Objects systems is a Restful Objects server on the internet, serving up JSON to a JavaSript "single-page app".
+In these cases, the href json-properties in the links will provide information about the domain objects that an untrusted client might use to hack the system.
+For example, suppose that an end-user uses a domain service to look up their Customer details.
+This might result in a href:
 http://~/objects/CUS/12345
-A malicious user might therefore try to browse to a related customer, e.g. http://~/objects/CUS/12346 and from that uncover useful information. This is clearly not desirable.
-While the Restful Objects spec does define the format of URLs, the format of the instance identifier part ("12345") is implementation-specific and therefore opaque. An implementation can protect itself from hacking by ensuring that the instance id that is served up within hrefs is encrypted using a private key.   For additional security, this private key could even be re-generated either each time the server is restarted or even per session; this would allow the URL that identifies an object to change over time.
-Another scenario is that other clients on the network could be snooping for valid resource URLs. The standard mechanism to address this risk is to deploy the application over SSL (https protocol).
+A malicious user might therefore try to browse to a related customer, e.g. http://~/objects/CUS/12346 and from that uncover useful information.
+This is clearly not desirable.
+While the Restful Objects spec does define the format of URLs, the format of the instance identifier part ("12345") is implementation-specific and therefore opaque.
+An implementation can protect itself from hacking by ensuring that the instance id that is served up within hrefs is encrypted using a private key.
+For additional security, this private key could even be re-generated either each time the server is restarted or even per session; this would allow the URL that identifies an object to change over time.
+Another scenario is that other clients on the network could be snooping for valid resource URLs.
+The standard mechanism to address this risk is to deploy the application over SSL (https protocol).
+
 === 30.2	Avoiding accidental traversals
-Under Restful Objects, a domain object's properties, collections and actions can be disabled or even hidden. Implementations are expected to manage this through a system of end-user roles and permissions.
-For implementations that work this way, care will need to be taken to ensure that an end-user does not have accidental permissions to a property, collection or action that allows them to gain access to other parts of the object graph. Implementations are expected to provide their own advice as to how to ensure this.
+
+Under Restful Objects, a domain object's properties, collections and actions can be disabled or even hidden.
+Implementations are expected to manage this through a system of end-user roles and permissions.
+For implementations that work this way, care will need to be taken to ensure that an end-user does not have accidental permissions to a property, collection or action that allows them to gain access to other parts of the object graph.
+Implementations are expected to provide their own advice as to how to ensure this.
 

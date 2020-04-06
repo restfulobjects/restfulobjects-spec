@@ -3,14 +3,8 @@ Restful Objects
 v1.0.0
 
 Restful Objects defines a hypermedia API, consisting of HTTP resources and corresponding JSON representations, for accessing and manipulating a domain object model.
-The most up-to-date version of this specification may be downloaded
-from www.restfulobjects.org. The site also includes details of known implementations,
-and other useful information.
-
-
-
-
-
+The most up-to-date version of this specification may be downloaded from www.restfulobjects.org.
+The site also includes details of known implementations, and other useful information.
 
 Dan Haywood
 
@@ -19,69 +13,83 @@ Creative Commons Attribution-ShareAlike 3.0
 
 http://creativecommons.org/licenses/by-sa/3.0/
 
-TABLE OF CONTENTS
-A Concepts and Building Blocks	A-1
+TABLE OF CONTENTS A Concepts and Building Blocks A-1
+
 === 1	Introduction	A-3
+
 === 2	Concepts	A-7
+
 === 3	Optional Capabilities	A-41
+
 === 4	Specified Elements	A-49
-B Supporting Resources and Representations	B-53
+
+B Supporting Resources and Representations B-53
+
 === 5	Home Page Resource & Representation	B-55
+
 === 6	User Resource & Representation	B-59
+
 === 7	Domain Services Resource	B-63
+
 === 8	Version Resource & Representation	B-67
+
 === 9	Objects of Type Resource	B-71
+
 === 10	Error Representation	B-75
+
 === 11	List Representation	B-77
+
 === 12	Scalar Value Representation	B-79
-C Domain Object Resources & Representations	C-81
+
+C Domain Object Resources & Representations C-81
+
 === 13	Response Scenarios	C-83
+
 === 14	Domain Object Resource & Representation	C-93
+
 === 15	Domain Service Resource	C-105
+
 === 16	Property Resource & Representation	C-106
+
 === 17	Collection Resource & Representation	C-115
+
 === 18	Action Resource & Representation	C-125
+
 === 19	Action Invoke Resource	C-133
-D Domain Type Resources	D-145
+
+D Domain Type Resources D-145
+
 === 20	Response Scenarios	D-147
+
 === 21	Domain Types Resource	D-151
+
 === 22	Domain Type Resource	D-155
+
 === 23	Domain Type Property Description Resource	D-159
+
 === 24	Domain Type Collection Description Resource	D-163
+
 === 25	Domain Type Action Description Resource	D-167
+
 === 26	Domain Type Action Parameter Description Resource	D-171
+
 === 27	Domain Type Action Invoke Resource	D-175
-E Discussions	E-183
+
+E Discussions E-183
+
 === 28	HATEOAS vs Web APIs	E-185
+
 === 29	Personal vs Shared State	E-187
+
 === 30	Dealing with Untrusted Clients	E-193
+
 === 31	Client vs Server Evolution	E-195
+
 === 32	Code Sketch to support Addressable View Models	E-198
+
 === 33	FAQs	E-201
+
 === 34	Ideas for Future Extensions to the Specification	E-205
 
-
-TABLE OF FIGURES
-Figure 1: Resources and Representations	A-7
-Figure 2: Media Type Layers	A-18
-Figure 3: Domain Objects vs Domain Types	A-45
-Figure 4: Home Page Representation	B-56
-Figure 5: User Representation	B-60
-Figure 6: Services Representation	B-64
-Figure 7: Version Representation	B-68
-Figure 8: Domain Object Representation	C-96
-Figure 9: Object Property Representation	C-110
-Figure 10: Object Collection Representation	C-119
-Figure 11: Object Action Representation	C-126
-Figure 12: Action Result for Object	C-139
-Figure 13: Action Result for List	C-141
-Figure 14: Action Result for Scalar	C-142
-Figure 15: Action Result for Void	C-144
-Figure 16: Domain Type List Representation	D-151
-Figure 17: Domain Type Representation	D-156
-Figure 18: Domain Property Collection Representation	D-160
-Figure 19: Domain Collection Description Representation	D-164
-Figure 20: Domain Action Description Representation	D-168
-Figure 21: Domain Action Parameter Description Representation	D-172
-Figure 22: Domain Type Action Representation	D-176
+TABLE OF FIGURES Figure 1: Resources and Representations A-7 Figure 2: Media Type Layers A-18 Figure 3: Domain Objects vs Domain Types A-45 Figure 4: Home Page Representation B-56 Figure 5: User Representation B-60 Figure 6: Services Representation B-64 Figure 7: Version Representation B-68 Figure 8: Domain Object Representation C-96 Figure 9: Object Property Representation C-110 Figure 10: Object Collection Representation C-119 Figure 11: Object Action Representation C-126 Figure 12: Action Result for Object C-139 Figure 13: Action Result for List C-141 Figure 14: Action Result for Scalar C-142 Figure 15: Action Result for Void C-144 Figure 16: Domain Type List Representation D-151 Figure 17: Domain Type Representation D-156 Figure 18: Domain Property Collection Representation D-160 Figure 19: Domain Collection Description Representation D-164 Figure 20: Domain Action Description Representation D-168 Figure 21: Domain Action Parameter Description Representation D-172 Figure 22: Domain Type Action Representation D-176
 

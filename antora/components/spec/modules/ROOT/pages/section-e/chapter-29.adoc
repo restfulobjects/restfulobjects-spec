@@ -1,30 +1,39 @@
 = 29	PERSONAL VS SHARED STATE
 
 Different types of resource state, what is not resource state, and discussion of the "domain-model rest anti-pattern" paper.
+
 === 29.1	Resources representing Shared State
+
 In Roy Fielding's thesis that originally describes the REST architectural style, the definition of a resource is very general, with the focus being that resources may be identified and thus may be linked to.
 The examples of resources given by Fielding in his thesis tend towards shared information, for example a document, an image, "today's weather in Los Angeles", or "revision 1.2.7 of a source code file".
-These examples of resources are shared in the sense that any user could ask the system for a representation of the resource, and would obtain broadly the same information. Put another way, these resources correspond to domain entities, with the representations being a projection of the state of those entities. Their representation may need to be versioned to allow clients to evolve independently of server, but that is a separate issue (see §30).
-Most of the examples in this specification are of domain entities: customer, order, product and so forth. The representations of these entities have hypermedia controls (links) to enable a client to navigate between entities, either as a result of following a property or collection link, or as the result of invoking an action. The links available may vary depending upon both the state of the resource, and upon the authorization of the user requesting the representation.
-For example, the client can use the link representing the Order's placedBy property to find the Customer that placed the order, or can use the link representing the Order's items collection to find the items within the Order. However, an Order that has not yet been placed might suppress the Customer link.
-Links not only represent static relationships between entities, they can also represent entity behaviour. So, the Order could have been created in the first place by the client following the link representing the Customer's placeOrder() action. However, a user with insufficient privileges might not see the placeOrder() link.
+These examples of resources are shared in the sense that any user could ask the system for a representation of the resource, and would obtain broadly the same information.
+Put another way, these resources correspond to domain entities, with the representations being a projection of the state of those entities.
+Their representation may need to be versioned to allow clients to evolve independently of server, but that is a separate issue (see §30).
+Most of the examples in this specification are of domain entities: customer, order, product and so forth.
+The representations of these entities have hypermedia controls (links) to enable a client to navigate between entities, either as a result of following a property or collection link, or as the result of invoking an action.
+The links available may vary depending upon both the state of the resource, and upon the authorization of the user requesting the representation.
+For example, the client can use the link representing the Order's placedBy property to find the Customer that placed the order, or can use the link representing the Order's items collection to find the items within the Order.
+However, an Order that has not yet been placed might suppress the Customer link.
+Links not only represent static relationships between entities, they can also represent entity behaviour.
+So, the Order could have been created in the first place by the client following the link representing the Customer's placeOrder() action.
+However, a user with insufficient privileges might not see the placeOrder() link.
 In this way, resources representing domain entities fully support the HATEOAS constraint (§28.1) of RESTful systems.
+
 === 29.2	Resources representing Personal State
+
 Whereas domain entities constitute shared state (available to any requesting user), some state is private to a given user and should not be accessible to other users.
-The classic example is that of a ShoppingCart. Each user may have access to a resource representing "their" ShoppingCart, but should not be able to access (or even determine the existence of) other users' ShoppingCarts.
-Resources that capture such "personal" state often double up as a means to take the user through the process of completing a user goal. For example, the initial representation of a ShoppingCart may provide links to browse for products to add to the cart. Once some products have been added, it may additionally provide a link to checkout the cart. Once the checkout is started, the links will change to the various steps of the checkout process (payment, delivery options and so on).
+The classic example is that of a ShoppingCart.
+Each user may have access to a resource representing "their" ShoppingCart, but should not be able to access (or even determine the existence of) other users' ShoppingCarts.
+Resources that capture such "personal" state often double up as a means to take the user through the process of completing a user goal.
+For example, the initial representation of a ShoppingCart may provide links to browse for products to add to the cart.
+Once some products have been added, it may additionally provide a link to checkout the cart.
+Once the checkout is started, the links will change to the various steps of the checkout process (payment, delivery options and so on).
 Restful Objects does not specify how implementations should protect personal state, but there are at lest two possible approaches.
-In the first, implementations can exploit the fact that URLs are opaque, and encrypt the instance identifier component.   This is discussed further and in more general terms in §30.
-The second approach is for the implementation to provide a mechanism to distinguish between a resource that holds personal state and one that holds shared state, and ensued that a user is only ever served up "their" personal resources. This would be analogous to querying from a database view that restricts rows by userId:
-create view MyPersonalResource
-as
-select *
-from AllPersonalResourses
-where user_id = @@user_id     -- current user id
-One way to implement this could be though a reserved/annotated "UserId" property (or method) in the domain object; for example:
-public class ShoppingCart {
-@UserId
-public int getPersonalTo() { … }
+In the first, implementations can exploit the fact that URLs are opaque, and encrypt the instance identifier component.
+This is discussed further and in more general terms in §30. The second approach is for the implementation to provide a mechanism to distinguish between a resource that holds personal state and one that holds shared state, and ensued that a user is only ever served up "their" personal resources.
+This would be analogous to querying from a database view that restricts rows by userId:
+create view MyPersonalResource as select * from AllPersonalResourses where user_id = @@user_id     -- current user id One way to implement this could be though a reserved/annotated "UserId" property (or method) in the domain object; for example:
+public class ShoppingCart { @UserId public int getPersonalTo() { … }
 
     public List<Item> getItems() { … }
     …

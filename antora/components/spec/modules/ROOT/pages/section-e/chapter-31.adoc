@@ -1,26 +1,44 @@
 = 31	CLIENT VS SERVER EVOLUTION
 When content negotiation is or is not needed.
 === 31.1	Motivation
-One of the goals of REST is to enable both the client and server to evolve independently. In particular, a server should be able to be enhanced to offer new functionality but existing clients should carry on working and simply ignore (be unaware of) this new functionality. As clients require the new functionality, they can be updated and deployed separately from the server.
-In many cases it is relatively easy to maintain backward compatibility. For example, a representation of a Customer may initially include the Customer's firstName and lastName. Adding a new middleInitial property will not break existing clients.
-Sometimes, however, representations are restructured in a way that would break the client. For example, the developer might want to restructure the representation of a Customer such that the firstName, middleInitial and lastName are all moved onto an associated Name object. In this case any client expecting there to be a firstName or lastName property on Customer will break.
+One of the goals of REST is to enable both the client and server to evolve independently.
+In particular, a server should be able to be enhanced to offer new functionality but existing clients should carry on working and simply ignore (be unaware of) this new functionality.
+As clients require the new functionality, they can be updated and deployed separately from the server.
+In many cases it is relatively easy to maintain backward compatibility.
+For example, a representation of a Customer may initially include the Customer's firstName and lastName.
+Adding a new middleInitial property will not break existing clients.
+Sometimes, however, representations are restructured in a way that would break the client.
+For example, the developer might want to restructure the representation of a Customer such that the firstName, middleInitial and lastName are all moved onto an associated Name object.
+In this case any client expecting there to be a firstName or lastName property on Customer will break.
+
 === 31.2	Content Negotiation
-The standard solution is to version representations, using the media type as the identifier for a particular version of a representation.  It can however be difficult  to manage multiple versions of persisted entitities (v1.Customer, v2.Customer etc).
-A simpler approach is to use addressable view models §A2.2 to provide a versioned abstraction layer on top of the domain entitites.  Thus, one client may consume v2.CustomerViewModel, while another may consume v3.CustomerViewModel. Each of these view models delegates to an underlying Customer entity, but doesn't expose it directly.
-Restful Objects does not mandate how implementations support addressable view models, but a code sketch is described in § Error! Reference source not found..
-Within HTTP the client indicates the version of the representation it requires using the Accept header.   The server either serves up that representation with a matching Content-Type header, or returns a 406 "not acceptable" error. The name for this process is ‘content negotiation’ (sometimes shortened to ‘conneg’).
-Restful Objects currently provides some of the infrastructure for conneg, through the "x-ro-domain-type" media type parameter §A2.4.2.  Using this parameter the server indicates the domain type of each object representation it serves; this applies to all representations, be they of view models or of entities.
-However full content negotiation is not currently supported in the spec; the client cannot specify the "x-ro-domain-type" media parameter in the Accept header in order to request a specific representation (or if they do, it will be ignored).  A future version of the spec is likely to include support, however; see §34.1.
+
+The standard solution is to version representations, using the media type as the identifier for a particular version of a representation.
+It can however be difficult to manage multiple versions of persisted entitities (v1.Customer, v2.Customer etc).
+A simpler approach is to use addressable view models §A2.2 to provide a versioned abstraction layer on top of the domain entitites.
+Thus, one client may consume v2.CustomerViewModel, while another may consume v3.CustomerViewModel.
+Each of these view models delegates to an underlying Customer entity, but doesn't expose it directly.
+Restful Objects does not mandate how implementations support addressable view models, but a code sketch is described in § Error!
+Reference source not found..
+Within HTTP the client indicates the version of the representation it requires using the Accept header.
+The server either serves up that representation with a matching Content-Type header, or returns a 406 "not acceptable" error.
+The name for this process is ‘content negotiation’ (sometimes shortened to ‘conneg’).
+Restful Objects currently provides some of the infrastructure for conneg, through the "x-ro-domain-type" media type parameter §A2.4.2. Using this parameter the server indicates the domain type of each object representation it serves; this applies to all representations, be they of view models or of entities.
+However full content negotiation is not currently supported in the spec; the client cannot specify the "x-ro-domain-type" media parameter in the Accept header in order to request a specific representation (or if they do, it will be ignored).
+A future version of the spec is likely to include support, however; see §34.1.
+
 === 31.3	When Conneg isn't required
-While content negotiation and view models are undoubtedly important, they do bring with them a substantial maintenance overhead for the application developer. It's therefore worth understanding when they are not needed.
-First, if new versons of client(s) and server can be deployed at the same time (typically when the developer "owns both ends of the pipe"), then versioned media types can be dispensed with. This is a realistic scenario for many enterprise applications that are only used internally within organizations.  It can also apply to external-facing applications where the client is deployed automatically. A growing form of this is ‘single page web apps’ where the client logic is written in JavaScript that may be readily refreshed from the server.
-Another scenario where conneg is not required is when the client is generic, in other words able to process any representation served up by Restful Objects. Indeed, one of the objectives of Restful Objects is to enable the development of such generic clients.
-The analogy here is the humble web browser that has built-in knowledge of the text/html media type and is able to render any representation with this media type.  Similarly, a Restful Objects "browser" would have built in knowledge of the various representations served up by a server, and would use the "profile" parameter to render domain objects, lists, action prompts and so on.
-To summarize,
-Client/server dependency
-Client genericity	Developed
-together	Independently developed
-Generic	no conneg	no conneg
-Bespoke/custom	no conneg	conneg required
+
+While content negotiation and view models are undoubtedly important, they do bring with them a substantial maintenance overhead for the application developer.
+It's therefore worth understanding when they are not needed.
+First, if new versons of client(s) and server can be deployed at the same time (typically when the developer "owns both ends of the pipe"), then versioned media types can be dispensed with.
+This is a realistic scenario for many enterprise applications that are only used internally within organizations.
+It can also apply to external-facing applications where the client is deployed automatically.
+A growing form of this is ‘single page web apps’ where the client logic is written in JavaScript that may be readily refreshed from the server.
+Another scenario where conneg is not required is when the client is generic, in other words able to process any representation served up by Restful Objects.
+Indeed, one of the objectives of Restful Objects is to enable the development of such generic clients.
+The analogy here is the humble web browser that has built-in knowledge of the text/html media type and is able to render any representation with this media type.
+Similarly, a Restful Objects "browser" would have built in knowledge of the various representations served up by a server, and would use the "profile" parameter to render domain objects, lists, action prompts and so on.
+To summarize, Client/server dependency Client genericity Developed together Independently developed Generic no conneg no conneg Bespoke/custom no conneg conneg required
 
 

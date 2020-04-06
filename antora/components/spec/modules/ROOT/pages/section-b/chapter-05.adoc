@@ -17,11 +17,9 @@ None
 
 ==== 5.1.1.2	Headers
 
-
 * Accept o application/json o application/json;profile=…/homepage
 
 ==== 5.1.1.3	Body
-
 
 * N/A
 
@@ -29,11 +27,9 @@ None
 
 ==== 5.1.2.1	Status Code
 
-
 * 200 "OK"
 
 ==== 5.1.2.2	Headers
-
 
 * Content-Type o application/json;profile=".../homepage"
 * Caching headers:

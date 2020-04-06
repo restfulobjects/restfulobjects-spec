@@ -137,11 +137,11 @@ Objects/
 {Action}/ invoke GET n/a – 405 object summary, member summary, property values property details and value collection details and content action prompt invoke (action known to be query-only) PUT n/a – 405 update or clear multiple property values update or clear value add object (if Set semantics) n/a – 405 invoke (action known to be idempotent) DELETE n/a – 405 delete object clear value remove object n/a – 405 n/a – 405 POST persist instance n/a – 405 n/a - 405 add object (if List semantics) n/a – 405 invoke (action not known to be idempotent) The columns indicate the domain object resources shown in the Figure 1, plus the Objects Of Type resource §B9 used for persisting new object instances.
 The header row indicates the resources as templated URIs :
 
-*    {DType} is the domain type identifier that uniquely represents the domain type.
+* {DType} is the domain type identifier that uniquely represents the domain type.
 Depending on the implementation this may take an abbreviated form e.g. "CUS" for Customer, or could be the fully qualified class name, eg “com.mycompany.myapp.Customer”.
 The spec requires only that the value is unique;
-*    {IID} is the instance identifier that uniquely identifies an object instance within its type: e.g. "123" for customer with id=123;
-*    {Property}, {Collection} and {Action} are unique identifiers for a property, collection or action of the object, e.g. "firstName", "orders", or "placeOrder" For brevity, the combination of domain type/instance identifier {DType}/{IID} is also termed the object identifier, or oid.
+* {IID} is the instance identifier that uniquely identifies an object instance within its type: e.g. "123" for customer with id=123;
+* {Property}, {Collection} and {Action} are unique identifiers for a property, collection or action of the object, e.g. "firstName", "orders", or "placeOrder" For brevity, the combination of domain type/instance identifier {DType}/{IID} is also termed the object identifier, or oid.
 The body of the table indicates which HTTP methods may be used to access these resources.
 The HTTP GET method is the most widely supported across the various resources, and is used to obtain a summary representation of an object §C14.4 (e.g. a Customer instance), or detailed information about a specific property of an object §C16.4 (e.g. Customer.firstName) or about a specific collection §C17.5 (e.g. Customer.orders).
 In addition, HTTP GET is used to obtain a representation of an object action §C18.2, such as the Customer's placeOrder() action.
@@ -551,56 +551,67 @@ To facilitate this Restful Objects specifies that all responses must indicate wh
 
 * No caching: suitable for transactional resources such as domain objects and domain object members;
 
-* Short-term caching: suitable for user resources that might encapsulate the users' credentials. Such resources might typically be cached for 1 hour (3600 seconds).
+* Short-term caching: suitable for user resources that might encapsulate the users' credentials.
+Such resources might typically be cached for 1 hour (3600 seconds).
 
-* Long-term caching: suitable for read-only resources such as domain model resources. Such resources might typically be cached for 1 day or longer (86400 seconds).
-Implementations are expected to provide their own configuration settings to allow these values to be tuned. In the remainder of the spec the placeholders "TRANSACTIONAL", "USER_INFO" and "NON_EXPIRING" are used:
+* Long-term caching: suitable for read-only resources such as domain model resources.
+Such resources might typically be cached for 1 day or longer (86400 seconds).
+Implementations are expected to provide their own configuration settings to allow these values to be tuned.
+In the remainder of the spec the placeholders "TRANSACTIONAL", "USER_INFO" and "NON_EXPIRING" are used:
 
 * "TRANSACTIONAL" is for resources that are frequently updated, for example a Customer;
 
 * "USER_INFO" is for resources that represent a user's credentials, and so might change over time but not often;
 
-* " NON_EXPIRING" is for resources that are not expected to change over time
-In the spec these placeholders map onto the HTTP 1.1 Cache-Control header. In addition, HTTP 1.0 Pragma, Date and Expires headers should also be set in order to support any legacy HTTP 1.0 proxies.
+* " NON_EXPIRING" is for resources that are not expected to change over time In the spec these placeholders map onto the HTTP 1.1 Cache-Control header.
+In addition, HTTP 1.0 Pragma, Date and Expires headers should also be set in order to support any legacy HTTP 1.0 proxies.
 The table below summarizes the values to be set:
-Caching	Cache-Control	Pragma	Date	Expires
-TRANSACTIONAL
-(low volume scenario)	non-cache	No-Cache	(current date/time)	0
-TRANSACTIONAL
-(high volume scenario)	max-age: 2		(current date/time)	Date + #seconds
-USER_INF
-* *max-age: 3600		(current date/time)	Date + #seconds
-NON_EXPIRING	max-age: 86400		(current date/time)	Date + #seconds
-As can be seen, in a high-volume environment implementations are permitted to specify a small degree of caching for "TRANSACTIONAL" resources in order to support reverse proxying.  The means by which the amount of caching is set is implementation-specific.
+Caching Cache-Control Pragma Date Expires TRANSACTIONAL (low volume scenario) non-cache No-Cache (current date/time) 0 TRANSACTIONAL (high volume scenario) max-age: 2 (current date/time) Date + #seconds USER_INF
+* *max-age: 3600 (current date/time) Date + #seconds NON_EXPIRING max-age: 86400 (current date/time) Date + #seconds As can be seen, in a high-volume environment implementations are permitted to specify a small degree of caching for "TRANSACTIONAL" resources in order to support reverse proxying.
+The means by which the amount of caching is set is implementation-specific.
+
 == 2.1	Security
+
 == 2.1.1	Authentication
-Restful Objects currently does not specify any particular approach to user authentication. Instead, it is expected that an out-of-band mechanism (such as oauth ) is used.
-Note, though, that the URLs defined by Restful Objects do not encode the identity of the user requesting the resource. This is deliberate: so that representations may be cached by server-side caching infrastructure .
+
+Restful Objects currently does not specify any particular approach to user authentication.
+Instead, it is expected that an out-of-band mechanism (such as oauth ) is used.
+Note, though, that the URLs defined by Restful Objects do not encode the identity of the user requesting the resource.
+This is deliberate: so that representations may be cached by server-side caching infrastructure .
+
 == 2.1.2	Authorisation ("disabledReason")
+
 Restful Objects defines two mechanisms by which the requesting user's credentials may affect the representations that are returned.
 First, if the credentials are such that the object member is hidden/invisible to that user, then that member will be excluded from the representation.
 Secondly, if the credentials are such that the object member is visible but disabled, then the representation of the member will exclude any links to resources for mutating that member.
-Furthermore, if a member is visible but disabled, then the representation for the disabled member may include an optional "disabledReason" json-property to explain why the member is disabled. The client may choose to render this information in its user interface (for example as a ‘tooltip’).
-Because the URLs defined by Restful Objects are well-defined, there is nothing to prevent a rogue client from guessing URLs and attempting to call them. If the client attempts to access a hidden object member directly (using any HTTP method), then a 404 "not found" will be returned. Or, if the user attempts to mutate a disabled object member using PUT, DELETE or POST, then a 403 "forbidden" will be returned.
+Furthermore, if a member is visible but disabled, then the representation for the disabled member may include an optional "disabledReason" json-property to explain why the member is disabled.
+The client may choose to render this information in its user interface (for example as a ‘tooltip’).
+Because the URLs defined by Restful Objects are well-defined, there is nothing to prevent a rogue client from guessing URLs and attempting to call them.
+If the client attempts to access a hidden object member directly (using any HTTP method), then a 404 "not found" will be returned.
+Or, if the user attempts to mutate a disabled object member using PUT, DELETE or POST, then a 403 "forbidden" will be returned.
+
 == 2.1	Concurrency Control (If-Match, ETag)
+
 Restful Objects defines concurrency control through a combination of the ETag HTTP response header and the If-Match request header.
-The ETag header provides a unique digest (typically based on a timestamp for the last time that an object was modified). When a client wishes to perform a (PUT, DELETE or POST) request that will modify the state of a resource, it must also provide the If-Match header to indicate the timestamp of the representation that it previously obtained from the server.
+The ETag header provides a unique digest (typically based on a timestamp for the last time that an object was modified).
+When a client wishes to perform a (PUT, DELETE or POST) request that will modify the state of a resource, it must also provide the If-Match header to indicate the timestamp of the representation that it previously obtained from the server.
 If the object has been modified since that time, then a 412 "Precondition failed" status code will be returned.
 If the client fails to provide the If-Match header, then the response will be 400 "Bad Request", with an appropriate Warning header.
-If the domain object does not have timestamp information (for example, if it is immutable), then no ETag header need be (nor sensibly can be) generated. For these resources, the If-Match header should not be provided by the client (but if it is, then the server will simply ignore it rather the return an error return code).
-Restful Objects does not require that the If-Modified response header is provided in representations (though implementations are free to return it if they wish).  Note that If-Modified is not appropriate for concurrency control because its precision is only to the nearest second.
+If the domain object does not have timestamp information (for example, if it is immutable), then no ETag header need be (nor sensibly can be) generated.
+For these resources, the If-Match header should not be provided by the client (but if it is, then the server will simply ignore it rather the return an error return code).
+Restful Objects does not require that the If-Modified response header is provided in representations (though implementations are free to return it if they wish).
+Note that If-Modified is not appropriate for concurrency control because its precision is only to the nearest second.
+
 == 2.1	Business Logic Warning and Error
-When an action is invoked the business logic may raise an informational, warning or error message. The client may in turn display a warning dialog in the UI.
-To support this, Restful Objects allows that the standard “Warning” HTTP header can be set. The HTTP status code indicates whether this message should be considered as information (200), or a warning (4xx or 5xx).
+
+When an action is invoked the business logic may raise an informational, warning or error message.
+The client may in turn display a warning dialog in the UI.
+To support this, Restful Objects allows that the standard “Warning” HTTP header can be set.
+The HTTP status code indicates whether this message should be considered as information (200), or a warning (4xx or 5xx).
+
 == 2.1	Malformed JSON Representations
+
 The correct form for JSON representations is:
-{
-  "foo": "bar",
-  "baz": "boz"
-}
-However, some REST APIs and implementations incorrectly serve malformed JSON, where the keys are not quoted:
-{
-  foo: "bar",
-  baz: "boz"
-}
-Implementations of Restful Objects must always serve up correctly formed JSON representation. However, where a client posts JSON to the server (for example, to modify a resource), the implementation must accept malformed JSON representations where the key has not been quoted .
+{ "foo": "bar", "baz": "boz" } However, some REST APIs and implementations incorrectly serve malformed JSON, where the keys are not quoted:
+{ foo: "bar", baz: "boz" } Implementations of Restful Objects must always serve up correctly formed JSON representation.
+However, where a client posts JSON to the server (for example, to modify a resource), the implementation must accept malformed JSON representations where the key has not been quoted .

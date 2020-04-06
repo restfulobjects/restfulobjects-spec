@@ -1,4 +1,4 @@
-r= 8	VERSION RESOURCE & REPRESENTATION
+r= 8 VERSION RESOURCE & REPRESENTATION
 
 This resource allows a client to dynamically determine which version of the Restful Objects spec a particular implementation supports, the version of the implementation (code) itself, and which of the optional capabilities §A3 it provides.
 The endpoint URL for this resource is:
@@ -12,16 +12,13 @@ Obtain a representation of the implementation's version and optional capabilitie
 
 ==== 8.1.1.1	Query String
 
-
 * none
 
 ==== 8.1.1.2	Headers
 
-
 * Accept o application/json o application/json;profile=".../version"
 
 ==== 8.1.1.3	Body
-
 
 * N/A
 
@@ -29,11 +26,9 @@ Obtain a representation of the implementation's version and optional capabilitie
 
 ==== 8.1.2.1	Status Code
 
-
 * 200 "OK"
 
 ==== 8.1.2.2	Headers
-
 
 * Content-Type o application/json;profile=".../version"
 * Caching headers:
