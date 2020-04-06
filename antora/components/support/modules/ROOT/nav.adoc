@@ -1,1 +1,1 @@
-include::docs:ROOT:partial$component-nav.adoc[]
+include::support:ROOT:partial$component-nav.adoc[]
