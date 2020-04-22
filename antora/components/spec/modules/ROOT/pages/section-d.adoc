@@ -1,2 +1,11 @@
+[#section-d-domain-type-resources]
 = SECTION D: DOMAIN TYPE RESOURCES
 
+* xref:section-d/chapter-20.adoc[20 RESPONSE SCENARIOS]
+* xref:section-d/chapter-21.adoc[21 DOMAIN TYPES RESOURCE]
+* xref:section-d/chapter-22.adoc[22 DOMAIN TYPE RESOURCE]
+* xref:section-d/chapter-23.adoc[23 DOMAIN TYPE PROPERTY DESCRIPTION RESOURCE]
+* xref:section-d/chapter-24.adoc[24 DOMAIN TYPE COLLECTION DESCRIPTION RESOURCE]
+* xref:section-d/chapter-25.adoc[25 DOMAIN TYPE ACTION DESCRIPTION RESOURCE]
+* xref:section-d/chapter-26.adoc[26 DOMAIN TYPE ACTION PARAMETER DESCRIPTION RESOURCE]
+* xref:section-d/chapter-27.adoc[27 DOMAIN TYPE ACTION INVOKE RESOURCE]

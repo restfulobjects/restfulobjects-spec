@@ -1,3 +1,8 @@
+[#section-a-concepts-and-building-blocks]
 = SECTION A: CONCEPTS AND BUILDING BLOCKS
 
 
+* xref:section-a/chapter-01.adoc[1	INTRODUCTION]
+* xref:section-a/chapter-02.adoc[2	CONCEPTS]
+* xref:section-a/chapter-03.adoc[3	OPTIONAL CAPABILITIES]
+* xref:section-a/chapter-04.adoc[4	SPECIFIED ELEMENTS]

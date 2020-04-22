@@ -1,2 +1,10 @@
+[#section-e-discussions]
 = SECTION E: DISCUSSIONS
 
+* xref:section-e/chapter-28.adoc[28 HATEOAS VS WEB APIS]
+* xref:section-e/chapter-29.adoc[29 PERSONAL VS SHARED STATE]
+* xref:section-e/chapter-30.adoc[30 DEALING WITH UNTRUSTED CLIENTS]
+* xref:section-e/chapter-31.adoc[31 CLIENT VS SERVER EVOLUTION]
+* xref:section-e/chapter-32.adoc[32 CODE SKETCH TO SUPPORT ADDRESSABLE VIEW MODELS]
+* xref:section-e/chapter-33.adoc[33 FAQS]
+* xref:section-e/chapter-34.adoc[34 IDEAS FOR FUTURE EXTENSIONS TO THE SPECIFICATION]

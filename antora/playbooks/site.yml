@@ -34,7 +34,7 @@ asciidoc:
     - ./antora/lib/github-issue
   attributes:
     experimental: ""
-    idprefix: ""
+    idprefix: "_"
     idseparator: "-"
     plantuml-server-url: "http://www.plantuml.com/plantuml"
 

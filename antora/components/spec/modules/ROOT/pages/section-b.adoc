@@ -1,2 +1,11 @@
+[#section-b-supporting-resources-and-representations]
 = SECTION B: SUPPORTING RESOURCES AND REPRESENTATIONS
 
+* xref:section-b/chapter-05.adoc[5	HOME PAGE RESOURCE & REPRESENTATION]
+* xref:section-b/chapter-06.adoc[6	USER RESOURCE & REPRESENTATION]
+* xref:section-b/chapter-07.adoc[7	DOMAIN SERVICES RESOURCE]
+* xref:section-b/chapter-08.adoc[8 VERSION RESOURCE & REPRESENTATION]
+* xref:section-b/chapter-09.adoc[9 OBJECTS OF TYPE RESOURCE]
+* xref:section-b/chapter-10.adoc[10 ERROR REPRESENTATION]
+* xref:section-b/chapter-11.adoc[11 LIST REPRESENTATION]
+* xref:section-b/chapter-12.adoc[12 SCALAR VALUE REPRESENTATION]

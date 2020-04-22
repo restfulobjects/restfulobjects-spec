@@ -64,7 +64,7 @@ FIGURE 17: DOMAIN TYPE REPRESENTATION For example, the JSON representation (for 
 }, ...
 ], "extensions": { ...
 } } where:
-JSON-Property Description links list of links to resources links[rel=self]    link to a resource that can obtain this representation links[rel=icon]    (optional) link to an image representing a scalable icon for this type links[rel=help]    (optional) link to a media resource providing help about the type name the fully qualified class name (or JSON type, if there is an equivalent) domainType the domainType id, i.e. the string used within templated URLs to access instances of this type (see resources in §C).
+JSON-Property Description links list of links to resources links[rel=self]    link to a resource that can obtain this representation links[rel=icon]    (optional) link to an image representing a scalable icon for this type links[rel=help]    (optional) link to a media resource providing help about the type name the fully qualified class name (or JSON type, if there is an equivalent) domainType the domainType id, i.e. the string used within templated URLs to access instances of this type (see resources in xref:section-c.adoc[§C]).
 friendlyName the singular form of the type, as would be suitable for rendering in a UI.
 pluralName the plural form of the type, as would be suitable for rendering in a UI.
 description a description of the type, e.g. to render as a tooltip.

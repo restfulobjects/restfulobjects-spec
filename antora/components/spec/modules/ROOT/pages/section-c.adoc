@@ -1,2 +1,10 @@
+[#section-c-domain-object-resources-representations]
 = SECTION C: DOMAIN OBJECT RESOURCES & REPRESENTATIONS
 
+* xref:section-c/chapter-13.adoc[13 RESPONSE SCENARIOS]
+* xref:section-c/chapter-14.adoc[14 DOMAIN OBJECT RESOURCE & REPRESENTATION]
+* xref:section-c/chapter-15.adoc[15 DOMAIN SERVICE RESOURCE]
+* xref:section-c/chapter-16.adoc[16 PROPERTY RESOURCE & REPRESENTATION]
+* xref:section-c/chapter-17.adoc[17 COLLECTION RESOURCE & REPRESENTATION]
+* xref:section-c/chapter-18.adoc[18 ACTION RESOURCE & REPRESENTATION]
+* xref:section-c/chapter-19.adoc[19 ACTION INVOKE RESOURCE]

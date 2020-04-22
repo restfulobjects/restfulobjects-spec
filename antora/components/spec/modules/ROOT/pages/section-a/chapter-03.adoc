@@ -73,7 +73,7 @@ private int id; private Date since;
   public boolean blacklist(String reason) { ... }
   ...
 }
-The resources to expose the metadata for an instance of this class are shown in §D.
+The resources to expose the metadata for an instance of this class are shown in xref:section-d.adoc[§D].
 
 FIGURE 3: DOMAIN OBJECTS VS DOMAIN TYPES Domain type resources are pre-defined for the scalar types §D21.3. For non-scalar types, the domain type is the concatenation of "http://~/domain-types/"  + the domain type id.
 The link to the domain type resource is shown in the domain object representation as:
