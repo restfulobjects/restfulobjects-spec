@@ -4,12 +4,15 @@ The 'user' resource represents the currently logged-in user.
 The endpoint URL for this resource is:
 /user r
 
+[#_6-1-http-get]
 == 6.1 HTTP GET
 
 Obtain representation of the currently logged-in user.
 
+[#_6-1-1-get-request]
 === 6.1.1 GET Request
 
+[#_6-1-1-1-query-string]
 ==== 6.1.1.1 Query String
 
 None

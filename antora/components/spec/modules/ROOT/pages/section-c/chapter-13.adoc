@@ -57,8 +57,8 @@ y y y y y y Action invoke GET C19.1 B11 B12
 
 y y y y y y y PUT C19.2
 --- y y y y y y y y y y POST C19.3
---- y y y y y y y y y y y Objects POST §B9.1 §14.4 y y y y y For a given status code, the specific headers and body returned by these resources vary little between the different resources; this is especially so for the failure scenarios (4xx and 5xx).
-This section (§C13) describes all the responses irrespective of the resource called.
+--- y y y y y y y y y y y Objects POST xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1] §14.4 y y y y y For a given status code, the specific headers and body returned by these resources vary little between the different resources; this is especially so for the failure scenarios (4xx and 5xx).
+This section (xref:section-c/chapter-13.adoc[§C13]) describes all the responses irrespective of the resource called.
 Sections §14 to § C18.2 identify the various request/response scenarios for each of the domain object resources.
 In each case they define the request URL, headers and body, and also identify the standard (success) response headers and body, if any.
 
@@ -176,7 +176,7 @@ Generated either as the result of a syntactically invalid request
 
 === 13.4.3 Body
 
-If arguments §A2.9.2/properties (§14.2, §B9.1) are malformed, (for example, incorrect datatype), then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid.
+If arguments §A2.9.2/properties (§14.2, xref:section-b/chapter-09.adoc#_9-1-http-post[§B9]) are malformed, (for example, incorrect datatype), then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid.
 For example:
 { "fromDate": { "value": "2009-13-33" "invalidReason": "could not be parsed as a date" } ..., }
 
@@ -314,7 +314,7 @@ Generated as the result of a validation failure.
 
 * 422 ("unprocesssable entity")
 
-* *property member values are invalid (if updating multiple properties §14.2, or if persisting a proto-persistent object §B9.1
+* *property member values are invalid (if updating multiple properties §14.2, or if persisting a proto-persistent object xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]
 
 * *"Arguments invalid"  details are provided in the body
 
@@ -326,7 +326,7 @@ Generated as the result of a validation failure.
 
 === 13.11.3 Body
 
-If arguments §A2.9.2/properties (§14.2, §B9.1) are invalid, then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid For example:
+If arguments §A2.9.2/properties (§14.2, xref:section-b/chapter-09.adoc[§B9.1]) are invalid, then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid For example:
 { "fromDate": { "value": "2009-12-01" "invalidReason": "The from date cannot be in the past" } ..., } If no individual argument/property was invalid, but the set of such is invalid (e.g. fromDate > toDate), then an "x ro invalidReason" json-property is provided at the root of the map.
 For example:
 { "fromDate": ..., "toDate": ..., "x-ro-invalidReason": "To date cannot be before from date" } The json-property has the prefix "x-ro-" in this case in order to avoid clashes with the argument/property names
@@ -365,5 +365,5 @@ This represents a syntax error where a required precondition header (for example
 
 === 13.13.3 Body
 
-* the error representation §B10.
+* the error representation xref:section-b/chapter-10.adoc[§B10].
 

@@ -49,7 +49,7 @@ The JSON representation is as follows:
 ], "extensions": { ... } } where:
 JSON-Property Description links list of links to resources.
 link[rel=self]    link back to the resource that generated this representation.
-link[rel=…/user]    link to the user resource §6 link[rel=…/services]    link to the services resource §7 link[rel=…/version]    link to the version resource §8 link[rel=…/types]    link to the domain types resource §D21 extensions additional information about the resource.
+link[rel=…/user]    link to the user resource §6 link[rel=…/services]    link to the services resource §7 link[rel=…/version]    link to the version resource §8 link[rel=…/types]    link to the domain types resource xref:section-d/chapter-21.adoc[§D21] extensions additional information about the resource.
 Restful Objects defines no standard json-properties for "extensions".
 Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require.
 

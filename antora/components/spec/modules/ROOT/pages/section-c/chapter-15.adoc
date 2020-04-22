@@ -2,7 +2,7 @@
 
 A domain service is a well-known (singleton) domain object that typically acts as a repository and/or factory, providing actions for obtaining other domain object instances (although services can provide any kind of functionality in relation to objects).
 
-Domain services can be accessed from the object list representation §B11 returned by the GET Domain Services resource §B7.
+Domain services can be accessed from the object list representation xref:section-b/chapter-11.adoc[§B11] returned by the GET Domain Services resource xref:section-b/chapter-07.adoc[§B7].
 
 == 15.1 HTTP GET
 

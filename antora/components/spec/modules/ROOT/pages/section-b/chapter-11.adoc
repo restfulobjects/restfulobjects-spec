@@ -1,7 +1,7 @@
 = 11 LIST REPRESENTATION
 
-The List representation consists of a list of links to domain object §C14 or domain service §C15 resources.
-Typically it is obtained as the result of invoking a query action, when it is in-lined within the action result representation §C19.4. It is also be obtained directly from the Services resource §B7, when it provides a list of links to domain service resources; . the only difference is that the "href" will be a link to a domain service resource §C15 rather than a domain object resource §C14.
+The List representation consists of a list of links to domain object xref:section-c/chapter-14.adoc[§C14] or domain service xref:section-c/chapter-15.adoc[§C15] resources.
+Typically it is obtained as the result of invoking a query action, when it is in-lined within the action result representation xref:section-c/chapter-19.adoc[§C19].4. It is also be obtained directly from the Services resource xref:section-b/chapter-07.adoc[§B7], when it provides a list of links to domain service resources; . the only difference is that the "href" will be a link to a domain service resource xref:section-c/chapter-15.adoc[§C15] rather than a domain object resource xref:section-c/chapter-14.adoc[§C14].
 
 The media type for a list representation will always be one of:
 
@@ -21,7 +21,7 @@ The media type for a list representation will always be one of:
 JSON-Property Description links list of links to other resources.
 links[rel=self]    (optional) link to the resource that generated this list.
 Present only for domain services.
-links[rel=…/element-type]    link to the domain type for the elements within the list – if the “domainModel” optional capability §B8 is implemented.
+links[rel=…/element-type]    link to the domain type for the elements within the list – if the “domainModel” optional capability xref:section-b/chapter-08.adoc[§B8] is implemented.
 value the actual list of links to the domain object resources (or domain service resources) extensions additional information about the resource.
 A "self" link will be present only if the representation was generated from the domain services resource §7. Restful Objects defines no standard child properties of the “extensions” json-property.
 Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require.

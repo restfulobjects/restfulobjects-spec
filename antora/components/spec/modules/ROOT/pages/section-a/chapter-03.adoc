@@ -13,7 +13,7 @@ The sections that follow each indicate the query parameter that is used to reque
 
 Some clients may wish to perform client-side validation before submitting changes to the server: examples include the enforcement of mandatory properties (or action parameters) and the enforcement of maximum string length.
 Such rules are applicable to any domain object instance of that given type, and so may be defined on the domain type Restful Objects defines two ways in which such domain type information may be represented: a "simple" scheme and a "formal" scheme, defined below.
-Common to both is that the information is accessible by way of links and extensions §2.11. A client may query the version resource §B8 to determine the server's support for domain metadata:
+Common to both is that the information is accessible by way of links and extensions §2.11. A client may query the version resource xref:section-b/chapter-08.adoc[§B8] to determine the server's support for domain metadata:
 
 * a value of "none" indicates that the implementation does not provide domain type information;
 * a value of "simple" or "formal" means that the server supports only that scheme
@@ -75,7 +75,7 @@ private int id; private Date since;
 }
 The resources to expose the metadata for an instance of this class are shown in xref:section-d.adoc[§D].
 
-FIGURE 3: DOMAIN OBJECTS VS DOMAIN TYPES Domain type resources are pre-defined for the scalar types §D21.3. For non-scalar types, the domain type is the concatenation of "http://~/domain-types/"  + the domain type id.
+FIGURE 3: DOMAIN OBJECTS VS DOMAIN TYPES Domain type resources are pre-defined for the scalar types xref:section-d/chapter-21.adoc[§D21].3. For non-scalar types, the domain type is the concatenation of "http://~/domain-types/"  + the domain type id.
 The link to the domain type resource is shown in the domain object representation as:
 { ...
 "links": [ { "rel": "describedby", "href": "http://~/domain-types/CUS", "type": "application/json;profile=\".../domain-type\"", "method": "GET" }, ...
@@ -95,7 +95,7 @@ For example, a Customer’s firstName property might disallow certain characters
 A validation failure will generate a 422 "unprocessable entity" status code, and in addition, a warning message will be returned.
 This will either be a simple Warning header, or, dependent on the request, may be part of the response, in the form of an"invalidReason" json-property.
 x-ro-validate-only reserved query parameter On occasion a client may want to validate one or more property fields, before attempting to modify an object, or may want to validate arguments before attempting to invoke the action.
-Restful Objects defines an optional capability §B8 whereby the client can set the reserved x–ro-validate-only query param for the request to indicate that only validation should be performed:
+Restful Objects defines an optional capability xref:section-b/chapter-08.adoc[§B8] whereby the client can set the reserved x–ro-validate-only query param for the request to indicate that only validation should be performed:
 If the validation completes, then a 204 "No content " status code will be returned.
 If a validation failure occurs, then the response will be 422 "unprocessable entity" with corresponding Warning header / "invalidReason" json-properties.
 
@@ -108,19 +108,19 @@ If followed, such a link returns a representation with the appropriate content-t
 { "links": [
 { "rel": ".../attachment;property=\"photo\"", "href": "http://~/objects/CUS/123/properties/photo", "type": "image/jpeg", "method": "GET" } ...
 ]
-} The href of this link should be the same as the property resource §C16.1, however the client should provide a different Accept header in order to obtain the attachment.
-The values of blob or clob properties are set/cleared using PUT (§C16.2) and DELETE (§C16.3), as for any other property.
+} The href of this link should be the same as the property resource xref:section-c/chapter-16.adoc[§C16].1, however the client should provide a different Accept header in order to obtain the attachment.
+The values of blob or clob properties are set/cleared using PUT (xref:section-c/chapter-16.adoc[§C16].2) and DELETE (xref:section-c/chapter-16.adoc[§C16].3), as for any other property.
 The Content-Type header specifies the media type when being PUT (e.g. image/jpeg).
 A client can determine whether an implementation supports blobs/clobs by inspecting the version resource §B8.
 
 == 3.4 Proto-persistent Objects
 
 As described in §2.2, a proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
-The ultimate persistence of the entity is therefore under the control of the client, which is done by POSTing to the Objects of Type resource, §B9.1. Support for proto-persistent objects is an optional capability because providing a general-purpose persistence capability may not be practicable for some implementations.
+The ultimate persistence of the entity is therefore under the control of the client, which is done by POSTing to the Objects of Type resource, xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]. Support for proto-persistent objects is an optional capability because providing a general-purpose persistence capability may not be practicable for some implementations.
 
 == 3.5 Object Deletion
 
-Persisted objects can be deleted through the DELETE Object resource, §C14.3. This is an optional capability because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
+Persisted objects can be deleted through the DELETE Object resource, xref:section-c/chapter-14.adoc[§C14].3. This is an optional capability because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
 If the implementation does support the capability then it must also determine that it is safe to delete the object.
 A 405 ("method not allowed") error will be returned otherwise.
 

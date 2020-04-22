@@ -1,7 +1,7 @@
 = 27 DOMAIN TYPE ACTION INVOKE RESOURCE
 
 The domain type action invoke resource represents an action that can be invoked on the domain type itself.
-Conceptually it is similar to the domain object action invoke resource, §C19, but the action is on the type rather than an instance of the type.
+Conceptually it is similar to the domain object action invoke resource, xref:section-c/chapter-19.adoc[§C19], but the action is on the type rather than an instance of the type.
 Restful Objects defines the following type actions.
 Type action See Description isSubtypeOf() §27.1 to determine if a domain type is a subtype of (or the same as) a given type.
 isSupertypeOf() §27.2 to determine if a domain type is a supertype of (or the same as) a given type.
@@ -15,8 +15,8 @@ The endpoint URL for this resource is:
 * *is a built-in JSON type
 
 * {typeactionId} identifies the action Both of the defined type actions take a single argument representing a link to the supertype.
-As for the invocation of object actions (§C19), type actions return a representation that links back to the type action and also to the result of the action.
-Both the currently defined type actions return a scalar §B12. The links from the domain type action result representation to other resources are as shown in the diagram below:
+As for the invocation of object actions (xref:section-c/chapter-19.adoc[§C19]), type actions return a representation that links back to the type action and also to the result of the action.
+Both the currently defined type actions return a scalar xref:section-b/chapter-12.adoc[§B12]. The links from the domain type action result representation to other resources are as shown in the diagram below:
 
 FIGURE 22: DOMAIN TYPE ACTION REPRESENTATION The representations returned by type actions follow the format:
 { "links" : [ { "rel" : "self", "href" : "http://~/domain-types/CUS/typeactions/... /invoke", "method" : "GET", "type": "application/json;profile=\".../type-action-result\"", "arguments" : ... } ], "id": ... "value" : ..., "extensions" : { ... } } where:
@@ -72,7 +72,7 @@ For example:
 
 ==== 27.1.2.3 Body (representation)
 
-The JSON representation returned The JSON representation returned is a type-action-result representation (as described earlier) with a scalar representation §B12 in-lined.
+The JSON representation returned The JSON representation returned is a type-action-result representation (as described earlier) with a scalar representation xref:section-b/chapter-12.adoc[§B12] in-lined.
 For example, if checking that the Customers domain type is a subtype of BasketOwner interface type, then the returned representation might look something like:
 { "links" : [ { "rel" : "self", "href" :
 "http://~/domain-types/CUS/typeactions/isSubtypeOf/invoke", "method" : "GET", "type" : "application/json;profile=\".../type-action-result\"", "arguments" : { "supertype" : { "href" : "http://~/domain-types/x.BasketOwner"
@@ -149,7 +149,7 @@ For example:
 
 ==== 27.2.2.3 Body (representation)
 
-The JSON representation returned The JSON representation returned is a typeactionresult representation (as described earlier) with a scalar representation §B12 in-lined.
+The JSON representation returned The JSON representation returned is a typeactionresult representation (as described earlier) with a scalar representation xref:section-b/chapter-12.adoc[§B12] in-lined.
 For example, if checking that the BasketOwner domain type is a supertype of the Customer domain type, then the returned representation might look something like:
 { "links" : [ { "rel" : "self", "href" : "http://~/domain-types/x.BasketOwner
 /typeactions/isSupertypeOf/invoke", "method" : "GET", "type" : "application/json;profile=\".../type-action-result\"", "arguments" : { "supertype" : { "href" : "http://~/domain-types/CUS"

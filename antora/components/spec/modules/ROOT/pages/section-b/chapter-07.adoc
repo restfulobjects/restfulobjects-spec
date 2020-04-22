@@ -1,8 +1,9 @@
 = 7	DOMAIN SERVICES RESOURCE
 
-Returns a list §11 of (links to) domain service resources §C15. The endpoint URL for this resource is:
+Returns a list §11 of (links to) domain service resources xref:section-c/chapter-15.adoc[§C15]. The endpoint URL for this resource is:
 /services
 
+[#_7-1-http-get]
 == 7.1 HTTP GET
 
 === 7.1.1 GET Request
@@ -42,4 +43,4 @@ The returned representation is a simple list §11, but with an additional link w
 } ], "value" : [ { "rel": ".../service;serviceId="toDoItems", "href" : "http://~/services/toDoItems", "method" : "GET", "type" : "application/json;profile=\".../object\"", "title": To Do Items" }, { "rel": ".../service;serviceId="categories", "href" : "http://~/services/categories", "method" : "GET", "type" : "application/json;profile=\".../object\"", "title": "Categories" }, ...
 ], "extensions": { ... } } The links from the services representation to other resources are as shown in the diagram below:
 
-FIGURE 6: SERVICES REPRESENTATION Note that the links in this list will point to domain service resources §C15, rather than to domain object resources §C14.
+FIGURE 6: SERVICES REPRESENTATION Note that the links in this list will point to domain service resources xref:section-c/chapter-15.adoc[§C15], rather than to domain object resources xref:section-c/chapter-14.adoc[§C14].

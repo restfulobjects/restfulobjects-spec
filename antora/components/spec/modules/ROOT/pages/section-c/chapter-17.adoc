@@ -224,5 +224,5 @@ Implementations that support the formal scheme §A3.1.2 provide an additional li
 "links": [
 { "rel": "describedby", "href": "http://~/domain-types/ORD/collections/items", "type": "application/json;profile=\".../type-collection\"", "method": "GET" }, ...
 ]
-which links to the domain collection description resource §D23.2 corresponding to this domain object collection.
+which links to the domain collection description resource xref:section-d/chapter-23.adoc[§D23].2 corresponding to this domain object collection.
 
