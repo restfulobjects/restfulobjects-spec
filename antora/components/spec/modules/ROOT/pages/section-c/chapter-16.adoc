@@ -68,7 +68,7 @@ As per §13.1 (200), returning an object property representation §16.4.
 == 16.2 HTTP PUT
 
 Update property value of an object, or check that the proposed new value for the property would be valid without making the change.
-The PUT method may be used to clear the property by passing in a null value, but the recommended practice is to use DELETE xref:section-c/chapter-16.adoc[§C16].3 for that purpose.
+The PUT method may be used to clear the property by passing in a null value, but the recommended practice is to use DELETE xref:section-c/chapter-16.adoc#_16_3_http_delete[§C16.3] for that purpose.
 Properties that are blob/clobs support two different request formats.
 Non blob/clobs support only a single request format.
 
@@ -165,6 +165,7 @@ However, the DELETE Object Property resource has been included in the spec becau
 
 As per §13.1 (200), returning an object property representation §16.4. Because the resource has mutated the state, there will be no self link (so that it cannot be bookmarked by clients).
 
+[#_16_4_representation]
 == 16.4 Representation
 
 The domain object property representation provides full details about a property of a domain object instance, and provides links to resources to allow the property to be modified (if it is not disabled).
@@ -237,5 +238,5 @@ Implementations that support the formal scheme §A3.1.2 provide an additional li
 "http://~/domain-types/ORD/properties/deliveryTime", "type":
 "application/json;profile=\".../ property-description\"", "method": "GET" }
 ]
-which links to the domain property description resource xref:section-d/chapter-22.adoc[§D22].2 corresponding to this domain object property.
+which links to the domain property description resource xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2] corresponding to this domain object property.
 

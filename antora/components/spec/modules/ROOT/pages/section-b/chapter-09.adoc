@@ -40,7 +40,7 @@ Persist a domain object by posting a cut-down version of its representation.
 
 ==== 9.1.1.2 Body
 
-Because this resource is in a sense "uploading" a new object, the body is the cut-down version of the domain object representation xref:section-c/chapter-14.adoc[§C14].4. It consists of:
+Because this resource is in a sense "uploading" a new object, the body is the cut-down version of the domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]. It consists of:
 
 * members[memberType=property]
 In other words, it includes all properties and their values (including those that would normally be hidden), along with a reference to the domaintype of the object being persisted.
@@ -58,7 +58,7 @@ For example:
 
 === 9.1.2 POST Successful Response
 
-As per xref:section-c/chapter-13.adoc[§C13].2 (201), returning a domain object representation xref:section-c/chapter-14.adoc[§C14].4.
+As per xref:section-c/chapter-13.adoc#_13_2_http_put[§C13.2] (201), returning a domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4].
 
 === 9.1.3 POST Validation Only and Succeeded
 

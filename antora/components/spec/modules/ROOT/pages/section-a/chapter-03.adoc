@@ -2,7 +2,7 @@
 
 While Restful Objects aims to define a consistent standard for RESTful interactions with domain models, some useful features might be easy for one framework to accomplish, but much more difficult for another.
 Therefore the specification defines a small number of capabilities that are optional.
-Implementations advertise the capabilities that they support through the "version" resource, §B8. In some cases, clients can vary the behaviour of these capabilities by providing optional query parameters.
+Implementations advertise the capabilities that they support through the "version" resource, xref:section-b/chapter-08.adoc[§B8]. In some cases, clients can vary the behaviour of these capabilities by providing optional query parameters.
 For example, if argument validation is supported by the implementation, then the client can use the "x-ro-validate-only" query parameter to suppress modification of the resource, and simply check values.
 In order to minimize clashes with other (application) parameters, the optional query parameters all have the "x-ro-" prefix: the "x-" is intended to indicate a non-standard parameter; the "ro-" to indicate that the parameter is specific to Restful Objects.
 If a framework has not implemented some optional aspect of the Restful Objects specification and can reasonably continue, then it should ignore the request.
@@ -75,7 +75,7 @@ private int id; private Date since;
 }
 The resources to expose the metadata for an instance of this class are shown in xref:section-d.adoc[§D].
 
-FIGURE 3: DOMAIN OBJECTS VS DOMAIN TYPES Domain type resources are pre-defined for the scalar types xref:section-d/chapter-21.adoc[§D21].3. For non-scalar types, the domain type is the concatenation of "http://~/domain-types/"  + the domain type id.
+FIGURE 3: DOMAIN OBJECTS VS DOMAIN TYPES Domain type resources are pre-defined for the scalar types xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3]. For non-scalar types, the domain type is the concatenation of "http://~/domain-types/"  + the domain type id.
 The link to the domain type resource is shown in the domain object representation as:
 { ...
 "links": [ { "rel": "describedby", "href": "http://~/domain-types/CUS", "type": "application/json;profile=\".../domain-type\"", "method": "GET" }, ...
@@ -108,10 +108,10 @@ If followed, such a link returns a representation with the appropriate content-t
 { "links": [
 { "rel": ".../attachment;property=\"photo\"", "href": "http://~/objects/CUS/123/properties/photo", "type": "image/jpeg", "method": "GET" } ...
 ]
-} The href of this link should be the same as the property resource xref:section-c/chapter-16.adoc[§C16].1, however the client should provide a different Accept header in order to obtain the attachment.
-The values of blob or clob properties are set/cleared using PUT (xref:section-c/chapter-16.adoc[§C16].2) and DELETE (xref:section-c/chapter-16.adoc[§C16].3), as for any other property.
+} The href of this link should be the same as the property resource xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1], however the client should provide a different Accept header in order to obtain the attachment.
+The values of blob or clob properties are set/cleared using PUT (xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2]) and DELETE (xref:section-c/chapter-16.adoc#_16_3_http_delete[§C16.3]), as for any other property.
 The Content-Type header specifies the media type when being PUT (e.g. image/jpeg).
-A client can determine whether an implementation supports blobs/clobs by inspecting the version resource §B8.
+A client can determine whether an implementation supports blobs/clobs by inspecting the version resource xref:section-b/chapter-08.adoc[§B8].
 
 == 3.4 Proto-persistent Objects
 
@@ -120,7 +120,7 @@ The ultimate persistence of the entity is therefore under the control of the cli
 
 == 3.5 Object Deletion
 
-Persisted objects can be deleted through the DELETE Object resource, xref:section-c/chapter-14.adoc[§C14].3. This is an optional capability because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
+Persisted objects can be deleted through the DELETE Object resource, xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14]. This is an optional capability because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
 If the implementation does support the capability then it must also determine that it is safe to delete the object.
 A 405 ("method not allowed") error will be returned otherwise.
 

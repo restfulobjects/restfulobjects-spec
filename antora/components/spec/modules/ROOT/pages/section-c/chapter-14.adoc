@@ -111,6 +111,7 @@ A 405 ("method not allowed") error will be returned otherwise.
 
 As per §13.3 (204), returning no representation.
 
+[#_14_4_representation]
 == 14.4 Representation
 
 The domain object representation provides summary information about a single domain object instance, along with links to other sub-resources by which the domain object may be interacted with, or mutated.
@@ -144,7 +145,7 @@ Discussed further below.
 links[rel=.../delete]    (optional) delete the (persistent) domain object.
 Discussed further below.
 links[rel=icon]    (optional) link to an image representing a scalable icon for this object extensions additional information about the resource.
-"domainType" The "domainType" json-property is only present for the simple scheme §A3.1.1; if the formal scheme §A3.1.2 is supported then the "domainType" can be obtained from the domain-type representation xref:section-d/chapter-22.adoc[§D22].2. Domain services do not have a "domainType" json-property.
+"domainType" The "domainType" json-property is only present for the simple scheme §A3.1.1; if the formal scheme §A3.1.2 is supported then the "domainType" can be obtained from the domain-type representation xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2]. Domain services do not have a "domainType" json-property.
 "instanceId" , "serviceId" and "links[rel=self]" The "instanceId" json-properties is present for persistent domain entities and for addressable view models §A2.2, and can (with the "domainType" json-property) be used to construct URLs to other resources for the domain object as required.
 Proto-persistent domain objects and (non-addressable) view models §A2.2 do not have an "instanceId" because they do not correspond to any server-side state that can be directly addressed; nor do they have a ‘self’ link, for the same reasons.The "serviceId" json-property performs much the same function as "instanceId", allowing the URL for domain services to be constructed.
 The "serviceId" is present only for domain services.
@@ -156,7 +157,7 @@ This link is not guaranteed to be present, however; if none of the properties of
 Also, proto-persistent domain objects and view models will never have an update link.
 "links[rel=.../delete]" For persistent domain objects, there may optionally be a rel=".../delete" link to delete the domain object.
 This links is not guaranteed to be present, however.
-Support for deleting objects is an optional capability §B8.2, and so is not guaranteed to be supported by every framework implementation.
+Support for deleting objects is an optional capability xref:section-b/chapter-08.adoc[§B8].2, and so is not guaranteed to be supported by every framework implementation.
 If it is supported, then the implementation should define its own mechanism to restrict which objects can be deleted, and which may not.
 Also, proto-persistent domain objects and view models will never have a delete link.
 "links[rel=.../persist]" For proto-persistent domain objects, a rel=".../persist" link is provided.

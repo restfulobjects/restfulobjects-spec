@@ -68,7 +68,7 @@ JSON-Property Description links list of links to resources links[rel=self]    li
 friendlyName the singular form of the type, as would be suitable for rendering in a UI.
 pluralName the plural form of the type, as would be suitable for rendering in a UI.
 description a description of the type, e.g. to render as a tooltip.
-isService indicates whether the type is a domain service or not typeActions map of type action invocation resources, §27. members map of links to resources representing a description of a domain object property xref:section-d/chapter-23.adoc[§D23].1, a domain object collection xref:section-d/chapter-23.adoc[§D23].2, or a domain object action xref:section-d/chapter-24.adoc[§D24].2. extensions map of additional information about the resource.
+isService indicates whether the type is a domain service or not typeActions map of type action invocation resources, §27. members map of links to resources representing a description of a domain object property xref:section-d/chapter-23.adoc[§D23].1, a domain object collection xref:section-d/chapter-23.adoc#_23_2_representation[§D23.2], or a domain object action xref:section-d/chapter-24.adoc#_24_2_representation[§D24.2]. extensions map of additional information about the resource.
 "links" The "links" list may contain links to a number of optional resources.
 For example:
 "links": [ { "rel": "icon", "href": "http://~/images/Customer-32x32.jpg", "type": "image/jpg", "method": "GET" }, { "rel": "help", "href": "http://~/videos/training/Customer-walkthru.mpg", "type": "audio/mpeg", "method": "GET" }, ...

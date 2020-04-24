@@ -8,7 +8,7 @@ In Roy Fielding's thesis that originally describes the REST architectural style,
 The examples of resources given by Fielding in his thesis tend towards shared information, for example a document, an image, "today's weather in Los Angeles", or "revision 1.2.7 of a source code file".
 These examples of resources are shared in the sense that any user could ask the system for a representation of the resource, and would obtain broadly the same information.
 Put another way, these resources correspond to domain entities, with the representations being a projection of the state of those entities.
-Their representation may need to be versioned to allow clients to evolve independently of server, but that is a separate issue (see §30).
+Their representation may need to be versioned to allow clients to evolve independently of server, but that is a separate issue (see xref:section-e/chapter-30.adoc[§30]).
 Most of the examples in this specification are of domain entities: customer, order, product and so forth.
 The representations of these entities have hypermedia controls (links) to enable a client to navigate between entities, either as a result of following a property or collection link, or as the result of invoking an action.
 The links available may vary depending upon both the state of the resource, and upon the authorization of the user requesting the representation.
@@ -30,7 +30,7 @@ Once some products have been added, it may additionally provide a link to checko
 Once the checkout is started, the links will change to the various steps of the checkout process (payment, delivery options and so on).
 Restful Objects does not specify how implementations should protect personal state, but there are at lest two possible approaches.
 In the first, implementations can exploit the fact that URLs are opaque, and encrypt the instance identifier component.
-This is discussed further and in more general terms in §30. The second approach is for the implementation to provide a mechanism to distinguish between a resource that holds personal state and one that holds shared state, and ensued that a user is only ever served up "their" personal resources.
+This is discussed further and in more general terms in xref:section-e/chapter-30.adoc[§30]. The second approach is for the implementation to provide a mechanism to distinguish between a resource that holds personal state and one that holds shared state, and ensued that a user is only ever served up "their" personal resources.
 This would be analogous to querying from a database view that restricts rows by userId:
 create view MyPersonalResource as select * from AllPersonalResourses where user_id = @@user_id     -- current user id One way to implement this could be though a reserved/annotated "UserId" property (or method) in the domain object; for example:
 public class ShoppingCart { @UserId public int getPersonalTo() { … }

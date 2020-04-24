@@ -1,7 +1,7 @@
 = 18 ACTION RESOURCE & REPRESENTATION
 
 The action resource can be used to obtain the detailed domain object action representation §18.2 for a particular domain object instance or for a particular domain service.
-This provides a description of the action only; to invoke it, the object action invoke sub-resource xref:section-c/chapter-18.adoc[§C18].2 is used.
+This provides a description of the action only; to invoke it, the object action invoke sub-resource xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2] is used.
 
 This resource is typically requested as a result of following a link from the domain object representation §14.4. The endpoint URL for this resource for an action on a domain service is:
 /services/{serviceId}/actions/{actionId}
@@ -49,6 +49,7 @@ Obtain a detailed representation of an action §18.2.
 
 As per §13.1 (200), returning an object action representation §18.2.
 
+[#_18_2_representation]
 == 18.2 Representation
 
 The domain object action representation provides full details of an action on a domain object instance, and provides links to resources that can invoke the action (if allowed).

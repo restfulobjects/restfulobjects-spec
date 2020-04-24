@@ -153,6 +153,7 @@ A single query argument should be formatted as a single argument node §A2.9.2.2
 
 As per §13.1 (200), returning an object collection representation §17.5. Because the resource has mutated the state, there will be no self link (so that it cannot be bookmarked by clients).
 
+[#_17_5_representation]
 == 17.5 Representation
 
 The domain object collection representation provides full details of a collection of a domain object, and provides links to resources that can modify the contents of the collection, if allowable.
@@ -224,5 +225,5 @@ Implementations that support the formal scheme §A3.1.2 provide an additional li
 "links": [
 { "rel": "describedby", "href": "http://~/domain-types/ORD/collections/items", "type": "application/json;profile=\".../type-collection\"", "method": "GET" }, ...
 ]
-which links to the domain collection description resource xref:section-d/chapter-23.adoc[§D23].2 corresponding to this domain object collection.
+which links to the domain collection description resource xref:section-d/chapter-23.adoc#_23_2_representation[§D23.2] corresponding to this domain object collection.
 

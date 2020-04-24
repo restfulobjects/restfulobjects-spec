@@ -1,7 +1,7 @@
 = 11 LIST REPRESENTATION
 
 The List representation consists of a list of links to domain object xref:section-c/chapter-14.adoc[§C14] or domain service xref:section-c/chapter-15.adoc[§C15] resources.
-Typically it is obtained as the result of invoking a query action, when it is in-lined within the action result representation xref:section-c/chapter-19.adoc[§C19].4. It is also be obtained directly from the Services resource xref:section-b/chapter-07.adoc[§B7], when it provides a list of links to domain service resources; . the only difference is that the "href" will be a link to a domain service resource xref:section-c/chapter-15.adoc[§C15] rather than a domain object resource xref:section-c/chapter-14.adoc[§C14].
+Typically it is obtained as the result of invoking a query action, when it is in-lined within the action result representation xref:section-c/chapter-19.adoc#_19_4_representation[§C19]. It is also be obtained directly from the Services resource xref:section-b/chapter-07.adoc[§B7], when it provides a list of links to domain service resources; . the only difference is that the "href" will be a link to a domain service resource xref:section-c/chapter-15.adoc[§C15] rather than a domain object resource xref:section-c/chapter-14.adoc[§C14].
 
 The media type for a list representation will always be one of:
 
