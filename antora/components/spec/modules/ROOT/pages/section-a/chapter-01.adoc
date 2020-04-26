@@ -2,7 +2,7 @@
 = 1	INTRODUCTION
 :idprefix: _
 
-Restful Objects is a public specification for a set of RESTful.footnote:[link:http://en.wikipedia.org/wiki/REST[]] resources.footnote:[link:http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm[]] by which a client application can interact with a domain model on a server using HTTP.
+Restful Objects is a public specification for a set of RESTful footnote:[link:http://en.wikipedia.org/wiki/REST[]] resources footnote:[link:http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm[]] by which a client application can interact with a domain model on a server using HTTP.
 These resources generate JSON representations along with corresponding media types.
 
 This chapter discusses further the goals and approach taken by the spec.
@@ -76,7 +76,7 @@ In contrast, if a RESTful API is custom-written and tuned to specific use cases,
 Restful Objects eliminates the need for the project team to explicitly document the RESTful API to their system, because consumers can infer the structure either directly from the underlying domain classes, or by querying the domain metamodel resources xref:section-d.adoc#section-d-domain-type-resources[§D].
 
 * *Common server code.*
-Restful Objects is intended to enourage frameworks to be written that implement the spec (indeed, such frameworks already exist.footnote:[A list of known implementations of the Restful Objects specification is maintained at link:http://www.restfulobjects.org[].] ).
+Restful Objects is intended to enourage frameworks to be written that implement the spec (indeed, such frameworks already exist footnote:[A list of known implementations of the Restful Objects specification is maintained at link:http://www.restfulobjects.org[].] ).
 A project team adopting such a framework can then focus solely on implementing business logic through domain classes, and know that the business logic will be exposed in a standard and consistent fashion.
 
 * *Common client code.*
@@ -103,7 +103,7 @@ The intention is to make the specification accessible to all its target audience
 Restful Objects was conceived by Dan Haywood, who is also the primary author of this document.
 Substantial contributions have been made by Richard Pawson and Stef Cascarini.
 
-The specification is licensed under Creative Commons Attribution Share-Alike 3.0.footnote:[http://creativecommons.org/licenses/by-sa/3.0/] (the same license as Wikipedia).
+The specification is licensed under Creative Commons Attribution Share-Alike 3.0 footnote:[http://creativecommons.org/licenses/by-sa/3.0/] (the same license as Wikipedia).
 As such the document may be shared and adapted.
 However, any derivative work must be attributed back to the author of this document, and must be licensed under the same license to this one.
 

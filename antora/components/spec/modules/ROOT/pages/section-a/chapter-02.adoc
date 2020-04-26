@@ -315,7 +315,7 @@ Objects/ +
 |===
 The columns indicate the domain object resources shown in the Figure 1, plus the Objects Of Type resource xref:section-b/chapter-09.adoc[§B9] used for persisting new object instances.
 
-The header row indicates the resources as templated URIs:
+The header row indicates the resources as templated URIs.footnote:[http://tools.ietf.org/html/draft-gregorio-uritemplate-08]:
 
 * {DType} is the domain type identifier that uniquely represents the domain type.
 +
@@ -338,7 +338,7 @@ Getting the representation of an action does not invoke the action; rather the r
 
 Modifying the state of a domain object is performed through resources supporting HTTP PUT, DELETE or POST. The HTTP method to use to request the modification depends upon the resource's semantics:
 
-* if the resource being called is idempotent, meaning that it will change persisted objects but calling that same resource again (with the same inputs) will have no further effect , then either HTTP PUT or HTTP DELETE is used
+* if the resource being called is idempotent, meaning that it will change persisted objects but calling that same resource again (with the same inputs) will have no further effect.footnote[In computer science terms, an idempotent function is one that if repeatedly applied, has the same impact as being applied once ; see http://en.wikipedia.org/wiki/Idempotence], then either HTTP PUT or HTTP DELETE is used
 
 * if the resource being called is not idempotent, then HTTP POST is used.
 
@@ -355,12 +355,12 @@ In either case references are removed from the collection using HTTP DELETE xref
 
 Actions are invoked through the '/invoke’ sub-resource.
 The method used depends on the action's semantics: if the action is idempotent, then PUT xref:section-c/chapter-19.adoc#_19_2_http_put[§C19.2] is used, otherwise POST xref:section-c/chapter-19.adoc#_19_3_http_post[§C19.3] is used.
-However, there is a further special case for actions: if the action is query-only and so makes no changes to persisted objects at all , then Restful Objects allows HTTP GET xref:section-c/chapter-19.adoc#_19_1_http_get[§C19.1] to be used to invoke the action.
+However, there is a further special case for actions: if the action is query-only and so makes no changes to persisted objects at all.footnote:[In computer science terms, a query-only action is "side-effect-free": it does not make any change to persisted data.  See http://en.wikipedia.org/wiki/Side_effect_(computer_science). A query only action is always idempotent)] , then Restful Objects allows HTTP GET xref:section-c/chapter-19.adoc#_19_1_http_get[§C19.1] to be used to invoke the action.
 
 Whether an action is query-only or is idempotent is down to the implementation to determine and to enforce.
 
 Not every HTTP method applies to every resource, and where it does not the specification requires that a 405 ('method not allowed') status code is returned.
-This will be accompanied by an *Allow* header to indicate which methods are allowed by the resource.
+This will be accompanied by an *Allow* header to indicate which methods are allowed by the resource.footnote:[http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.7].
 A 405 will also be returned if the client attempts, for example, to invoke an action with a GET that is not query-only (or cannot be determined to be so by the server implementation).
 
 In addition to the domain object resources, there are also resources for domain services.
@@ -559,7 +559,7 @@ See xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§3.3].
 [#_2-4-1-representationtype-profile-parameter]
 === 2.4.1 RepresentationType ("profile" parameter)
 
-The representation type is used to indicate the nature of the representation, and is specified as the value of the "profile" parameter . By inspecting the value, the client can dynamically determine how to deal with a representation.
+The representation type is used to indicate the nature of the representation, and is specified as the value of the "profile" parameter.footnote:[link:http://buzzword.org.uk/2009/draft-inkster-profile-parameter-00.html[]]. By inspecting the value, the client can dynamically determine how to deal with a representation.
 
 The format of the media type with representation type is therefore:
 
@@ -648,7 +648,7 @@ Every representation defined by the Restful Objects spec has a corresponding rep
 
 While the "profile" parameter informs the client of the representation type, in the case of an object representation (that is, for profile="urn:org.restfulobjects:repr-types/object") there is no easy way for the client to distinguish between, for example, (the representation of) a Customer and (the representation of) an Order.
 
-For clients that want to handle such representations differently, the spec defines an additional "x-ro-domain-type" parameter.
+For clients that want to handle such representations differently, the spec defines an additional "x-ro-domain-type" parameter.footnote:[Unlike the "profile" parameter, there is no standard or semi-standard parameter to reuse.  The "x-ro-" prefix of the "x-ro-domain-type" parameter is to avoid name clashes with other emerging standards.].
 
 Similarly, when a list of objects is returned (that is, for "profile" is any of "urn:org.restfulobjects:repr-types/action-result", "urn:org.restfulobjects:repr-types/object-collection" or "urn:org.restfulobjects:repr-types/list" ), there is no easy way for the client to know what type the elements of the list are.
 
@@ -698,7 +698,7 @@ In all the above cases the client can use this value to process the representati
 [#_2-4-3-handling-of-accept-headers]
 === 2.4.3 Handling of Accept headers
 
-The HTTP protocol defines the Accept request header for the client to specify which media types it can consume; the server then indicates the actual media type using the Content-Type response header.
+The HTTP protocol footnote:[link:http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html[]] defines the Accept request header for the client to specify which media types it can consume; the server then indicates the actual media type using the Content-Type response header.
 If the server is unable to return the requested type, then it must return a 406 "not acceptable" status return code.
 
 Restful Objects defines the following behaviour:
@@ -740,13 +740,13 @@ Even if Accept header validation has been suppressed, the Content-Type returned 
 [#_2-5-scalar-datatypes-and-formats]
 == 2.5 Scalar datatypes and formats
 
-JSON defines only the following scalar datatypes.footnote:[http://json.org/, also http://en.wikipedia.org/wiki/JSON#Data_types.2C_syntax_and_example] :
+JSON defines only the following scalar datatypes footnote:[http://json.org/, also http://en.wikipedia.org/wiki/JSON#Data_types.2C_syntax_and_example] :
 
 * Number (double precision floating-point format)
 * String (double-quoted Unicode, UTF-8 by default)
 * Boolean (true or false)
 
-The JSON schema specification.footnote:[http://tools.ietf.org/html/draft-zyp-json-schema-03, section 5.1] also defines:
+The JSON schema specification footnote:[http://tools.ietf.org/html/draft-zyp-json-schema-03, section 5.1] also defines:
 
 * Integer (a number with no floating-point value)
 
@@ -756,7 +756,7 @@ Therefore, representing values of these datatypes requires that the information 
 
 The Restful Objects spec defines the "*format*" json-property as an additional modifier to describe how to interpret the value of a string or number json-property.
 
-The values of the "*format*" json-property for string values are.footnote:[A number of these are also defined in the JSON schema, http://tools.ietf.org/html/draft-zyp-json-schema-03, section 5.23] :
+The values of the "*format*" json-property for string values are footnote:[A number of these are also defined in the JSON schema, http://tools.ietf.org/html/draft-zyp-json-schema-03, section 5.23] :
 
 * string
 +
@@ -805,7 +805,7 @@ the number should be interpreted as a float-point decimal.
 +
 the number should be interpreted as an integer.
 
-If there is no "*format*" json-property or domain metadata, then the value is interpreted according to standard Javascript rules, as documented in the Ecmascript standard . In essence: if there is NO decimal point and the number is in the range [-9,007,199,254,740,992, +9,007,199,254,740,992], then it is an integer.
+If there is no "*format*" json-property or domain metadata, then the value is interpreted according to standard Javascript rules, as documented in the Ecmascript standard footnote:[link:http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf[]]. In essence: if there is NO decimal point and the number is in the range [-9,007,199,254,740,992, +9,007,199,254,740,992], then it is an integer.
 Otherwise, the number is a 64-bit IEE754 floating point number.
 
 Note that the internationalization of dates (e.g. formatting a date as MM/DD/YYYY for the en_US locale) is a responsibility of the client, not the server implementation.
@@ -890,7 +890,7 @@ For example, an Order representation may have a collection of OrderItems, and ma
 The "rel" json-property indicates the nature of the relationship of the related resource to the resource that generated this representation.
 The value of this property is a URN, meaning that it is unique value within a defined namespace (specific to Restful Objects).
 
-The value of the "rel" json-property either takes one of the IANA-specified rel values or a value specific to Restful Objects.
+The value of the "rel" json-property either takes one of the IANA-specified rel values footnote:[link:http://www.iana.org/assignments/link-relations/link-relations.xml[]] or a value specific to Restful Objects.
 
 [#_2-7-1-1-iana-specified-rel-values]
 ==== 2.7.1.1 IANA-specified rel values
@@ -1180,9 +1180,8 @@ The second is the representation returned by any action invoked by either a PUT 
 [#_2-9-resource-argument-representation]
 == 2.9 Resource argument representation
 
-[UP TO HERE]
-
 In many cases the resources defined by the Restful Objects spec require additional data, for example representing either action arguments or object properties.
+
 Restful Objects defines two mechanisms for passing in such arguments.
 The ‘Formal’ mechanism may be used in all circumstances.
 However, for certain specific situations there is the option to use the “Simple” form, which has the advantage of being simpler to construct and easier for a human to read.
@@ -1191,8 +1190,13 @@ However, for certain specific situations there is the option to use the “Simpl
 === 2.9.1 Simple Arguments
 
 If a query-only action is being invoked through GET xref:section-c/chapter-19.adoc#_19_1_http_get[§C19.1], and all arguments are scalar values, then the action may be invoked using simple ‘param=value’ arguments.
+
 For example:
-GET services/x.TaskRepository/actions/findTasks?tagged=urgent However, if either of these conditions are not true (the action invoked is called using PUT or POST, or if the action takes arguments that are references to other objects) then this simple form cannot be used.
+
+  GET services/x.TaskRepository/actions/findTasks?tagged=urgent
+
+However, if either of these conditions are not true (the action invoked is called using PUT or POST, or if the action takes arguments that are references to other objects) then this simple form cannot be used.
+
 This form of arguments also cannot be used when updating multiple properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]. For these cases the ‘Formal’ mechanism must be used xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§3.1.2].
 
 [#_2-9-2-formal-arguments]
@@ -1204,11 +1208,14 @@ For all other cases arguments must be provided using a more formal syntax, eithe
 * resources that require a single value (xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2], xref:section-c/chapter-17.adoc#_17_2_http_put[§C17.2]) take a single argument node;
 * the action resource methods (xref:section-c/chapter-19.adoc#_19_1_http_get[§C19.1], xref:section-c/chapter-19.adoc#_19_2_http_put[§C19.2], xref:section-c/chapter-19.adoc#_19_3_http_post[§C19.3]) take a map of argument nodes;
 * the update of multiple properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2] takes a map of argument nodes (the arguments representing the property values)
-* the persist of a new object (xref:section-b/chapter-09.adoc[§B9]) also takes a map-like structure but in this case the map is based on a cut-down version of the object representation, xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]) Treating property values and action arguments in the same way simplifies matters, but it does require that action resources provide a unique name for each of their arguments (rather than merely by a position, as in a list).
+* the persist of a new object (xref:section-b/chapter-09.adoc[§B9]) also takes a map-like structure but in this case the map is based on a cut-down version of the object representation, xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]).
+
+Treating property values and action arguments in the same way simplifies matters, but it does require that action resources provide a unique name for each of their arguments (rather than merely by a position, as in a list).
 For implementations that support named parameters this will simply be the parameter name.
 For implementations that do not support named parameters, the recommendation is to manufacture one either using existing metadata where available (e.g. a UI hint), or otherwise to use the type name of the parameter (string, int etc).
 If the action takes more than one argument of a given type, then the implementation can disambiguate using integer suffixes (string1, string2 and so on).
-Note that the representations defined here, although they may look like the body of HTTP requests, apply to all resources, that is, to GET and DELETE as well as to PUT and POST. Section §2.10 explains the mechanics of how the argument structures defined here are passed to the resource.
+
+Note that the representations defined here, although they may look like the body of HTTP requests, apply to all resources, that is, to GET and DELETE as well as to PUT and POST. Section xref:section-a/chapter-02.adoc#_2-10-passing-arguments-to-resources[§A2.10] explains the mechanics of how the argument structures defined here are passed to the resource.
 
 [#_2-9-2-1-argument-node-structure]
 ==== 2.9.2.1 Argument node structure
@@ -1216,90 +1223,247 @@ Note that the representations defined here, although they may look like the body
 The structure of an argument node fulfils a number of inter-related requirements:
 
 * it allows the value for the argument to be specified;
-* if any of the argument values supplied are found to be invalid, it allows the same representation to be returned in the response, with an "invalidReason" json-property for those argument(s) that are invalid If validation is being requested, then the map need only contain arguments for those to be validated; other arguments can be omitted.
-Note that the client can request validation of a null value by providing an argument node, whose value just happens to be null.
+* if any of the argument values supplied are found to be invalid, it allows the same representation to be returned in the response, with an "invalidReason" json-property for those argument(s) that are invalid.
+
+If validation is being requested, then the map need only contain arguments for those to be validated; other arguments can be omitted.
+
+Note that the client *can* request validation of a null value by providing an argument node, whose value just happens to be null.
+
 Argument nodes take the following structure:
-{ "value": ... , "invalidReason": "xxx" } where:
-JSON-Property Description value is the value of the argument (possibly a link) invalidReason (optional) is the reason why the value is invalid.
-The "invalidReason" json-property is intended to be populated by the server, and would be returned by the server as part of its response if one or more the arguments provided was invalid.
-If the client provides an "invalidReason" in its map then this will be ignored by the server.
-If the "value" is a link to another domain object resource, then only the "href" json-property need be specified; for example:
-{ "value": { "href": "http://~/objects/ABC/123"
-} }
+
+[source,javascript]
+----
+{
+    "value": ... ,          // <.>
+    "invalidReason": "xxx"  // <.>
+}
+----
+<.> is the value of the argument (possibly a link)
+<.> (optional) is the reason why the value is invalid.
+
+The "*invalidReason*" json-property is intended to be populated by the server, and would be returned by the server as part of its response if one or more the arguments provided was invalid.
+If the client provides an "*invalidReason*" in its map then this will be ignored by the server.
+
+If the "*value*" is a link to another domain object resource, then only the "*href*" json-property need be specified; for example:
+
+
+[source,javascript]
+----
+{
+  "value": {
+    "href": "http://~/objects/ABC/123"
+  }
+}
+----
 
 [#_2-9-2-2-single-value-arguments-property-collection]
 ==== 2.9.2.2 Single value arguments (Property, Collection)
 
 If providing a new value for a property or a collection then a single argument node should be provided.
+
 For example, the following could represent a new value for the "lastName" property of Customer:
-{ "value": "Bloggs Smythe" } If this value was invalid for some reason, then the server would generate a response:
-{ "value": "Bloggs Smythe", "invalidReason": "Use hyphenated form rather than spaces" }
+
+[source,javascript]
+----
+{
+  "value": "Bloggs Smythe"
+}
+----
+
+If this value was invalid for some reason, then the server would generate a response:
+
+[source,javascript]
+----
+{
+  "value": "Bloggs Smythe",
+  "invalidReason": "Use hyphenated form rather than spaces"
+}
+----
 
 [#_2-9-2-3-argument-maps-actions-properties]
 ==== 2.9.2.3 Argument maps (Actions, Properties)
 
 Action resources (xref:section-c/chapter-19.adoc#_19_2_http_put[§C19.2], xref:section-c/chapter-19.adoc#_19_3_http_post[§C19.3]) and the PUT Object resource xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2] accept arguments only in map form.
 In the former case the argument nodes are the values of the arguments, in the latter they represent the property values.
+
 For example, suppose an object has an action listProducts(Category category, Subcategory subcategory).
 Arguments for actions are provided in map form:
-{ "category": { "value": { "href": "http://~/objects/CGY/BOOK"
-} }, "subcategory": { "value": { "href": "http://~/objects/SCG/Fiction"
-} } } Similarly, updating multiple properties could be done using the following map:
-{ "firstName": { "value": "Joe" }, "lastName": { "value": "Bloggs" }, "status": { "value": { "href": "http://~/objects/STS/NEW"
-} } } Only domain object properties that match the json-properties of this map will be updated; json properties that do not match an object property will result in a 400 (syntax error).
 
-Providing values for blob/clob properties or arguments If a property or argument is a blob or clob (§2.5) then (just like any other datatype) the value can be provided in-line within a map.
+[source,javascript]
+----
+{
+  "category": {
+    "value": {
+      "href": "http://~/objects/CGY/BOOK"
+    }
+  },
+  "subcategory": {
+    "value": {
+      "href": "http://~/objects/SCG/Fiction"
+    }
+  }
+}
+----
+
+Similarly, updating multiple properties could be done using the following map:
+
+[source,javascript]
+----
+{
+  "firstName": {
+    "value": "Joe"
+  },
+  "lastName": {
+    "value": "Bloggs"
+   },
+   "status": {
+     "value": {
+       "href": "http://~/objects/STS/NEW"
+    }
+  }
+}
+----
+
+Only domain object properties that match the json-properties of this map will be updated; json properties that do not match an object property will result in a 400 (syntax error).
+
+===== Providing values for blob/clob properties or arguments
+
+If a property or argument is a blob or clob (§2.5) then (just like any other datatype) the value can be provided in-line within a map.
 In the case of a blob, the byte array must be base 64 encoded.
-Validating individual property/arguments If any of the values provided are invalid, then the returned response will indicate this with an "invalidReason" json-property.
+
+===== Validating individual property/arguments
+
+If any of the values provided are invalid, then the returned response will indicate this with an "invalidReason" json-property.
+
 For example:
-{ "firstName": { "value": "Joe" }, "lastName": { "value": "Bloggs" }, "status": { "value": { "href": "http://~/objects/STS/NEW"
-}, "invalidReason":
-"Cannot set customers that have placed orders to 'New' status" } }
+
+[source,javascript]
+----
+{
+  "firstName": {
+    "value": "Joe"
+  },
+  "lastName": {
+    "value": "Bloggs"
+  },
+  "status": {
+    "value": {
+      "href": "http://~/objects/STS/NEW"
+    },
+  "invalidReason":
+    "Cannot set customers that have placed orders to 'New' status"
+ }
+}
+----
 
 ==== 2.9.2.4	Validating argument sets
 
-The client can also request the validation of arguments; this is done by providing the reserved x-ro-validate-only param (xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§3.2]) .
+The client can also request the validation of arguments; this is done by providing the reserved x-ro-validate-only param (xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§3.2]) footnote:[The "x-ro-" prefix is used to distinguish from regular argument names.].
+
 In the example introduced above, an object has an action listProducts(Category category, Subcategory subcategory).
 To validate the category by itself (for example, when the user tabs from the category field in the UI), it would provide only the category argument:
-{ "category": { "value": { "href": "http://~/objects/CGY/BOOK"
-} }, "x-ro-validate-only": true } If the server found that the argument provided was invalid, then it would indicate it in its response using the "invalidReason" json-property:
-{ "category": { "value": { "href": "http://~/objects/CGY/BOOK"
-}, "invalidReason": "not permitted to select from this category " } }
+
+[source,javascript]
+----
+{
+  "category": {
+    "value": {
+      "href": "http://~/objects/CGY/BOOK"
+    }
+  },
+  "x-ro-validate-only": true
+}
+----
+
+If the server found that the argument provided was invalid, then it would indicate it in its response using the "*invalidReason*" json-property:
+
+[source,javascript]
+----
+{
+  "category": {
+    "value": {
+      "href": "http://~/objects/CGY/BOOK"
+    },
+    "invalidReason": "not permitted to select from this category "
+  }
+}
+----
 
 [#_2_9_2_5obtaining_argument_choices]
 ==== 2.9.2.5	Obtaining argument choices
 
-The set of argument choices for a parameter can be found by obtaining a representation of the action resource xref:section-c/chapter-18.adoc#_18_1_1_get_request[§C18.1.1]. For example, the list of categories could be returned as:
-{ "category": { ...
-"choices": [
-{ "href": "http://~/objects/CGY/BOOKS" }, { "href": "http://~/objects/CGY/ELECTRICAL" }, { "href": "http://~/objects/CGY/GARDEN" }, { "href": "http://~/objects/CGY/HOME" }, { "href": "http://~/objects/CGY/LEISURE" }
-]
-} } Note that the spec does not currently support obtaining the set of choices of one parameter based on another; see xref:section-e/chapter-34.adoc#_34_5_partial_arguments[§E34.5] for discussion on proposals for this as a future feature.
+The set of argument choices for a parameter can be found by obtaining a representation of the action resource xref:section-c/chapter-18.adoc#_18_1_1_get_request[§C18.1.1].
 
-[#_2-10passing-arguments-to-resources]
+For example, the list of categories could be returned as:
+
+[source,javascript]
+----
+{
+  "category": {
+    ...
+    "choices": [
+      { "href": "http://~/objects/CGY/BOOKS" },
+      { "href": "http://~/objects/CGY/ELECTRICAL" },
+      { "href": "http://~/objects/CGY/GARDEN" },
+      { "href": "http://~/objects/CGY/HOME" },
+      { "href": "http://~/objects/CGY/LEISURE" }
+    ]
+  }
+}
+----
+Note that the spec does not currently support obtaining the set of choices of one parameter based on another; see xref:section-e/chapter-34.adoc#_34_5_partial_arguments[§E34.5] for discussion on proposals for this as a future feature.
+
+[#_2-10-passing-arguments-to-resources]
 == 2.10	Passing arguments to resources
 
 As noted previously, calling a resource using GET with simple arguments §2.9.1 is straight-forward: the arguments are simply passed as key/value pairs.
+
 For example:
-GET services/x.TaskRepository/actions/findTasks?tagged=urgent Passing formal arguments §2.9.2 through to resources that accept a PUT or a POST is also easy: a string representation of the arguments map should simply be provided as the body of the request.
-However, if formal arguments need to be passed through to a resource using GET and DELETE then matters are slightly more complex, because the HTTP spec does not guarantee that resources called using GET and DELETE will receive a body . Therefore, any query arguments to such resources must be encoded within the URL. In the case of a query argument representing a link, this should be converted to its string form first, and then URL encoded.
+
+    GET services/x.TaskRepository/actions/findTasks?tagged=urgent
+
+Passing formal arguments §2.9.2 through to resources that accept a PUT or a POST is also easy: a string representation of the arguments map should simply be provided as the body of the request.
+
+However, if formal arguments need to be passed through to a resource using GET and DELETE then matters are slightly more complex, because the HTTP spec footnote:[link:http://www.w3.org/Protocols/rfc2616/rfc2616.html[], sec 4.3 and 9.7.] does not guarantee that resources called using GET and DELETE will receive a body footnote:[Emperical testing confirms that bodies are not preserved by servlet containers such as Tomcat and Jetty.  Proxies may also strip out the body.].
+Therefore, any query arguments to such resources must be encoded within the URL.
+In the case of a query argument representing a link, this should be converted to its string form first, and then URL encoded.
 The result is used as the entire query string.
+
 For example, suppose the OrderRepository#findOrdersPlacedBy action takes a reference to a customer.
 The argument representation for this reference:
-{ "placedBy": { "value": { "ref": "http://~/objects/CUS/123", } } } can be encoded to:
-%7B%0A%20%20%22placedBy%22%3A%20%7B%20%0A%20%20%20%20%22value%22%3A%20%7B%0A%20%20%20%20%20%20%22ref%22%3A%20%22http%3A%2F%2F~%2Fobjects%2FABC-123%22%2C%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A This is appended to the end of the URL, such that the entire URL is:
-http://~/services/x.OrderRepository/actions/findOrdersPlacedBy?%7B%0A%20%20%22placedBy%22%3A%20%7B%20%0A%20%20%20%20%22value%22%3A%20%7B%0A%20%20%20%20%20%20%22ref%22%3A%20%22http%3A%2F%2F~%2Fobjects%2FABC-123%22%2C%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A
+
+[source,javascript]
+----
+{
+  "placedBy": {
+    "value": {
+      "ref": "http://~/objects/CUS/123"
+    }
+  }
+}
+----
+
+can be encoded footnote:[eg, using http://meyerweb.com/eric/tools/dencoder/] to:
+
+    %7B%0A%20%20%22placedBy%22%3A%20%7B%20%0A%20%20%20%20%22value%22%3A%20%7B%0A%20%20%20%20%20%20%22ref%22%3A%20%22http%3A%2F%2F~%2Fobjects%2FABC-123%22%2C%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A
+
+This is appended to the end of the URL, such that the entire URL is:
+
+    http://~/services/x.OrderRepository/actions/findOrdersPlacedBy?%7B%0A%20%20%22placedBy%22%3A%20%7B%20%0A%20%20%20%20%22value%22%3A%20%7B%0A%20%20%20%20%20%20%22ref%22%3A%20%22http%3A%2F%2F~%2Fobjects%2FABC-123%22%2C%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A
 
 [#_2-11extensible-representations]
 == 2.11	Extensible Representations
 
 All of the representations defined by the Restful Objects spec include two json-properties that allow implementations to provide additional (implementation-specific) information in a standardized fashion.
-The "links" json-property is intended to allow a list of additional links from the representation to other resources.
-As always for links, the "rel" json-property of the link indicates the nature of the resource being linked to.
-The "extensions" json-property, meanwhile, is a map to allow additional data json-properties to be provided.
+
+The "*links*" json-property is intended to allow a list of additional links from the representation to other resources.
+As always for links, the "*rel*" json-property of the link indicates the nature of the resource being linked to.
+The "*extensions*" json-property, meanwhile, is a map to allow additional data json-properties to be provided.
 
 [#_2-12url-encoding-and-case-sensitivity]
 == 2.12	URL encoding and Case sensitivity
+
+[UP TO HERE]
 
 The URLs defined by the Restful Objects spec follow the rules defined by the HTTP spec . In particular, this means that URL matching is case sensitive , and that certain characters (such as "/", "|", "&", ":") may not be used directly, and so must be URL encoded with respect to a particular character set.
 Restful Objects requires that all URLs are encoded using UTF-8. All modern implementation languages (Java, .NET, Ruby, Python etc) provide built-in support for URL encoding to this character set.
