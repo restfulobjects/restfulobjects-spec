@@ -18,7 +18,7 @@ In this case any client expecting there to be a firstName or lastName property o
 
 The standard solution is to version representations, using the media type as the identifier for a particular version of a representation.
 It can however be difficult to manage multiple versions of persisted entitities (v1.Customer, v2.Customer etc).
-A simpler approach is to use addressable view models §A2.2 to provide a versioned abstraction layer on top of the domain entitites.
+A simpler approach is to use addressable view models xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2] to provide a versioned abstraction layer on top of the domain entitites.
 Thus, one client may consume v2.CustomerViewModel, while another may consume v3.CustomerViewModel.
 Each of these view models delegates to an underlying Customer entity, but doesn't expose it directly.
 Restful Objects does not mandate how implementations support addressable view models, but a code sketch is described in § Error!
@@ -26,9 +26,9 @@ Reference source not found..
 Within HTTP the client indicates the version of the representation it requires using the Accept header.
 The server either serves up that representation with a matching Content-Type header, or returns a 406 "not acceptable" error.
 The name for this process is ‘content negotiation’ (sometimes shortened to ‘conneg’).
-Restful Objects currently provides some of the infrastructure for conneg, through the "x-ro-domain-type" media type parameter §A2.4.2. Using this parameter the server indicates the domain type of each object representation it serves; this applies to all representations, be they of view models or of entities.
+Restful Objects currently provides some of the infrastructure for conneg, through the "x-ro-domain-type" media type parameter xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]. Using this parameter the server indicates the domain type of each object representation it serves; this applies to all representations, be they of view models or of entities.
 However full content negotiation is not currently supported in the spec; the client cannot specify the "x-ro-domain-type" media parameter in the Accept header in order to request a specific representation (or if they do, it will be ignored).
-A future version of the spec is likely to include support, however; see xref:section-e/chapter-34.adoc[§34].1.
+A future version of the spec is likely to include support, however; see xref:section-e/chapter-34.adoc#_34_1_content_negotiation[§34.1].
 
 == 31.3 When Conneg isn't required
 

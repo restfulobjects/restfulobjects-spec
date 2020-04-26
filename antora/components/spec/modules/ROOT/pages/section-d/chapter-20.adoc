@@ -37,7 +37,7 @@ For resources that return a body containing some representation.
 
 * Caching headers:
 
-* *NON_EXPIRING, see §A2.13
+* *NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
 
 === 20.1.3 Body (representation)
 

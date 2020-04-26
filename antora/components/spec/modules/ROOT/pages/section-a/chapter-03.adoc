@@ -9,6 +9,7 @@ If a framework has not implemented some optional aspect of the Restful Objects s
 If there is no reasonable way to continue, then the framework should return a 501 "Not implemented" status code along with a Warning header explaining the feature that has not been implemented.
 The sections that follow each indicate the query parameter that is used to request the capability.
 
+[#_3_1_domain_metadata_x_ro_domain_model]
 == 3.1 Domain Metadata (x-ro-domain-model)
 
 Some clients may wish to perform client-side validation before submitting changes to the server: examples include the enforcement of mandatory properties (or action parameters) and the enforcement of maximum string length.
@@ -20,6 +21,7 @@ Common to both is that the information is accessible by way of links and extensi
 * a value of "selectable" is for implementations that support both schemes.
 By default such implementations will return both simple and formal domain metadata, but the client can provide a reserved x-ro-domain-model query parameter to request either just "simple" or "formal" as it requires.
 
+[#_3_1_1_simple_scheme]
 === 3.1.1 Simple Scheme
 
 In the simple scheme, Restful Objects allows that implementations may in-line certain domain type information within the “extensions” json-property of the domain object representation.
@@ -52,6 +54,7 @@ However, in the cases where no ordering information is available, the implementa
 For example, an implementation might return 0 for all unordered members (putting them joint first place in the list) or it might return a value of 999, say (putting them all joint last place).
 Alternatively, an implementation may choose to synthesise ordering information, for example based on the declaration order of its source code. , or on the alphabetic order of the member names.
 
+[#_3_1_2_formal_scheme]
 === 3.1.2 Formal Scheme
 
 The formal scheme of providing domain type information defines separate resources that generate representations of the domain metamodel.
@@ -88,6 +91,7 @@ However, navigating to the formal domain type resource would show that a salary 
 Because domain types are intended to be cacheable, implementations should not attempt to alter the metadata representations on a user-by-user basis.
 If an implementation intends to support use cases where the above issue might be considered a security risk, then it should also offer the simple scheme and provide an implementation-specific mechanism to disable formal scheme support.
 
+[#_3_2_validation_x_ro_validate_only]
 == 3.2 Validation (x-ro-validate-only)
 
 If validation logic has been defined for a property value, a collection reference, or an action’s parameter(s), then the server implementation is expected to perform that validation prior to initiating any change.
@@ -99,6 +103,7 @@ Restful Objects defines an optional capability xref:section-b/chapter-08.adoc[§
 If the validation completes, then a 204 "No content " status code will be returned.
 If a validation failure occurs, then the response will be 422 "unprocessable entity" with corresponding Warning header / "invalidReason" json-properties.
 
+[#_3_3_blobsclobs_and_attachments]
 == 3.3 Blobs/Clobs and Attachments
 
 As well as properties representing strings and dates, etc, the specification also defines optional support for properties whose value is a blob (binary large object) or a clob (character large object) §2.5. A typical example is a property representing a media item such as a picture or document.
@@ -113,11 +118,13 @@ The values of blob or clob properties are set/cleared using PUT (xref:section-c/
 The Content-Type header specifies the media type when being PUT (e.g. image/jpeg).
 A client can determine whether an implementation supports blobs/clobs by inspecting the version resource xref:section-b/chapter-08.adoc[§B8].
 
+[#_3_4_proto_persistent_objects]
 == 3.4 Proto-persistent Objects
 
 As described in §2.2, a proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
 The ultimate persistence of the entity is therefore under the control of the client, which is done by POSTing to the Objects of Type resource, xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]. Support for proto-persistent objects is an optional capability because providing a general-purpose persistence capability may not be practicable for some implementations.
 
+[#_3_5_object_deletion]
 == 3.5 Object Deletion
 
 Persisted objects can be deleted through the DELETE Object resource, xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14]. This is an optional capability because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.

@@ -1,6 +1,6 @@
 = 17 COLLECTION RESOURCE & REPRESENTATION
 
-The (domain object) collection resource can be used to obtain the detailed domain object collection representation §17.5 for a particular domain object instance.
+The (domain object) collection resource can be used to obtain the detailed domain object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5] for a particular domain object instance.
 It also allows elements to be added to, or removed from, the collection (or optionally to validate the adding and removal of elements without modifying the collection).
 
 The endpoint URL for this resource is:
@@ -13,15 +13,16 @@ where:
 
 * {collectionId} is the collection identifier
 
+[#_17_1_http_get]
 == 17.1 HTTP GET
 
-Obtain a detailed representation of a collection §17.5. This resource is typically requested as a result of following a link from the domain object representation §14.4.
+Obtain a detailed representation of a collection xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. This resource is typically requested as a result of following a link from the domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4].
 
 === 17.1.1 Request
 
 ==== 17.1.1.1 Query String
 
-* x-ro-domain-model (optional, §A3.1)
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
 
 * *"simple"
 
@@ -41,7 +42,7 @@ Obtain a detailed representation of a collection §17.5. This resource is typica
 
 === 17.1.2 Success Response
 
-As per §13.1 (200), returning an object collection representation §17.5. Note that the Content-Type will include an "x-ro-element-type" parameter.
+As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the Content-Type will include an "x-ro-element-type" parameter.
 
 == 17.2 HTTP PUT
 
@@ -52,7 +53,7 @@ This method is valid only if the collection has Set semantics (the most common c
 
 ==== 17.2.1.1 Query String
 
-* x-ro-domain-model (if domain metadata is "selectable", §A3.1)
+* x-ro-domain-model (if domain metadata is "selectable", xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
 
 * *"simple"
 
@@ -66,21 +67,21 @@ This method is valid only if the collection has Set semantics (the most common c
 
 ==== 17.2.1.3 Body
 
-* should be formatted as a single argument node §A2.9.2.2. In addition:
+* should be formatted as a single argument node xref:section-a/chapter-02.adoc#_2-9-2-2-single-value-arguments-property-collection[§B2.9.2.2]. In addition:
 
-* x-ro-domain-model (optional, §A3.1)
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
 
 * *"simple"
 
 * *"formal"
 
-* x-ro-validate-only (optional, §A3.2)
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
 
 * *"true"  only validate the request, do not modify the collection
 
 === 17.2.2 Success Response
 
-As per §13.1 (200), returning an object collection representation §17.5. Note that the Content-Type will include an "x-ro-element-type" parameter.
+As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the Content-Type will include an "x-ro-element-type" parameter.
 
 == 17.3 HTTP POST
 
@@ -101,21 +102,21 @@ This method is valid only if the collection has List semantics (where duplicate 
 
 ==== 17.3.1.3 Body
 
-* should be formatted as a single argument node §A2.9.2.2. In addition:
+* should be formatted as a single argument node xref:section-a/chapter-02.adoc#_2-9-2-2-single-value-arguments-property-collection[§B2.9.2.2]. In addition:
 
-* x-ro-domain-model (optional, §A3.1)
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
 
 * *"simple"
 
 * *"formal"
 
-* x-ro-validate-only (optional, §A3.2)
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
 
 * *"true"  only validate the request, do not modify the collection
 
 === 17.3.2 Success Response
 
-As per §13.1 (200), returning an object collection representation §17.5. Note that the Content-Type will include an "x-ro-element-type" parameter.
+As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the Content-Type will include an "x-ro-element-type" parameter.
 
 == 17.4 HTTP DELETE
 
@@ -125,17 +126,17 @@ Remove an object from a collection, or validate that an object may be removed fr
 
 ==== 17.4.1.1 Query String
 
-A single query argument should be formatted as a single argument node §A2.9.2.2 referencing the object to remove:
+A single query argument should be formatted as a single argument node xref:section-a/chapter-02.adoc#_2-9-2-2-single-value-arguments-property-collection[§B2.9.2.2] referencing the object to remove:
 { "value": { "href": "http://~/objects/XXX/yyyy"
 } } In addition:
 
-* x-ro-domain-model (optional, §A3.1)
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
 
 * *"simple"
 
 * *"formal"
 
-* x-ro-validate-only (optional, §A3.2)
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
 
 * *"true"  only validate the request, do not modify the collection
 
@@ -151,7 +152,7 @@ A single query argument should be formatted as a single argument node §A2.9.2.2
 
 === 17.4.2 Success Response
 
-As per §13.1 (200), returning an object collection representation §17.5. Because the resource has mutated the state, there will be no self link (so that it cannot be bookmarked by clients).
+As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Because the resource has mutated the state, there will be no self link (so that it cannot be bookmarked by clients).
 
 [#_17_5_representation]
 == 17.5 Representation
@@ -172,12 +173,13 @@ FIGURE 10: OBJECT COLLECTION REPRESENTATION For example, the representation of a
 } ...
 ], "extensions": { ... } } where:
 JSON-Property Description links list of links to other resources.
-links[rel=self]    link to a resource that can obtain this representation id collection ID, to use when building templated URIs value list of links to the domain objects referenced by the collection, §17.5.1. disabledReason (optional) if populated then indicates the reason why the collection cannot be modified.
-links[rel=.../add-to]    (optional) link back to self to add item to collection; discussed below, §17.5.2. links[rel=…/remove-from]    (optional) link back to self to remove item from collection; discussed below, §17.5.2. links[rel=up]    link to the object that is the owner of this collection.
+links[rel=self]    link to a resource that can obtain this representation id collection ID, to use when building templated URIs value list of links to the domain objects referenced by the collection, xref:section-c/chapter-17.adoc#_17_5_1_collection_values[§C17.5.1]. disabledReason (optional) if populated then indicates the reason why the collection cannot be modified.
+links[rel=.../add-to]    (optional) link back to self to add item to collection; discussed below, xref:section-c/chapter-17.adoc#_17_5_2_collection_modification[§C17.5.2]. links[rel=…/remove-from]    (optional) link back to self to remove item from collection; discussed below, xref:section-c/chapter-17.adoc#_17_5_2_collection_modification[§C17.5.2]. links[rel=up]    link to the object that is the owner of this collection.
 extensions additional information about the resource.
-Both the "links" and the "extensions" json-properties may contain domain model information; this is discussed in §17.5.3. Restful Objects defines no further standard child properties for the "extensions" json-property.
+Both the "links" and the "extensions" json-properties may contain domain model information; this is discussed in xref:section-c/chapter-17.adoc#_17_5_3_domain_model_information[§C17.5.3]. Restful Objects defines no further standard child properties for the "extensions" json-property.
 Implementations are free to add further links/json-properties to "links" and "extensions" as they require.
 
+[#_17_5_1_collection_values]
 === 17.5.1 Collection values
 
 The value of a collection is a list of links to other objects e.g.:
@@ -185,6 +187,7 @@ The value of a collection is a list of links to other objects e.g.:
 { "rel": ".../value;collection=\"items\"", "href": "http://~/objects/ORI/123-1", "type": "application/json;profile=\".../object\"", "method": "GET", "title": "Harry Potter and the Goblet of Fire" }, { "rel": ".../value;collection=\"items\"", "href": "http://~/objects/ORI/123-2", "type": "application/json;profile=\".../object\"", "method": "GET", "title": "Rubiks Cube" }, { "rel": ".../value;collection=\"items\"", "href": "http://~/objects/ORI/123-3", "type": "application/json;profile=\".../object\"", "method": "GET", "title": "Xbox" }
 ]
 
+[#_17_5_2_collection_modification]
 === 17.5.2 Collection modification
 
 If the collection is a modifiable (by the current user), then the "addTo" and "removeFrom" links will be provided.
@@ -208,6 +211,7 @@ JSON-Property Description links[rel=.../add-to]    link back to self to add to c
 } where:
 JSON-Property Description disabledReason indicates the reason why the collection cannot be added to/removed from; only included if the collection is disabled
 
+[#_17_5_3_domain_model_information]
 === 17.5.3 Domain model information
 
 Domain model information is available through either the "links" or the "extensions" json-properties.
@@ -217,11 +221,11 @@ Domain model information is available through either the "links" or the "extensi
 Implementations that support the simple scheme provide extra data in the "extensions" json-properties.
 For example:
 "extensions": { "friendlyName": "items", "description": "Line items (details) of the order", "returnType": "list", "elementType": "ORI", "pluralForm": "Order Items" } Note that the combination of the "size" json-property and the "pluralForm" json-property make it easy for a client to render useful summary information (e.g. "3 Customers").
-See §A3.1.1 for the full definitions of these json-properties.
+See xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§B3.1.1] for the full definitions of these json-properties.
 
 ==== 17.5.3.2 Formal scheme
 
-Implementations that support the formal scheme §A3.1.2 provide an additional link only in the "links" json-property:
+Implementations that support the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§B3.1.2] provide an additional link only in the "links" json-property:
 "links": [
 { "rel": "describedby", "href": "http://~/domain-types/ORD/collections/items", "type": "application/json;profile=\".../type-collection\"", "method": "GET" }, ...
 ]

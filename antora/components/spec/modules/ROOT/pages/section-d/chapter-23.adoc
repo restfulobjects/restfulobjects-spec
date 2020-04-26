@@ -55,7 +55,7 @@ optional indicates whether the property is optional maxLength for string propert
 A value of 0 means unlimited.
 pattern for string properties, indicates a regular expression for the property to match.
 memberOrder a presentation hint recommending the relative order to display each member (clients are not obliged to follow this).
-format for properties returning a string or number value, indicates how to interpret that value §A2.5. links[rel=up]    link to the domain type which owns this property links[rel=…/return-type]    link to the domain type of which this property holds a value (ie, its return type) links[rel=help]    (optional) link to a media resource providing help about the property extensions additional information about the resource.
+format for properties returning a string or number value, indicates how to interpret that value xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§A2.5]. links[rel=up]    link to the domain type which owns this property links[rel=…/return-type]    link to the domain type of which this property holds a value (ie, its return type) links[rel=help]    (optional) link to a media resource providing help about the property extensions additional information about the resource.
 "extensions" Restful Objects defines no standard json-properties within "extensions", but implementations are free to add further links/ json-properties to "links" and "extensions" as they require.
 One possible example is to specify which properties should appear as table columns when the domain type in question is the element type of a collection or list being rendered as such.
 

@@ -1,6 +1,6 @@
 = 9 OBJECTS OF TYPE RESOURCE
 
-The "Object of Type " resource is the target of a persist link to persist a proto-persistent ("not yet persisted") object §A2.2 of a given domain type.
+The "Object of Type " resource is the target of a persist link to persist a proto-persistent ("not yet persisted") object xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2] of a given domain type.
 
 The overall process is:
 
@@ -16,7 +16,7 @@ The overall process is:
 
 * *the response code is 201, and will have the Location header
 
-* *the representation itself will now include the "self" link, the "instanceId" json-property (and the "domainType" json-property if simple scheme §A3.1.1).
+* *the representation itself will now include the "self" link, the "instanceId" json-property (and the "domainType" json-property if simple scheme xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§A3.1.1]).
 The endpoint for this resource is:
 /objects/{domainType}
 where:

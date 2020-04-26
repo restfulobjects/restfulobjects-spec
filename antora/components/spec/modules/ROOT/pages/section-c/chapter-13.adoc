@@ -57,11 +57,12 @@ y y y y y y Action invoke GET C19.1 B11 B12
 
 y y y y y y y PUT C19.2
 --- y y y y y y y y y y POST C19.3
---- y y y y y y y y y y y Objects POST xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1] §14.4 y y y y y For a given status code, the specific headers and body returned by these resources vary little between the different resources; this is especially so for the failure scenarios (4xx and 5xx).
+--- y y y y y y y y y y y Objects POST xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1] xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4] y y y y y For a given status code, the specific headers and body returned by these resources vary little between the different resources; this is especially so for the failure scenarios (4xx and 5xx).
 This section (xref:section-c/chapter-13.adoc[§C13]) describes all the responses irrespective of the resource called.
-Sections §14 to § C18.2 identify the various request/response scenarios for each of the domain object resources.
+Sections xref:section-c/chapter-14.adoc[§C14] to § C18.2 identify the various request/response scenarios for each of the domain object resources.
 In each case they define the request URL, headers and body, and also identify the standard (success) response headers and body, if any.
 
+[#_13_1_request_succeeded_and_generated_a_representation]
 == 13.1 Request succeeded, and generated a representation
 
 For resources that return a body containing some representation.
@@ -93,9 +94,9 @@ This is to discourage clients from bookmarking the link.
 
 * Caching headers:
 
-* *TRANSACTIONAL, see §A2.13  if the object is transactional
+* *TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
 
-* *NON_EXPIRING, see §A2.13  if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
+* *NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
 
 * ETag
 
@@ -123,7 +124,7 @@ The representation will depend on the resource being requested.
 
 * Caching headers:
 
-* *TRANSACTIONAL, see §A2.13  if the object is transactional
+* *TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
 
 * ETag
 
@@ -135,12 +136,13 @@ The representation will depend on the resource being requested.
 
 === 13.2.3 Body (representation)
 
-Representation of a domain object, see §14.4.
+Representation of a domain object, see xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4].
 
+[#_13_3_request_succeeded_but_generated_no_content]
 == 13.3 Request succeeded, but generated no content
 
-This response is most often generated as the result of a validation succeeding (if x-ro-validate-only is supported, §A3.2).
-Note, by contrast, that invoking a void action DOES return a representation §19.4.4.
+This response is most often generated as the result of a validation succeeding (if `x-ro-validate-only` is supported, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2]).
+Note, by contrast, that invoking a void action DOES return a representation xref:section-c/chapter-19.adoc#_19_4_4_action_returning_a_void[§C19.4.4].
 
 === 13.3.1 Status code
 
@@ -176,7 +178,7 @@ Generated either as the result of a syntactically invalid request
 
 === 13.4.3 Body
 
-If arguments §A2.9.2/properties (§14.2, xref:section-b/chapter-09.adoc#_9-1-http-post[§B9]) are malformed, (for example, incorrect datatype), then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid.
+If arguments xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§B2.9.2] /properties (xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], xref:section-b/chapter-09.adoc#_9-1-http-post[§B9]) are malformed, (for example, incorrect datatype), then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid.
 For example:
 { "fromDate": { "value": "2009-13-33" "invalidReason": "could not be parsed as a date" } ..., }
 
@@ -270,11 +272,12 @@ This is the response if a requested object or object member does not exist, or i
 
 * empty
 
+[#_13_9_not_acceptable]
 == 13.9 Not acceptable
 
 The client has specified an Accept header that does not include a media type provided by the resource.
 For resources that return "application/json" representations, a 406 response code will occur if the Accept header is set to "application/json" but has an incompatible "profile" parameter.
-For example, specifying a profile=".../collection" for anything other than a collection resource §17.1 will return a 406. A 406 can also be returned for blob/clob property resources §16.2.2 when there is a mismatch between the Accept header and the media type of the stored blob/clob.
+For example, specifying a profile=".../collection" for anything other than a collection resource xref:section-c/chapter-17.adoc#_17_1_http_get[§C17.1] will return a 406. A 406 can also be returned for blob/clob property resources xref:section-c/chapter-16.adoc#_16_2_2_request_if_blobclobs[§C16.2.2] when there is a mismatch between the Accept header and the media type of the stored blob/clob.
 For example, setting Accept to "image/jpeg" for a "video/h264" will return a 406.
 
 === 13.9.1 Status code
@@ -314,7 +317,7 @@ Generated as the result of a validation failure.
 
 * 422 ("unprocesssable entity")
 
-* *property member values are invalid (if updating multiple properties §14.2, or if persisting a proto-persistent object xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]
+* *property member values are invalid (if updating multiple properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], or if persisting a proto-persistent object xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]
 
 * *"Arguments invalid"  details are provided in the body
 
@@ -326,7 +329,7 @@ Generated as the result of a validation failure.
 
 === 13.11.3 Body
 
-If arguments §A2.9.2/properties (§14.2, xref:section-b/chapter-09.adoc[§B9.1]) are invalid, then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid For example:
+If arguments xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§B2.9.2]/properties (xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], xref:section-b/chapter-09.adoc[§B9.1]) are invalid, then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid For example:
 { "fromDate": { "value": "2009-12-01" "invalidReason": "The from date cannot be in the past" } ..., } If no individual argument/property was invalid, but the set of such is invalid (e.g. fromDate > toDate), then an "x ro invalidReason" json-property is provided at the root of the map.
 For example:
 { "fromDate": ..., "toDate": ..., "x-ro-invalidReason": "To date cannot be before from date" } The json-property has the prefix "x-ro-" in this case in order to avoid clashes with the argument/property names

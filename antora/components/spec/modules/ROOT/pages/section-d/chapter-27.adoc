@@ -33,12 +33,12 @@ Obtain a representation resulting from the invocation of the isSubtypeOf() domai
 
 The endpoint URL for this resource is:
 /domain-types/{domainType}/type-actions/isSubtypeOf/invoke This resource requires a parameter "supertype" which can be specified either in the simple style, or in the formal style.
-Simple Style If query arguments are specified using the simple style (§A2.9.1 then the query string is simply:
+Simple Style If query arguments are specified using the simple style (xref:section-a/chapter-02.adoc#_2-9-1-simple-arguments[§A2.9.1] then the query string is simply:
 
 ?supertype=xxx
 
 where xxx is the domain type id of the supertype.
-Formal Style If query arguments are specified using the formal style (§A2.9.2) then the supertype should be specified as a map and then the map encoded as a URL (§A2.9.2.5).
+Formal Style If query arguments are specified using the formal style (xref:section-a/chapter-02.adoc#_2-9-2-formal-arguments[§A2.9.2]) then the supertype should be specified as a map and then the map encoded as a URL (xref:section-a/chapter-02.adoc#_2_9_2_5obtaining_argument_choices[§A2.9.2.5]).
 For example:
 { "supertype": { "value": { "href": "http://~/domain-types/x.BasketOwner", } } Note that the value should be a link to the supertype, rather than simply the name of the supertype.
 
@@ -68,7 +68,7 @@ For example:
 
 * Caching headers:
 
-* *NON_EXPIRING, see §A2.13  the structure of a domain type will not vary between deployments
+* *NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  the structure of a domain type will not vary between deployments
 
 ==== 27.1.2.3 Body (representation)
 
@@ -110,12 +110,12 @@ Obtain a representation resulting from the invocation of the isSupertypeOf() dom
 
 The endpoint URL for this resource is:
 /domain-types/{domainType}/type-actions/isSupertypeOf/invoke This resource requires a parameter "subtype" which can be specified either in the simple style, or in the formal style.
-Simple Style If query arguments are specified using the simple style (§A2.9.1) then the query string is simply:
+Simple Style If query arguments are specified using the simple style (xref:section-a/chapter-02.adoc#_2-9-1-simple-arguments[§A2.9.1]) then the query string is simply:
 
 ?subtype=xxx
 
 where xxx is the domain type id of the subtype.
-Formal Style If query arguments are specified using the formal style (§A2.9.2) then the subtype should be specified as a map and then the map encoded as a URL (§A2.9.2.5).
+Formal Style If query arguments are specified using the formal style (xref:section-a/chapter-02.adoc#_2-9-2-formal-arguments[§A2.9.2]) then the subtype should be specified as a map and then the map encoded as a URL (xref:section-a/chapter-02.adoc#_2_9_2_5obtaining_argument_choices[§A2.9.2.5]).
 For example:
 { "subtype": { "value": { "href": "http://~/domain-types/CUS", } } } Note that the value should be a link to the subtype, rather than simply the name of the subtype.
 
@@ -145,7 +145,7 @@ For example:
 
 * Caching headers:
 
-* *NON_EXPIRING, see §A2.13  the structure of a domain type will not vary between deployments
+* *NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  the structure of a domain type will not vary between deployments
 
 ==== 27.2.2.3 Body (representation)
 

@@ -30,7 +30,7 @@ None
 
 * Content-Type o application/json;profile=".../list ";x-ro-element-type="yyy"  where "yyy" is the domain type id for the services (most likely a type representing a common base class for all services, eg Object)
 * Caching headers:
-o NON_EXPIRING, see §A2.13  list of available services will not change between deployments
+o NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  list of available services will not change between deployments
 
 ==== 7.1.2.3 Body
 

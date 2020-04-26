@@ -38,9 +38,10 @@ FIGURE 16: DOMAIN TYPE LIST REPRESENTATION For example, the JSON representation 
 "extensions" : { ... } } where:
 JSON-Property Description links list of links to resources links[rel=self]    link to a resource that can obtain this representation links[rel=up]    link to the homepage resource, B5. values List of links to domain types, §22 extensions map of additional information about the resource.
 
+[#_21_3_predefined_domain_types]
 == 21.3 Predefined Domain Types
 
-There are a number of predefined "formal" domain type resources that correspond either to the built-in scalar types described §A2.5, or to lists and sets (for collections), or to void (for actions with void return type).
+There are a number of predefined "formal" domain type resources that correspond either to the built-in scalar types described xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§A2.5], or to lists and sets (for collections), or to void (for actions with void return type).
 The following table shows the correlation in these cases:
 Type Simple scheme JSON datatype Simple scheme 'format' Formal scheme predefined type string String string (the default)    http://~/domain-types/string
 boolean Boolean        http://~/domain-types/boolean
@@ -55,7 +56,7 @@ int Number integer    http://~/domain-types/integer
 list --- ---    http://~/domain-types/list
 set --- ---    http://~/domain-types/set
 void --- ---    http://~/domain-types/void
-If the "format" json-property is omitted for a number, then the rules for interpreting that number as a float-point decimal or as an integer are as documented in the ECMAscript standard, §A2.5. For large numbers, big-integer(n) specifies the scale n, while big-decimal(s,p) specifies the scale s and the precision p.
+If the "format" json-property is omitted for a number, then the rules for interpreting that number as a float-point decimal or as an integer are as documented in the ECMAscript standard, xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§A2.5]. For large numbers, big-integer(n) specifies the scale n, while big-decimal(s,p) specifies the scale s and the precision p.
 For example, big-integer(10) is numbers in the range 0 to 9,999,999,999, while big-decimal(10.2) is numbers in the range 0.00 to 99,999,999.99. No representations are returned No representations are defined for any of the predefined domain type resources listed above; instead, a 204 (no content) will be returned.
 Clients are expected to have built-in support for these domain types (e.g. a calendar widget to render dates; a checkbox widget to render Booleans, and so on).
 

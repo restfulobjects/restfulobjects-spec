@@ -9,8 +9,8 @@ This is REST’s HATEOAS concept: hypertext as the engine of application state.
 When you use a web browser you can click through links to get to the next page; HATEOAS says that a REST client should be able to do likewise to follow a link to another resource.
 Said more generally, links are an example of a hypermedia control by which the REST client can navigate the resources.
 The client knows what the link represents through its "rel" (relation) property; however the value of the URL is opaque.
-This style of REST is supported by Restful Objects in that all resources in Restful Objects are discoverable from the Home Page resource xref:section-a/chapter-04.adoc[§B4], acting as a well-known starting point.
-The rels are defined in §A2.7.1. All other resources can be obtained from the home page, for example by following the links that represent reference properties and collections between domain objects, or by invoking domain object or service actions that can return references to other objects.
+This style of REST is supported by Restful Objects in that all resources in Restful Objects are discoverable from the Home Page resource xref:section-a/chapter-04.adoc[§A4], acting as a well-known starting point.
+The rels are defined in xref:section-a/chapter-02.adoc#_2-7-1-rel[§A2.7.1]. All other resources can be obtained from the home page, for example by following the links that represent reference properties and collections between domain objects, or by invoking domain object or service actions that can return references to other objects.
 Links are only included in representations if it makes sense for the client to follow them.
 
 == 28.2 Web APIs (Templated URIs)

@@ -1,8 +1,10 @@
 = 8 VERSION RESOURCE & REPRESENTATION
 
-This resource allows a client to dynamically determine which version of the Restful Objects spec a particular implementation supports, the version of the implementation (code) itself, and which of the optional capabilities §A3 it provides.
+This resource allows a client to dynamically determine which version of the Restful Objects spec a particular implementation supports, the version of the implementation (code) itself, and which of the optional capabilities xref:section-a/chapter-03.adoc[§A3] it provides.
+
 The endpoint URL for this resource is:
-/version
+
+    /version
 
 == 8.1 HTTP GET
 
@@ -32,7 +34,7 @@ Obtain a representation of the implementation's version and optional capabilitie
 
 * Content-Type o application/json;profile=".../version"
 * Caching headers:
-o NON_EXPIRING, see §A2.13  version and capabilities will not change between deployments
+o NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  version and capabilities will not change between deployments
 
 ==== 8.1.2.3 Body
 
@@ -49,10 +51,10 @@ FIGURE 7: VERSION REPRESENTATION The JSON representation is:
 JSON-Property Description links list of links to resources.
 links[rel=self]    link to a resource that can generate this representation.
 links[rel=up]    link to the home page resource, §5. specVersion The "major.minor" parts of the version of the spec supported by this implementation, e.g. “1.0” implVersion (optional) Version of the implementation itself (format is specific to the implementation).
-optionalCapabilities map representing the optional capabilities §A3 supported by this implementation (see below) extensions additional metadata about the resource.
+optionalCapabilities map representing the optional capabilities xref:section-a/chapter-03.adoc[§A3] supported by this implementation (see below) extensions additional metadata about the resource.
 "specVersion" The specVersion json-property only specifies the major.minor parts of the spec.
 An trivial update to the spec (eg 1.0.0 to 1.0.1) will not require implementations issuing a corresponding update.
 "optionalCapabilities" The "optionalCapabilities" json-property holds a map of child properties describing the functionality supported by the implementation.
-Capability Value type String value The implementation's support for… blobsClobs boolean --- blobs/clobs see §A3.3. deleteObjects boolean --- deletion of persisted objects through the DELETE Object resource xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14], see §A3.5 domainModel string none simple formal selectable different domain metadata representations.
-A value of "selectable" means that the reserved x-domain-model query parameter is supported, see §A3.1 protoPersistentObjects boolean --- proto-persistent objects are supported, see §A3.4 validateOnly boolean --- the reserved x-ro-validate-only query parameter, see §A3.2 "links" and "extensions" Restful Objects defines no standard links/json-properties for "links" and "extensions", but implementations are free to add to their own links/json-properties as they require.
+Capability Value type String value The implementation's support for… blobsClobs boolean --- blobs/clobs see xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§A3.3]. deleteObjects boolean --- deletion of persisted objects through the DELETE Object resource xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14], see xref:section-a/chapter-03.adoc#_3_5_object_deletion[§A3.5] domainModel string none simple formal selectable different domain metadata representations.
+A value of "selectable" means that the reserved x-domain-model query parameter is supported, see xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1] protoPersistentObjects boolean --- proto-persistent objects are supported, see xref:section-a/chapter-03.adoc#_3_4_proto_persistent_objects[§A3] validateOnly boolean --- the reserved x-ro-validate-only query parameter, see xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2] "links" and "extensions" Restful Objects defines no standard links/json-properties for "links" and "extensions", but implementations are free to add to their own links/json-properties as they require.
 

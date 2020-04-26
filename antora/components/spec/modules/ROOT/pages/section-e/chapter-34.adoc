@@ -2,14 +2,15 @@
 
 Ideas for extending the scope of the specification
 
+[#_34_1_content_negotiation]
 == 34.1 Content Negotiation
 
-Although representations of domain objects indicate the type of the object in the Content-Type header (through the x-ro-domain-type media parameter §A2.4.2), this parameter is ignored when set on the Accept header.
+Although representations of domain objects indicate the type of the object in the Content-Type header (through the x-ro-domain-type media parameter xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]), this parameter is ignored when set on the Accept header.
 This means that a client cannot insist that a particular representation is of a certain type.
 This idea is for the spec to be extended so that the x-ro-domain-type from an Accept header is checked when invoking an object or service action, and is used as a hint to ensure that a representation of the correct type is returned to the client.
 In this way the spec would support content negotiation (conneg).
 In theory, this functionality could be applied to any domain type, either a persistent entity or an (addressable) view model.
-In practice, though, supporting different versions of persistent entities (v2.Customer, v3.Customer) may well be difficult, and so implementations may choose to restrict support to actions that return addressable view models, xref:section-e/chapter-32.adoc[§32].1. For example, given a versioned CustomerViewModel, a client would set the Accept request header to:
+In practice, though, supporting different versions of persistent entities (v2.Customer, v3.Customer) may well be difficult, and so implementations may choose to restrict support to actions that return addressable view models, xref:section-e/chapter-32.adoc#_32_1_making_view_models_addressable[§32.1]. For example, given a versioned CustomerViewModel, a client would set the Accept request header to:
 Accept: application/json; profile="urn:org.restfulobjects:repr-types/object"; x ro domain type= "http://~/domain-types/x.viewmodels.v2.CustomerViewModel"
 The server would then either serve up a representation with a matching Content-Type, or would return a 406 error code ("Not acceptable") to indicate that the domain type required is not (or is no longer) supported.
 It is easy enough for the framework implementation to parse the x-ro-domain-type and determine the corresponding domain type (e.g. java.lang.Class on a Java implementation, or System.Type on a .NET implementation).
@@ -68,9 +69,10 @@ For example:
 ]
 } Using this information the client could manage the paging, for example enabling/disabling next and previous buttons in its UI.
 
+[#_34_4_minimizing_round_trips_x_ro_follow_links]
 == 34.4 Minimizing Round-trips (x-ro-follow-links)
 
-While HTTP caching §A2.13 works well enough for non-transactional resources, most of the resources served up by Restful Objects will be transactional.
+While HTTP caching xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13] works well enough for non-transactional resources, most of the resources served up by Restful Objects will be transactional.
 This suggestion is for the Restful Objects spec to define a capability (probably optional xref:section-b/chapter-08.adoc[§B8]) to support ‘eager following’ of links.
 This capability would be specified by setting a reserved x-ro-follow-links query parameter.
 This would act as a hint to the server to generate in its response a representation that includes additional information as a result of following links.
@@ -115,7 +117,7 @@ The x-ro-follow-links query parameter could also be used to influence the loadin
 * setting the query parameter to "links[rel=.../details]" could cause the details link to be populated, from which full information about the contents of the collection can be obtained;
 
 * setting the query parameter to "value" could cause the optional "value" to be returned, holding a list of links to the actual elements.
-These links would have their "title" json-property §A4.1 populated;
+These links would have their "title" json-property xref:section-a/chapter-04.adoc#_4_1_specified_json_properties[§A4.1] populated;
 
 * setting the query parameter to "size" could cause the optional "size" to be returned.
 This is useful if the client needs to know only the number of elements in a collection.
@@ -134,7 +136,7 @@ In the example introduced above, if an object has an action listProducts(Categor
 } }, "subcategory": { "choices": [
 { "href": "http://~/objects/SCY/Fiction" }, { "href": "http://~/objects/SCY/Childrens" }, { "href": "http://~/objects/SCY/Computer" }, { "href": "http://~/objects/SCY/Business" }
 ]
-} } Validating argument sets The client can also request the validation of arguments; this is done by providing the reserved x-ro-validate-only param (§A3.2) .
+} } Validating argument sets The client can also request the validation of arguments; this is done by providing the reserved x-ro-validate-only param (xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2]) .
 For example, to validate the category by itself (for example, when the user tabs from the category field in the UI), it would provide only the category argument:
 { "category": { "value": { "href": "http://~/objects/CGY/BOOK"
 } }, "x-ro-validate-only": true } If the server found that the argument provided was invalid, then it would indicate it in its response using the "invalidReason" json-property:
@@ -154,9 +156,10 @@ This would probably be an optional capability xref:section-b/chapter-08.adoc[§B
 
 * Broadly speaking, those json-properties that are internationized either represent "friendly" names, or descriptions, or are invalidity/disabled reasons.
 
-* The json-properties that are internationalized will only ever be simple strings (with a "format" of "string", §A2.5).
+* The json-properties that are internationalized will only ever be simple strings (with a "format" of "string", xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§A2.5]).
 Strings with other formats (e.g. decimal numbers, or dates) are never internationalised.
 
+[#_34_7_listable_instances]
 == 34.7 Listable Instances
 
 This suggestion is to allow the ~/objects/{domainType} resource to support the GET method.
@@ -171,7 +174,7 @@ This is not currently the case with Restful Objects, as there are no definitions
 
 * ~/objects/{domainType}
 
-* *except for POST; see also xref:section-e/chapter-34.adoc[§34].7.
+* *except for POST; see also xref:section-e/chapter-34.adoc#_34_7_listable_instances[§34.7].
 
 * ~/objects/{domainType}/{instanceId}/properties
 

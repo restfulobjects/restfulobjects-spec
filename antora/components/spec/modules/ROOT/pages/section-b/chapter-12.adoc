@@ -1,7 +1,7 @@
 = 12 SCALAR VALUE REPRESENTATION
 
 The scalar value representation represents a single value that is not itself a domain object.
-This representation is never returned directly from a resource, but may appear in-lined within the representation of an action invocation xref:section-c/chapter-19.adoc#_19_4_representation[§C19] if the action returned a scalar type such as a string or an integer.
+This representation is never returned directly from a resource, but may appear in-lined within the representation of an action invocation xref:section-c/chapter-19.adoc#_19_4_representation[§C19.4] if the action returned a scalar type such as a string or an integer.
 
 The media type for a scalar representation will always be one of:
 
@@ -13,8 +13,8 @@ The media type for a scalar representation will always be one of:
 ], "extensions": { ... } } where:
 JSON-Property Description value the scalar value itself.
 links list of links to other resources.
-links[rel=…/return-type]    (optional – only if the "formal” scheme §A3.1.2 capability is supported) link to the domain type xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3] of the value extensions additional metadata about the representation.
-extensions.format (optional – and only if the "simple" scheme §A3.1.1 capability is supported) qualifies the datatype value §A2.5. Note that there is no "self" link, because the scalar value is not an addressable resource.
+links[rel=…/return-type]    (optional – only if the "formal” scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2] capability is supported) link to the domain type xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3] of the value extensions additional metadata about the representation.
+extensions.format (optional – and only if the "simple" scheme xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§A3.1.1] capability is supported) qualifies the datatype value xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§A2.5]. Note that there is no "self" link, because the scalar value is not an addressable resource.
 Restful Objects defines no standard child properties for the "extensions" json-property.
 Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require.
 

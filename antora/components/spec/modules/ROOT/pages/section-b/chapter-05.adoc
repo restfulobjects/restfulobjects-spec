@@ -33,7 +33,7 @@ None
 
 * Content-Type o application/json;profile=".../homepage"
 * Caching headers:
-o NON_EXPIRING, see §A2.13  since home page changes only on redeployment
+o NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  since home page changes only on redeployment
 
 ==== 5.1.2.3 Body
 
@@ -43,7 +43,7 @@ As per §5.2.
 
 The links from the home page representation to other resources are as shown in the diagram below:
 
-FIGURE 4: HOME PAGE REPRESENTATION The link to the domain types resource is only present if the formal scheme (§A3.1.2) capability is supported.
+FIGURE 4: HOME PAGE REPRESENTATION The link to the domain types resource is only present if the formal scheme (xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2]) capability is supported.
 The JSON representation is as follows:
 { "links": [ { "rel": "self", "href": "http://~/", "type": "application/json;profile=\".../homepage\"", "method": "GET" }, { "rel": ".../user", "href": "http://~/user", "type": "application/json;profile=\".../user\"", "method": "GET" }, { "rel": ".../services", "href": "http://~/services", "type": "application/json;profile=\".../list\"", "method": "GET" }, { "rel": ".../version", "href": "http://~/version", "type": "application/json;profile=\".../version\"", "method": "GET" }, { "rel": ".../domain-types", "href": "http://~/domain-types", "type": "application/json;profile=\".../type-list\"", "method": "GET" }, ...
 ], "extensions": { ... } } where:

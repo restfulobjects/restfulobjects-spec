@@ -34,7 +34,7 @@ None
 ==== 6.1.2.2 Headers
 
 * Content-Type o application/json;profile=".../user"
-* Caching headers: SHORT, see §A2.13 o temporary caching of user details
+* Caching headers: SHORT, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13] o temporary caching of user details
 
 ==== 6.1.2.3 Body
 

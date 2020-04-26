@@ -2,6 +2,7 @@
 
 This section summarises the standard json-properties, headers and status codes that are understood by Restful Objects implementations.
 
+[#_4_1_specified_json_properties]
 == 4.1 Specified json-properties
 
 There are a number of json-properties specified by Restful Objects that have well-defined and fixed meanings, irrespective of which representation they appear within.
