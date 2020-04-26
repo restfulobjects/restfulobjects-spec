@@ -2,60 +2,164 @@
 
 While Restful Objects aims to define a consistent standard for RESTful interactions with domain models, some useful features might be easy for one framework to accomplish, but much more difficult for another.
 Therefore the specification defines a small number of capabilities that are optional.
-Implementations advertise the capabilities that they support through the "version" resource, xref:section-b/chapter-08.adoc[§B8]. In some cases, clients can vary the behaviour of these capabilities by providing optional query parameters.
-For example, if argument validation is supported by the implementation, then the client can use the "x-ro-validate-only" query parameter to suppress modification of the resource, and simply check values.
-In order to minimize clashes with other (application) parameters, the optional query parameters all have the "x-ro-" prefix: the "x-" is intended to indicate a non-standard parameter; the "ro-" to indicate that the parameter is specific to Restful Objects.
+
+Implementations advertise the capabilities that they support through the "version" resource, xref:section-b/chapter-08.adoc[§B8].
+
+In some cases, clients can vary the behaviour of these capabilities by providing optional query parameters.
+For example, if argument validation is supported by the implementation, then the client can use the "*x-ro-validate-only*" query parameter to suppress modification of the resource, and simply check values.
+
+In order to minimize clashes with other (application) parameters, the optional query parameters all have the "*x-ro-*" prefix: the "x-" is intended to indicate a non-standard parameter; the "ro-" to indicate that the parameter is specific to Restful Objects.
+
 If a framework has not implemented some optional aspect of the Restful Objects specification and can reasonably continue, then it should ignore the request.
-If there is no reasonable way to continue, then the framework should return a 501 "Not implemented" status code along with a Warning header explaining the feature that has not been implemented.
+If there is no reasonable way to continue, then the framework should return a *501* "Not implemented" status code along with a *Warning* header explaining the feature that has not been implemented.
+
 The sections that follow each indicate the query parameter that is used to request the capability.
 
 [#_3_1_domain_metadata_x_ro_domain_model]
 == 3.1 Domain Metadata (x-ro-domain-model)
 
 Some clients may wish to perform client-side validation before submitting changes to the server: examples include the enforcement of mandatory properties (or action parameters) and the enforcement of maximum string length.
-Such rules are applicable to any domain object instance of that given type, and so may be defined on the domain type Restful Objects defines two ways in which such domain type information may be represented: a "simple" scheme and a "formal" scheme, defined below.
-Common to both is that the information is accessible by way of links and extensions §2.11. A client may query the version resource xref:section-b/chapter-08.adoc[§B8] to determine the server's support for domain metadata:
+Such rules are applicable to any domain object instance of that given type, and so may be defined on the domain type.
+
+Restful Objects defines two ways in which such domain type information may be represented: a "simple" scheme and a "formal" scheme, defined below.
+Common to both is that the information is accessible by way of links and extensions xref:section-a/chapter-02.adoc#_2-11-extensible-representations[§2.11].
+
+A client may query the version resource xref:section-b/chapter-08.adoc[§B8] to determine the server's support for domain metadata:
 
 * a value of "none" indicates that the implementation does not provide domain type information;
 * a value of "simple" or "formal" means that the server supports only that scheme
 * a value of "selectable" is for implementations that support both schemes.
-By default such implementations will return both simple and formal domain metadata, but the client can provide a reserved x-ro-domain-model query parameter to request either just "simple" or "formal" as it requires.
++
+By default such implementations will return both simple and formal domain metadata, but the client can provide a reserved *x-ro-domain-model* query parameter to request either just "simple" or "formal" as it requires.
 
 [#_3_1_1_simple_scheme]
 === 3.1.1 Simple Scheme
 
-In the simple scheme, Restful Objects allows that implementations may in-line certain domain type information within the “extensions” json-property of the domain object representation.
+In the simple scheme, Restful Objects allows that implementations may in-line certain domain type information within the “*extensions*” json-property of the domain object representation.
+
 For example, the fact that a property is required (may not be left empty) is captured using:
+
+[source,javascript]
+----
 { ...
-"extensions": { "optional": false, ...
-} } Restful Objects defines the following standard json-properties for the "simple" scheme:
-JSON-Property Values Applies to Description domainType string domain object unique identifier for the domain type friendlyName string domain object, property, collection, action, action param Version of the name suitable for use in a UI (e.g. as a label).
-pluralName string domain object Pluralized form of the friendly name, for use in a UI (e.g. as a label of a collection).
-collection action returning list Pluralized form of the element type within the collection/list.
+  "extensions": {
+    "optional": false,
+    ...
+  }
+}
+----
+Restful Objects defines the following standard json-properties for the "simple" scheme:
+
+[cols="2a,1a,2a,3a",options="header"]
+|===
+
+|JSON-Property
+|Values
+|Applies to
+|Description
+
+|domainType
+|string
+|domain object
+|unique identifier for the domain type
+
+|friendlyName
+|string
+|domain object, property, collection, action, action param
+|Version of the name suitable for use in a UI (e.g. as a label).
+
+.2+|pluralName
+.2+|string
+|domain object
+|Pluralized form of the friendly name, for use in a UI (e.g. as a label of a collection).
+
+| collection +
+action returning list
+|Pluralized form of the element type within the collection/list.
 description string domain object, property, collection, action, action param Description, suitable for use in a UI (e.g. as a tooltip).
-isService boolean domain object whether this domain object is a domain service optional boolean property, action param. if false, then a value for the property / param must be provided.
+
+|isService
+|boolean
+|domain object
+|whether this domain object is a domain service
+
+|optional
+|boolean
+|property, action param.
+|if false, then a value for the property / param must be provided.
 Default is implementation-specific.
-maxLength int string property, string action param the maximum number of characters that the string may contain.
+
+|maxLength
+|int
+|string property, +
+string action param
+|the maximum number of characters that the string may contain.
 A value of 0 means unlimited.
-pattern string string property, string action param whether value must match the regular expression that any submitted value must match.
-returnType string property action (returning scalar or object) action param If scalar value returned, indicates its datatype §2.5 (in conjunction with'format' if 'string').
+
+|pattern
+|string
+|string property, +
+string action param
+|whether value must match the regular expression that any submitted value must match.
+
+.3+|returnType
+.3+|string
+
+|property +
+action (returning scalar or object) +
+action param
+|If scalar value returned, indicates its datatype §2.5 (in conjunction with'format' if 'string').
 If object returned, its domain type id.
-collection action (returning collection) Either 'list' or set'.
-action returning void 'void' format string when returnType if 'string' further qualifies the datatype §2.5. elementType string collection action returning collection of the domain type id for the type of the elements held within the collection.
-hasParams boolean action whether an action has parameters or not.
+
+|collection +
+action (returning collection)
+|Either 'list' or set'.
+
+|action returning void
+|'void'
+
+|format
+|string
+|when returnType if 'string'
+|further qualifies the datatype §2.5.
+
+|elementType
+|string
+|collection action returning collection
+|of the domain type id for the type of the elements held within the collection.
+
+|hasParams
+|boolean
+|action
+|whether an action has parameters or not.
 This may, for example, be used by clients to render ellipsis (…) in their UI.
-memberOrder int property, collection, action a presentation hint indicating the recommended relative display order for each member.
+
+|memberOrder
+|int
+|property, +
+collection, +
+action
+|a presentation hint indicating the recommended relative display order for each member.
 Discussed further below.
+|===
+
 Implementations are free to extend this list as they require.
-MemberOrder The "memberOrder" json-property is a presentation hint indicating the recommended display order for each member of the object relative to others.
+
+==== MemberOrder
+
+The "*memberOrder*" json-property is a presentation hint indicating the recommended display order for each member of the object relative to others.
 Note that clients are not obliged to adhere to member ordering.
-Irrespective of whether it is used, the "memberOrder" json-property must always be provided by the implementation.
+
+Irrespective of whether it is used, the "*memberOrder*" json-property must always be provided by the implementation.
 However, in the cases where no ordering information is available, the implementations may provide the same value for more than one member.
 For example, an implementation might return 0 for all unordered members (putting them joint first place in the list) or it might return a value of 999, say (putting them all joint last place).
+
 Alternatively, an implementation may choose to synthesise ordering information, for example based on the declaration order of its source code. , or on the alphabetic order of the member names.
 
 [#_3_1_2_formal_scheme]
 === 3.1.2 Formal Scheme
+
+[UP TO HERE]
 
 The formal scheme of providing domain type information defines separate resources that generate representations of the domain metamodel.
 If this scheme is followed then such resources are obtained by rel="describedby" link in the "links" json-property.
