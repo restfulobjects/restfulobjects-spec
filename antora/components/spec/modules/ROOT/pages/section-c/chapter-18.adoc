@@ -19,10 +19,12 @@ where:
 
 * {actionId} is the action identifier
 
+[#_18_1_http_get]
 == 18.1 HTTP GET
 
 Obtain a detailed representation of an action xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2].
 
+[#_18_1_1_get_request]
 === 18.1.1 GET Request
 
 ==== 18.1.1.1 Query String

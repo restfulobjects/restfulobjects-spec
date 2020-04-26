@@ -124,6 +124,7 @@ This is useful if the client needs to know only the number of elements in a coll
 These three values for x-ro-follow-links should be considered as mutually exclusive (since: details => value => size).
 From the client's perspective, note that this means that the contents of the collection would be available either in the "value" json-property, or could be in the in-lined details representation "links[rel=.../details].value" json-property.
 
+[#_34_5_partial_arguments]
 == 34.5 Partial Arguments
 
 This suggestion is for the Restful Objects specification to define support for partial arguments.

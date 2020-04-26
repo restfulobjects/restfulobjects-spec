@@ -4,6 +4,7 @@ A domain service is a well-known (singleton) domain object that typically acts a
 
 Domain services can be accessed from the object list representation xref:section-b/chapter-11.adoc[§B11] returned by the GET Domain Services resource xref:section-b/chapter-07.adoc[§B7].
 
+[#_15_1_http_get]
 == 15.1 HTTP GET
 
 Obtain summary representation of a domain service..

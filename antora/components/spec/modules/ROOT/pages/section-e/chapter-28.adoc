@@ -2,6 +2,7 @@
 
 Comparing two styles of distributed system.
 
+[#_28_1_hateoas_hypermedia_controls]
 == 28.1 HATEOAS (Hypermedia Controls)
 
 REST-based systems are typically designed to have a single or small number of starting (home page) resources, from which all other resources can be traversed.

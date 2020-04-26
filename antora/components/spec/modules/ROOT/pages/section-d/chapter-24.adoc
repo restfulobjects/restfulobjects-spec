@@ -41,6 +41,7 @@ Obtain a representation of a description of a domain collection, within the meta
 
 As per §20.1 (200); body as per §24.2.
 
+[#_24_2_representation]
 == 24.2 Representation
 
 The links from the domain collection description representation to other resources are as shown in the diagram below:

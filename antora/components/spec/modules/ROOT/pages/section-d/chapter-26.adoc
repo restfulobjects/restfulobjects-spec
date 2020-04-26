@@ -42,6 +42,7 @@ Obtain a representation of a description of a domain action parameter, within th
 
 As per §20.1 (200); body as per §26.2.
 
+[#_26_2_representation]
 == 26.2 Representation
 
 The links from the domain action parameter description representation to other resources are as shown in the diagram below:

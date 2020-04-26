@@ -93,6 +93,7 @@ A client that wishes to modify the returned domain object must therefore re-retr
 
 As per xref:section-c/chapter-19.adoc#_19_4_representation[§C19.4].
 
+[#_19_2_http_put]
 == 19.2 HTTP PUT
 
 Invoke an action and return a representation if the action returns a result.
@@ -138,6 +139,7 @@ In addition:
 
 As per xref:section-c/chapter-19.adoc#_19_1_2_success_response[§C19.1.2].
 
+[#_19_3_http_post]
 == 19.3 HTTP POST
 
 Invoke an action, and return a representation if the action returns a result.

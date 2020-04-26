@@ -44,6 +44,7 @@ Obtain a detailed representation of a collection xref:section-c/chapter-17.adoc#
 
 As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the Content-Type will include an "x-ro-element-type" parameter.
 
+[#_17_2_http_put]
 == 17.2 HTTP PUT
 
 Add an object to a collection, or alternatively validate that the proposed object may be added to the collection is valid but without making the change.
@@ -83,6 +84,7 @@ This method is valid only if the collection has Set semantics (the most common c
 
 As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the Content-Type will include an "x-ro-element-type" parameter.
 
+[#_17_3_http_post]
 == 17.3 HTTP POST
 
 Add an object to a collection, or alternatively validate that the proposed object to add to the collection is valid but do not modify the collection.
@@ -118,6 +120,7 @@ This method is valid only if the collection has List semantics (where duplicate 
 
 As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the Content-Type will include an "x-ro-element-type" parameter.
 
+[#_17_4_http_delete]
 == 17.4 HTTP DELETE
 
 Remove an object from a collection, or validate that an object may be removed from the collection but without making the change.

@@ -41,6 +41,7 @@ Obtain a representation that describes a domain property within the metamodel.
 
 As per §20.1 (200); body as per §23.2.
 
+[#_23_2_representation]
 == 23.2 Representation
 
 The links from the domain property description representation to other resources are as shown in the diagram below:

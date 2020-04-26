@@ -6,6 +6,7 @@ The endpoint URL for this resource is:
 
     /version
 
+[#_8_1_http_get]
 == 8.1 HTTP GET
 
 Obtain a representation of the implementation's version and optional capabilities.

@@ -40,6 +40,7 @@ Obtain a representation of a description of a domain action, within the metamode
 
 As per §20.1 (200); body as per §25.2.
 
+[#_25_2_representation]
 == 25.2 Representation
 
 The links from the domain action description representation to other resources are as shown in the diagram below:

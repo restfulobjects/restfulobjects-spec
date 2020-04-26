@@ -32,22 +32,31 @@ The representation returned by this resource provides links to three further res
 * The user resource xref:section-b/chapter-06.adoc[§B6] represents the currently logged-in user; the returned User Representation provides details such as their user name and roles.
 
 * The domain services resource xref:section-b/chapter-07.adoc[§B7] returns a list representation xref:section-b/chapter-11.adoc[§B11], which contains a link to each domain service resource xref:section-c/chapter-15.adoc[§C15]. A domain service is a singleton object that has actions but no state.
++
 The representation returned by a service resource is an object representation, but with content clearly indicating that the object it represents is a service.
 
 * The version resource xref:section-b/chapter-08.adoc[§B8] provides a mechanism for the client to discover the version of the spec and of the implementation, as well as querying any optional capabilities of the implementation (e.g. whether it supports direct deletion of persisted objects).
+
 The domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4] is the most important representation within Restful Objects; from it various sub-resources can be accessed.
 The most immediate such sub- resources are for:
 
 * each property of the object (xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4])
 * each collection of the object (xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]), and
 * each action of the object (xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]).
+
 Following these links it is possible to walk the graph to other domain object resources associated via properties or collections, and/or to modify the contents of properties and collections.
+
 An action on an object may be invoked through its ‘action invoke’ sub-resource (xref:section-c/chapter-19.adoc[§C19]); the HTTP method to use is dependent on the action's semantics.
-The representation returned by invoking the action will either be a scalar value xref:section-b/chapter-12.adoc[§B12], a representation of the returned domain object xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4], or a list xref:section-b/chapter-11.adoc[§B11] (linking to multiple domain object resources xref:section-c/chapter-14.adoc[§C14]) As well as providing access to sub-resources, the domain object resource also allows multiple properties to be updated, and objects to be deleted in a single transaction.
-(The latter is an optional capability xref:section-b/chapter-08.adoc[§B8].) Restful Objects defines two schemes by which implementations may provide domain type information – such as whether a property is mandatory or not – to clients.
+The representation returned by invoking the action will either be a scalar value xref:section-b/chapter-12.adoc[§B12], a representation of the returned domain object xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4], or a list xref:section-b/chapter-11.adoc[§B11] (linking to multiple domain object resources xref:section-c/chapter-14.adoc[§C14]).
+
+As well as providing access to sub-resources, the domain object resource also allows multiple properties to be updated, and objects to be deleted in a single transaction.
+(The latter is an optional capability xref:section-b/chapter-08.adoc[§B8]).
+
+Restful Objects defines two schemes by which implementations may provide domain type information – such as whether a property is mandatory or not – to clients.
 The "simple" scheme in-lines certain key domain type information directly within the domain object representation.
 The "formal" scheme, by contrast, defines separate ‘domain type’ resources and corresponding representations, with the domain object representations linking to these domain type resources.
 There are six such resources (xref:section-d/chapter-21.adoc#_21_2_representation[§D21.2], xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2], xref:section-d/chapter-23.adoc#_23_2_representation[§D23.2], xref:section-d/chapter-24.adoc#_24_2_representation[§D24.2], xref:section-d/chapter-25.adoc#_25_2_representation[§D25.2], and xref:section-d/chapter-26.adoc#_26_2_representation[§D26.2]).
+
 Restful Objects also defines a general mechanism to enable new domain object instances (that have been created by an action) to then be persisted, through the Objects Of Type resource xref:section-b/chapter-09.adoc[§B9].
 
 [#_2-2-domain-object-ontology]
@@ -59,45 +68,76 @@ The representations defined by Restful Objects are RESTful in the sense that the
 * to actions xref:section-c/chapter-18.adoc#_18_1_http_get[§C18.1] on the object
 * to update all properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2] of the object
 * to persist the object xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]
-* to delete the object xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14.3] The following sections describe how the different types of domain object will result in the presence or absence of specific links.
+* to delete the object xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14.3].
+
+The following sections describe how the different types of domain object will result in the presence or absence of specific links.
 (Note that in all cases, a link is only ever provided if the client has the correct security permissions for that capability).
-Persistent domain entity The most common type of domain object that Restful Objects deals with is a persistent domain entity: an object instance that exists from one interaction to the next, whose state is stored in a database (for example in an RDBMS table) and which is potentially visible to all clients.
+
+=== Persistent domain entity
+
+The most common type of domain object that Restful Objects deals with is a persistent domain entity: an object instance that exists from one interaction to the next, whose state is stored in a database (for example in an RDBMS table) and which is potentially visible to all clients.
+
 Typically a representation of a persistent domain entity includes links to the entity's state (its properties and collections).
+
 The representation will contain links to the object's actions, by which domain object behaviour can be invoked.
 This is a key piece of HATEOAS support.
+
 Assuming that at least one property is updatable, the "update properties" link will also be present.
-And if object deletion xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14] is supported by the implementation, then the delete object link will also be present.
+And if object deletion xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14.3] is supported by the implementation, then the delete object link will also be present.
+
 The "persist object" link will not be present because this object is already persisted.
+
 Examples of persistent domain entities are Customer, Order, OrderItem, and Product.
-Proto-persistent domain entity A proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
+
+=== Proto-persistent domain entity
+
+A proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
 The ultimate persistence of the entity is therefore under the control of the client.
+
 Unlike a persistent domain entity, for a proto-persistent domain entity there is no server-side resource to address after the first interaction which returns its representation.
 This means that its representation must have all the state (properties and collections) in-lined within the representation.
 There are no links to update the object’s properties, nor to delete that object.
 And there are no links to any domain object actions.
 The only link that is available is the one to persist the object.
+
 For example, a Customer object might provide a createOrder() action that returns (the representation of) a proto-persistent Order as its result, with certain properties set as required.
 The client would be expected to complete relevant details for the Order, and then to use the provided rel="…/persist" link in order to persist the Order.
 Thereafter that order will always be handled as a persistent domain entity.
-View model A view model is a type of domain object that projects the state of one or more domain entity instances.
+
+=== View model
+
+A view model is a type of domain object that projects the state of one or more domain entity instances.
 This is typically done in support of a particular use case.
+
 View models may also be used to provide a stable layer of abstraction.
 This is necessary when the deployment cycle for the Restful server and its client(s) are different: the server must ensure that any representations consumed by its client(s) remain backwardly compatible.
+
 An example of a view model might be OrderHistoryReport, which aggregates information about a number of historical orders (e.g. so they can be graphed or plotted in some form).
+
 View models are not persisted and so (like proto-persistent entities) their representation includes the state of the view model but no behaviour.
 However, unlike proto-persistent entities, they provide no persist link.
 In fact, such representations contain no links at all.
-Addressable view model Because simple view models provide no links, they leave the consuming client at a dead-end; in order to do further work the client must use information saved from a previous representation.
+
+=== Addressable view model
+
+Because simple view models provide no links, they leave the consuming client at a dead-end; in order to do further work the client must use information saved from a previous representation.
 In other words, the HATEOAS principle is broken.
+
 In order for any action link to work, the object must have some notion of identity from one interaction to the next.
 Where a view model instance does have such an identity we describe it as an ‘Addressable View Model’.
+
 How this identity is managed is implementation-specific, but typically an addressable view model will be closely associated with an underlying persistent domain entity (by convention or some other means); the implementation can then use that underlying entity in order to re-create some server-state.
 See xref:section-e/chapter-32.adoc#_32_1_making_view_models_addressable[§E32] for a code sketch as to how this might be accomplished.
+
 In theory addressable view models could also provide links to related properties or collections.
 However, because the purpose of a view model is also to expose a stable set of state for a particular use case, implementations are more than likely expected to simply in-line the property or collection values in their representation.
+
 A good example of an addressable view model is Order/OrderItems, where a single representation has the state of a (persistent) Order along with all its associated OrderItems.
 However, such a view model would also provide actions that could delegate to the underlying Order object.
-Domain service The last category of domain objects is a domain service.
+
+=== Domain service
+
+The last category of domain objects is a domain service.
 A domain service is a singleton domain object that acts as a repository for locating existing domain entities, as a factory for creating new entities, or provides other services to domain objects.
 Domain services typically do not have state (properties or collections), only behaviour (actions).
 They also cannot be updated, persisted or deleted.
@@ -107,7 +147,69 @@ They also cannot be updated, persisted or deleted.
 
 The following table summarizes the links (to other representations) that may be present in the object representation xref:section-c/chapter-14.adoc[§C14].
 
-property collection action persist update properties delete Persistent entity yes yes yes --- yes yes Proto persistent entity --- (in-lined) --- (in-lined) --- yes --- --- View model --- (in-lined) --- (in-lined) --- --- --- --- Addressable view model --- (in-lined) --- (in-lined) yes --- --- --- Domain service --- --- yes --- --- --- In the above table "yes" indicates that a link to that other resource may be present; "in-lined" means that the value of the property/collection is part of the object representation itself (as one large JSON document).
+[table,cols=">2a,^1a,^1a,^1a,^1a,^1a,^1a",options=header]
+|===
+|
+|property
+|collection
+|action
+|persist|update +
+properties
+|delete
+
+|Persistent +
+entity
+|yes
+|yes
+|yes
+|\--
+|yes
+|yes
+
+|Proto-persistent +
+entity
+|\-- +
+(in-lined)
+|\-- +
+(in-lined)
+|\--
+|yes
+|\--
+|\--
+
+|View model
+|\-- +
+(in-lined)
+|\-- +
+(in-lined)
+|\--
+|\--
+|\--
+|\--
+|Addressable +
+view model
+|\-- +
+(in-lined)
+|\-- +
+(in-lined)
+|yes
+|\--
+|\--
+|\--
+
+|Domain +
+service
+|\--
+|\--
+|yes
+|\--
+|\--
+|\--
+
+|===
+
+In the above table "yes" indicates that a link to that other resource may be present; "in-lined" means that the value of the property/collection is part of the object representation itself (as one large JSON document).
+
 As noted above, it isn't strictly necessary to distinguish these different types of domain objects; a client can only follow the links that it is provided in the representation.
 However, where there is likely variation in the presence or not or a link, the spec uses the above terms as a way to explain why that variation occurs.
 
@@ -115,87 +217,242 @@ However, where there is likely variation in the presence or not or a link, the s
 == 2.3 Domain Object & Service Resources
 
 The following table summarises the resources that relate directly to domain objects.
-ObjectsOf Type xref:section-b/chapter-09.adoc[§B9]
 
+[table,cols="^1a,^2a,^2a,^2a,^2a,^2a,^2a",options=header]
+|===
 
-Objects/{DType}    Object xref:section-c/chapter-14.adoc[§C14]
+|
+|Objects +
+Of Type +
+xref:section-b/chapter-09.adoc[§B9]
 
+|Object +
+xref:section-c/chapter-14.adoc[§C14]
 
+|Object +
+Property +
+xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]
 
-Objects/
-{DType}/
-{IID}    Object Property xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]
+|Object +
+Collection +
+xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4]
 
+|Object +
+Action +
+xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5] +
 
-Objects/
-{DType}/
-{IID}/ Properties/
-{Property}    Object Collection xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4]
+|Object +
+Action +
+Invoke +
+xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]
 
-
-Objects/
+|
+|Objects/ +
+{DType}
+|
+Objects/ +
+{DType}/ +
+{IID}
+|Objects/ +
+{DType}/ +
+{IID}/ Properties/ +
+{Property}
+|Objects/
 {DType}/
 {IID}/ Collections/
-{Collection}    Object Action xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]
+{Collection}
+|Objects/ +
+{DType}/ +
+{IID}/ Actions/ +
+{Action}
+|Objects/ +
+{DType}/ +
+{IID}/ Actions/ +
+{Action}/ invoke
 
 
-Objects/
-{DType}/
-{IID}/ Actions/
-{Action}    Object Action Invoke xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]
+|GET
+|n/a – +
+405
+|object summary, member summary, property values
+|property details and value
+|collection details and content
+|action prompt
+|invoke (action known to be query-only)
 
-Objects/
-{DType}/
-{IID}/ Actions/
-{Action}/ invoke GET n/a – 405 object summary, member summary, property values property details and value collection details and content action prompt invoke (action known to be query-only) PUT n/a – 405 update or clear multiple property values update or clear value add object (if Set semantics) n/a – 405 invoke (action known to be idempotent) DELETE n/a – 405 delete object clear value remove object n/a – 405 n/a – 405 POST persist instance n/a – 405 n/a - 405 add object (if List semantics) n/a – 405 invoke (action not known to be idempotent) The columns indicate the domain object resources shown in the Figure 1, plus the Objects Of Type resource xref:section-b/chapter-09.adoc[§B9] used for persisting new object instances.
-The header row indicates the resources as templated URIs :
+|PUT
+| n/a – +
+405
+|update or clear multiple property values
+|update or clear value
+|add object (if Set semantics)
+|n/a – +
+405
+|invoke (action known to be idempotent)
+
+|DELETE
+|n/a – +
+405
+|delete object
+|clear value
+|remove object
+|n/a – +
+405
+|n/a – +
+405
+|POST
+|persist instance
+|n/a – +
+405
+|n/a - +
+405
+|add object +
+(if List semantics)
+|n/a – +
+405
+|invoke +
+(action not known to be idempotent)
+|===
+The columns indicate the domain object resources shown in the Figure 1, plus the Objects Of Type resource xref:section-b/chapter-09.adoc[§B9] used for persisting new object instances.
+
+The header row indicates the resources as templated URIs:
 
 * {DType} is the domain type identifier that uniquely represents the domain type.
++
 Depending on the implementation this may take an abbreviated form e.g. "CUS" for Customer, or could be the fully qualified class name, eg “com.mycompany.myapp.Customer”.
++
 The spec requires only that the value is unique;
+
 * {IID} is the instance identifier that uniquely identifies an object instance within its type: e.g. "123" for customer with id=123;
-* {Property}, {Collection} and {Action} are unique identifiers for a property, collection or action of the object, e.g. "firstName", "orders", or "placeOrder" For brevity, the combination of domain type/instance identifier {DType}/{IID} is also termed the object identifier, or oid.
+
+* {Property}, {Collection} and {Action} are unique identifiers for a property, collection or action of the object, e.g. "firstName", "orders", or "placeOrder"
+
+For brevity, the combination of domain type/instance identifier {DType}/{IID} is also termed the object identifier, or oid.
+
 The body of the table indicates which HTTP methods may be used to access these resources.
+
 The HTTP GET method is the most widely supported across the various resources, and is used to obtain a summary representation of an object xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4] (e.g. a Customer instance), or detailed information about a specific property of an object xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4] (e.g. Customer.firstName) or about a specific collection xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5] (e.g. Customer.orders).
+
 In addition, HTTP GET is used to obtain a representation of an object action xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2], such as the Customer's placeOrder() action.
 Getting the representation of an action does not invoke the action; rather the returned representation describes the action, providing such information as the arguments and the HTTP method required to invoke the action.
+
 Modifying the state of a domain object is performed through resources supporting HTTP PUT, DELETE or POST. The HTTP method to use to request the modification depends upon the resource's semantics:
 
 * if the resource being called is idempotent, meaning that it will change persisted objects but calling that same resource again (with the same inputs) will have no further effect , then either HTTP PUT or HTTP DELETE is used
-* if the resource being called is not idempotent, then HTTP POST is used Whether HTTP PUT or DELETE is used depends on context: if a new data value is being provided then PUT is used, if a value is being cleared or data removed in some way then DELETE is used.
-So, properties can be set to a new value using HTTP PUT xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2], or can be set to null using HTTP DELETE xref:section-c/chapter-16.adoc#_16_3_http_delete[§C16.3]. Modifying multiple properties is accomplished using an HTTP PUT to the object resource xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]. For collections things are a little more involved because the HTTP method to use depends upon the collection's semantics.
+
+* if the resource being called is not idempotent, then HTTP POST is used.
+
+Whether HTTP PUT or DELETE is used depends on context: if a new data value is being provided then PUT is used, if a value is being cleared or data removed in some way then DELETE is used.
+
+So, properties can be set to a new value using HTTP PUT xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2], or can be set to null using HTTP DELETE xref:section-c/chapter-16.adoc#_16_3_http_delete[§C16.3].
+Modifying multiple properties is accomplished using an HTTP PUT to the object resource xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2].
+
+For collections things are a little more involved because the HTTP method to use depends upon the collection's semantics.
 The most common situation is where the collection follows ‘Set’ semantics (in other words, it does not allow duplicates to be added).
 In this case the HTTP PUT xref:section-c/chapter-17.adoc#_17_2_http_put[§C17.2] is used; if the object exists then the request to add it is ignored, so this is idempotent.
 If the collection does allow duplicates (in other words, it follows ‘List’ semantics) then HTTP POST xref:section-c/chapter-17.adoc#_17_3_http_post[§C17.3] is used.
-In either case references are removed from the collection using HTTP DELETE xref:section-c/chapter-17.adoc#_17_4_http_delete[§C17.4]. Actions are invoked through the '/invoke’ sub-resource.
+In either case references are removed from the collection using HTTP DELETE xref:section-c/chapter-17.adoc#_17_4_http_delete[§C17.4].
+
+Actions are invoked through the '/invoke’ sub-resource.
 The method used depends on the action's semantics: if the action is idempotent, then PUT xref:section-c/chapter-19.adoc#_19_2_http_put[§C19.2] is used, otherwise POST xref:section-c/chapter-19.adoc#_19_3_http_post[§C19.3] is used.
 However, there is a further special case for actions: if the action is query-only and so makes no changes to persisted objects at all , then Restful Objects allows HTTP GET xref:section-c/chapter-19.adoc#_19_1_http_get[§C19.1] to be used to invoke the action.
+
 Whether an action is query-only or is idempotent is down to the implementation to determine and to enforce.
+
 Not every HTTP method applies to every resource, and where it does not the specification requires that a 405 ('method not allowed') status code is returned.
-This will be accompanied by an Allow header to indicate which methods are allowed by the resource . A 405 will also be returned if the client attempts, for example, to invoke an action with a GET that is not query-only (or cannot be determined to be so by the server implementation).
+This will be accompanied by an *Allow* header to indicate which methods are allowed by the resource.
+A 405 will also be returned if the client attempts, for example, to invoke an action with a GET that is not query-only (or cannot be determined to be so by the server implementation).
+
 In addition to the domain object resources, there are also resources for domain services.
 However, domain services have no state, so there are no subresources for properties or collections:
-Service xref:section-c/chapter-15.adoc[§C15]
 
-Services/{ServiceId}    Service Action xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]
+[table,cols="^1a,^2a,^2a,^2a",options=header]
+|===
 
-Services/{ServiceId}/ Actions/{Action}    Service Action Invoke xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]
+|
+|Service +
+xref:section-c/chapter-15.adoc[§C15]
 
-Services/{ServiceId}/ Actions/{Action}
-/invoke GET service summary, action summary action prompt invoke (action known to be query-only) PUT n/a – 405 n/a – 405 invoke (action known to be idempotent) DELETE n/a – 405 n/a – 405 n/a – 405 POST n/a – 405 n/a – 405 invoke (action not known to be idempotent) The services/{serviceId} URL is broadly equivalent to objects/{domainType}/{instanceId}.
+
+|Service Action +
+xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]
+
+|Service Action Invoke +
+xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]
+
+|
+|Services/{ServiceId}
+|Services/{ServiceId}/ Actions/{Action}
+|Services/{ServiceId}/ Actions/{Action}
+/invoke
+
+|GET
+|service summary, action summary
+|action prompt
+|invoke +
+(action known to be query-only)
+
+|PUT
+|n/a – +
+405
+|n/a – +
+405
+|invoke +
+(action known to be idempotent)
+
+|DELETE
+|n/a – +
+405
+|n/a – +
+405
+|n/a – +
+405
+
+|POST
+|n/a – +
+405
+|n/a – +
+405
+|invoke +
+(action not known to be idempotent)
+|===
+
+The services/{serviceId} URL is broadly equivalent to objects/{domainType}/{instanceId}.
 However PUT and DELETE are not supported (because domain services have no properties and cannot be deleted).
+
 The services/{serviceId}/actions/... subresources are directly equivalent to objects/{domainType}/instanceId}/actions/... subresources, and support the exact same HTTP methods.
 
 [#_2-3-1-example-resource-urls]
 === 2.3.1 Example Resource URLs
 
 The following table lists some example URLs for accessing resources:
-Resource Type Resource object    http://~/objects/ORD/123
-property    http://~/objects/ORD/123/properties/createdOn
-collection    http://~/objects/ORD/123/collections/items
-action    http://~/objects/ORD/123/actions/placeOrder
-action invocation    http://~/objects/ORD/123/actions/placeOrder/invoke
-service    http://~/services/x.CustomerRepository
+
+[table,cols="<3a,<6a",options=header]
+|===
+
+|Resource Type
+|Resource
+
+|object
+|http://~/objects/ORD/123
+
+|property
+|http://~/objects/ORD/123/properties/createdOn
+
+|collection
+|http://~/objects/ORD/123/collections/items
+
+|action
+|http://~/objects/ORD/123/actions/placeOrder
+
+|action invocation
+|http://~/objects/ORD/123/actions/placeOrder/invoke
+
+|service
+|http://~/services/x.CustomerRepository
+
+|===
+
 In the example URLs the "ORD" is the domain type identifier, while the "123" is the instance identifier.
 Together these identify a persisted instance of a a domain object of a particular type (an Order, in this case).
 The format of both the domain type identifier and the instance identifier is implementation-specific, though both must be URL-encoded.
@@ -207,19 +464,95 @@ The format of both the domain type identifier and the instance identifier is imp
 The following table shows an example of the interactions between a client application and a Restful Objects server, for a simple web-shopping scenario.
 It is rendered as a sequence of HTTP calls.
 
-Description Method URL Request Body Returned representation Go to the home resource GET    http://~/    - Home Page Follow link to list of Services available GET    http://~/services    - List (of links to Services) Follow link to the ProductRepository service GET    http://~/services/x.ProductRepository    - Object (representing a Service) Follow link to ‘Find By Name’ action GET    http://~/services/x.ProductRepository/actions/FindByName    - Action (to display to user as a dialog) Invoke this (query-only) action with “cycle” as the parameter GET    http://~/services/x.ProductRepository/actions/FindByName/invoke/?Name=cycle    - Action result in-lining list of links to Product objects Follow the link to one of the Product objects in the collection GET    http://~/objects/object/x.Product/8071
-- Object of type Product Invoke the (zero parameter) action ‘AddToBasket’ on this object POST    http://~/objects/object/x.Product/1234/actions/AddToBasket/invoke    - - Invoke the action ‘ViewBasket…’ on the BasketService GET    http://~/services/x.BasketService/actions/ViewBasketForCurrentUser/invoke    - Action result in-lining list of links to Item objects Modify the Quantity property on the item just added PUT    http://~/objects/object/x.Item/1234/properties/Quantity    Property representation with value=3 - Delete a (previously added) item from the Basket DELETE    http://~/objects/ x.Item/55023 - -
+[table,cols="<2a,<1a,<2a,<1a,<2a",options=header]
+|===
+
+|Description
+|Method
+|URL
+|Request Body
+|Returned representation
+
+|Go to the home resource
+|GET
+|http://~/
+|-
+|Home Page
+
+|Follow link to list of Services available
+|GET
+|http://~/services
+|-
+|List (of links to Services)
+
+|Follow link to the ProductRepository service
+|GET
+|http://~/services/x.ProductRepository
+|-
+|Object (representing a Service)
+
+|Follow link to ‘Find By Name’ action
+|GET
+|link:http://~/services/x.ProductRepository/actions/FindByName[http://~/services/x.ProductRepository/ +
+actions/FindByName]
+|-
+|Action (to display to user as a dialog)
+
+|Invoke this (query-only) action with “cycle” as the parameter
+|GET
+|link:http://~/services/x.ProductRepository/actions/FindByName/invoke/?Name=cycle[http://~/services/x.ProductRepository/ +actions/FindByName/invoke/?Name=cycle]
+|-
+|Action result in-lining list of links to Product objects
+
+|Follow the link to one of the Product objects in the collection
+|GET
+|http://~/objects/object/x.Product/8071
+|-
+|Object of type Product
+
+|Invoke the (zero parameter) action ‘AddToBasket’ on this object
+|POST
+|link:http://~/objects/object/x.Product/1234/actions/AddToBasket/invoke[http://~/objects/object/x.Product/1234/ +
+actions/AddToBasket/invoke]
+|(empty)
+|-
+
+|Invoke the action ‘ViewBasket…’ on the BasketService
+|GET
+|link:http://~/services/x.BasketService/actions/ViewBasketForCurrentUser/invoke[http://~/services/x.BasketService/ +
+actions/ViewBasketForCurrentUser/invoke]
+|-
+|Action result in-lining list of links to Item objects
+|Modify the Quantity property on the item just added
+|PUT
+|link:http://~/objects/object/x.Item/1234/properties/Quantity[http://~/objects/object/x.Item/1234/ +
+properties/Quantity]
+|Property value=3
+|-
+
+|Delete a (previously added) item from the Basket
+|DELETE
+|http://~/objects/x.Item/55023
+|-
+|-
+|===
 
 [#_2-4-media-types-accept-and-content-type]
 == 2.4 Media Types (Accept and Content-Type)
 
 Web browsers typically use the media type in order to determine how to render some returned content.
 For example, text/html indicates an HTML page, while image/png and image/svg are different types of images.
+
 Rather than defining its own set of custom media types, the specification uses the standard media type for JSON representations, application/json, and then uses media type parameters that indicate the structure and semantics of the JSON.
 Depending on the representation, there are additional parameters: "profile" and either "x-ro-domain-type" or "x-ro-element-type":
 
-FIGURE 2: MEDIA TYPE LAYERS As the diagram shows, the "profile" parameter refines thesemantics of application/json, and the "x-ro-domain-type" parameter refines the semantics of "profile" parameter of object representations.
+.MEDIA TYPE LAYERS
+image::Slide22.PNG[width="450px",link="{imagesdir}/Slide22.PNG"]
+
+
+As the diagram shows, the "profile" parameter refines thesemantics of application/json, and the "x-ro-domain-type" parameter refines the semantics of "profile" parameter of object representations.
 The "x-ro-element-type" parameter similarly refines the semantics of "profile" for list/collection representations.
+
 Note that the spec also supports non-JSON media types, such as application/pdf and image/jpeg, for blobs and clobs.
 See xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§3.3].
 
@@ -227,100 +560,260 @@ See xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§3.3].
 === 2.4.1 RepresentationType ("profile" parameter)
 
 The representation type is used to indicate the nature of the representation, and is specified as the value of the "profile" parameter . By inspecting the value, the client can dynamically determine how to deal with a representation.
+
 The format of the media type with representation type is therefore:
-application/json;profile="urn:org.restfulobjects:repr-types/xxx" Every representation defined by the Restful Objects spec has a corresponding representation type:
-Representation type Indicates a representation of homepage the start page xref:section-a/chapter-04.adoc[§A4] user the user requesting the resource xref:section-b/chapter-06.adoc[§B6] version the version of the spec and implementation xref:section-b/chapter-08.adoc[§B8] list a list of references to domain services or objectsxref:section-b/chapter-11.adoc[§B11] object a domain object instance (or a service, which is a singleton object) xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4] object-property a domain object property xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4] object-collection a domain object collection xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5] object-action a domain object action xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2] action-result result of invoking a domain object action xref:section-c/chapter-19.adoc#_19_4_representation[§C19] type-list a list of domain types xref:section-d/chapter-21.adoc#_21_2_representation[§D21.2] domain-type a domain type xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2] property-description a domain property's description § D23.2 collection-description a domain collection's description xref:section-d/chapter-24.adoc#_24_2_representation[§D24.2] action-description a domain action's description.
-xref:section-d/chapter-25.adoc#_25_2_representation[§D25.2] action-param-description an action parameter's description xref:section-d/chapter-26.adoc#_26_2_representation[§D26.2] type-action-result result of invoking a domain type action xref:section-d/chapter-27.adoc[§D27]. error An error was generated, xref:section-b/chapter-10.adoc[§B10].
+
+    application/json;profile="urn:org.restfulobjects:repr-types/xxx"
+
+Every representation defined by the Restful Objects spec has a corresponding representation type:
+
+[table,cols="<4a,<4a,2a",options=header]
+|===
+
+|Representation type
+|Indicates a representation of
+|
+
+|homepage
+|the start page
+|xref:section-b/chapter-05.adoc[§B5]
+
+|user
+|the user requesting the resource
+|xref:section-b/chapter-06.adoc[§B6]
+
+|version
+|the version of the spec and implementation
+|ref:section-b/chapter-08.adoc[§B8]
+
+|list
+|a list of references to domain services or objects
+|xref:section-b/chapter-11.adoc[§B11]
+
+|object
+|a domain object instance (or a service, which is a singleton object)
+|xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]
+
+|object-property
+|a domain object property
+|xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4]
+
+|object-collection
+|a domain object collection
+|xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]
+
+|object-action
+|a domain object action
+|xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]
+
+|action-result
+|result of invoking a domain object action
+|xref:section-c/chapter-19.adoc#_19_4_representation[§C19]
+
+|type-list
+|a list of domain types
+|xref:section-d/chapter-21.adoc#_21_2_representation[§D21.2]
+
+|domain-type
+|a domain type
+|xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2]
+
+|property-description
+|a domain property's description
+|xref:section-d/chapter-23.adoc#_23_2_representation[§D23.2]
+
+|collection-description
+|a domain collection's description
+|xref:section-d/chapter-24.adoc#_24_2_representation[§D24.2]
+
+|action-description
+|a domain action's description.
+|xref:section-d/chapter-25.adoc#_25_2_representation[§D25.2]
+
+|action-param-description
+|an action parameter's description
+|xref:section-d/chapter-26.adoc#_26_2_representation[§D26.2]
+
+|type-action-result
+|result of invoking a domain type action
+|xref:section-d/chapter-27.adoc[§D27].
+
+|error
+|An error was generated
+|xref:section-b/chapter-10.adoc[§B10]
+|===
 
 [#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter]
 === 2.4.2 Domain Type ("x-ro-domain-type" parameter) and Element Type ("x-ro-element-type" parameter)
 
 While the "profile" parameter informs the client of the representation type, in the case of an object representation (that is, for profile="urn:org.restfulobjects:repr-types/object") there is no easy way for the client to distinguish between, for example, (the representation of) a Customer and (the representation of) an Order.
-For clients that want to handle such representations differently, the spec defines an additional "x-ro-domain-type" parameter .
+
+For clients that want to handle such representations differently, the spec defines an additional "x-ro-domain-type" parameter.
+
 Similarly, when a list of objects is returned (that is, for "profile" is any of "urn:org.restfulobjects:repr-types/action-result", "urn:org.restfulobjects:repr-types/object-collection" or "urn:org.restfulobjects:repr-types/list" ), there is no easy way for the client to know what type the elements of the list are.
+
 Therefore, the spec defines an additional "x-ro-element-type" parameter.
+
 The value of both of these parameters is a domain type identifier {domainTypeId}.
 For "x-ro-domain-type" the value should be of the actual runtime type, for "x-ro-element-type" it should be of the collection's compile-time type.
+
 For example, the media type for the representation of a Customer might be:
-application/json; profile="urn:org.restfulobjects:repr-types/object"; x-ro-domain-type="CUS" while the representation of a collection of Customers might be:
-application/json; profile="urn:org.restfulobjects:repr-types/object-collection"; x-ro-element-type="CUS" where in both cases "CUS" is the domain type identifier for this Customer class.
+
+    application/json; +
+      profile="urn:org.restfulobjects:repr-types/object"; +
+      x-ro-domain-type="CUS"
+
+while the representation of a collection of Customers might be:
+
+    application/json;
+      profile="urn:org.restfulobjects:repr-types/object-collection";
+      x-ro-element-type="CUS"
+
+where in both cases "CUS" is the domain type identifier for this Customer class.
+
 In the case of a view model, the "x-ro-domain-type" value would more likely include a version number, eg:
-application/json; profile="urn:org.restfulobjects:repr-types/object"; x-ro-domain-type="OHVM2" where, say, "OHVM2" is the unique domain type id corresponding to the class com.mycompany.myapp.viewmodels.v2.OrderHistory.
+
+    application/json;
+      profile="urn:org.restfulobjects:repr-types/object";
+      x-ro-domain-type="OHVM2"
+
+where, say, "OHVM2" is the unique domain type id corresponding to the class com.mycompany.myapp.viewmodels.v2.OrderHistory.
+
 The "x-ro-domain-type" and "x-ro-element-type" parameters are also returned for action result representations which wrap a domain object or a list of domain objects.
+
 For example, an action that returned a single Customer would return a media type (under the simple scheme) of:
-application/json; profile="urn:org.restfulobjects:repr-types/action-result"; x-ro-domain-type="CUS" while an action that returned a list of Customers (under the simple scheme) would be:
-application/json; profile="urn:org.restfulobjects:repr-types/action-result"; x-ro-element-type="CUS" In all the above cases the client can use this value to process the representation accordingly; for example, rendering it with a different view template.
+
+    application/json;
+      profile="urn:org.restfulobjects:repr-types/action-result";
+      x-ro-domain-type="CUS"
+
+while an action that returned a list of Customers (under the simple scheme) would be:
+
+    application/json;
+      profile="urn:org.restfulobjects:repr-types/action-result";
+      x-ro-element-type="CUS"
+
+In all the above cases the client can use this value to process the representation accordingly; for example, rendering it with a different view template.
 
 [#_2-4-3-handling-of-accept-headers]
 === 2.4.3 Handling of Accept headers
 
 The HTTP protocol defines the Accept request header for the client to specify which media types it can consume; the server then indicates the actual media type using the Content-Type response header.
 If the server is unable to return the requested type, then it must return a 406 "not acceptable" status return code.
+
 Restful Objects defines the following behaviour:
 
 * if the client provides no Accept header, then the server may serve up a representation of any content type
+
 * if the client provides an Accept header of */*, or application/*, then any representation may be returned.
 In this case any "profile" parameter will be ignored
+
 * if the client specifies one or more "profile" parameters, then the server must ensure that the returned representation is one of those that is acceptable.
 If it is not, then a 406 must be returned.
+
 Note however that if the client specifies the "x-ro-domain-type" parameter, then this is ignored by the server.
-This means that the client cannot currently use this parameter to ensure that, for example, v1 of a view model is returned rather than v2. Support for content negotiation through the "x-ro-domain-type" parameter in this way is likely to be introduced in a future version of the spec, see xref:section-e/chapter-34.adoc#_34_1_content_negotiation[§E34.1]. If the client does elect to specify "profile" parameters, then it should take care to always include the error profile.
-In other words, a request that is expected to return a domain object representation should provide an Accept header of:
-Accept:
-application/json; profile="urn:org.restfulobjects:repr-types/object", application/json; profile="urn:org.restfulobjects:repr-types/error" If the error profile is omitted and a (server-side) error occurs, the server may still return the error representation, but must return a 406 (rather than the usual 500 error).
+This means that the client cannot currently use this parameter to ensure that, for example, v1 of a view model is returned rather than v2. Support for content negotiation through the "x-ro-domain-type" parameter in this way is likely to be introduced in a future version of the spec, see xref:section-e/chapter-34.adoc#_34_1_content_negotiation[§E34.1].
+
+If the client does elect to specify "profile" parameters, then it should take care to always include the error profile.
+In other words, a request that is expected to return a domain object representation should provide an *Accept* header of:
+
+    application/json;
+      profile="urn:org.restfulobjects:repr-types/object",
+    application/json;
+     profile="urn:org.restfulobjects:repr-types/error"
+
+If the error profile is omitted and a (server-side) error occurs, the server may still return the error representation, but must return a 406 (rather than the usual 500 error).
 
 [#_2-4-4-browsing-the-restful-api]
 === 2.4.4 Browsing the RESTful API
 
 During development it can be helpful to browse a RESTful API directly, using a browser plugin such as RESTConsole or JSONView.
 Such plugins provide such features as folding of the JSON representation, and automatic detection of links in the representation so that they can be followed (with a GET).
+
 Although designed to consume JSON, some of these tools incorrectly set the Accept header to a value other than application/json.
 Normally, this would result in a 406 ("Not acceptable") response error.
 In order to accommodate the use of such tools, implementations may wish to provide a "non-strict" mode of operation to suppress Accept header validation.
 However, this is not part of the spec.
+
 Even if Accept header validation has been suppressed, the Content-Type returned should be set to application/json along with the "profile" (and any other) parameter.
 
 [#_2-5-scalar-datatypes-and-formats]
 == 2.5 Scalar datatypes and formats
 
-JSON defines only the following scalar datatypes :
+JSON defines only the following scalar datatypes.footnote:[http://json.org/, also http://en.wikipedia.org/wiki/JSON#Data_types.2C_syntax_and_example] :
 
 * Number (double precision floating-point format)
 * String (double-quoted Unicode, UTF-8 by default)
-* Boolean (true or false) The JSON schema specification also defines:
+* Boolean (true or false)
 
-* Integer (a number with no floating-point value) Most notably, JSON does not define a native datatype to represent date, time or date/time.
+The JSON schema specification.footnote:[http://tools.ietf.org/html/draft-zyp-json-schema-03, section 5.1] also defines:
+
+* Integer (a number with no floating-point value)
+
+Most notably, JSON does not define a native datatype to represent date, time or date/time.
 Also, it does not define datatypes to represent arbitrarily accurate decimal or integer numbers.
 Therefore, representing values of these datatypes requires that the information be encoded in some way within a JSON string value.
-The Restful Objects spec defines the "format" json-property as an additional modifier to describe how to interpret the value of a string or number json-property.
-The values of the "format" json-property for string values are :
 
-* string o The value should simply be interpreted as a string.
-This is also the default if the "format" json-property is omitted (or if no domain metadata is available)
-* date-time o A date in ISO 8601 format of YYYY-MM-DDThh:mm:ssZ in UTC time.
+The Restful Objects spec defines the "*format*" json-property as an additional modifier to describe how to interpret the value of a string or number json-property.
 
-* date o A date in the format of YYYY-MM-DD.
+The values of the "*format*" json-property for string values are.footnote:[A number of these are also defined in the JSON schema, http://tools.ietf.org/html/draft-zyp-json-schema-03, section 5.23] :
 
-* time o A time in the format of hh:mm:ss.
+* string
++
+The value should simply be interpreted as a string.
+This is also the default if the "*format*" json-property is omitted (or if no domain metadata is available)
 
-* utc-millisec o The difference, measured in milliseconds, between the specified time and midnight, 00:00 of January 1, 1970 UTC.
+* date-time
++
+A date in ISO 8601 format of YYYY-MM-DDThh:mm:ssZ in UTC time.
 
-* big-integer(n) o The value should be parsed as an integer, scale n.
+* date
++
+A date in the format of YYYY-MM-DD.
 
-* big-decimal(s,p) o The value should be parsed as a big decimal, scale n, precicion p.
+* time
++
+A time in the format of hh:mm:ss.
 
-* blob o "binary large object": the string is a base-64 encoded sequence of bytes.
+* utc-millisec
++
+The difference, measured in milliseconds, between the specified time and midnight, 00:00 of January 1, 1970 UTC.
 
-* clob o "character large object": the string is a large array of characters, for example an HTML resource The values of the "format" json-property for number values are:
+* big-integer(n)
++
+The value should be parsed as an integer, scale n.
 
-* decimal o the number should be interpreted as a float-point decimal.
+* big-decimal(s,p)
++
+The value should be parsed as a big decimal, scale n, precicion p.
 
-* int o the number should be interpreted as an integer.
-If there is no "format" json-property or domain metadata, then the value is interpreted according to standard Javascript rules, as documented in the Ecmascript standard . In essence: if there is NO decimal point and the number is in the range [-9,007,199,254,740,992, +9,007,199,254,740,992], then it is an integer.
+* blob
++
+"binary large object": the string is a base-64 encoded sequence of bytes.
+
+* clob
++
+"character large object": the string is a large array of characters, for example an HTML resource
+
+The values of the "*format*" json-property for number values are:
+
+* decimal
++
+the number should be interpreted as a float-point decimal.
+
+* int
++
+the number should be interpreted as an integer.
+
+If there is no "*format*" json-property or domain metadata, then the value is interpreted according to standard Javascript rules, as documented in the Ecmascript standard . In essence: if there is NO decimal point and the number is in the range [-9,007,199,254,740,992, +9,007,199,254,740,992], then it is an integer.
 Otherwise, the number is a 64-bit IEE754 floating point number.
+
 Note that the internationalization of dates (e.g. formatting a date as MM/DD/YYYY for the en_US locale) is a responsibility of the client, not the server implementation.
 Dates should always be provided in the formats described above; the Accept-Language header should be ignored.
-If the implementation supports the formal metamodel scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§3.1.2], then each of these datatypes has a corresponding pre-defined domain type resource axref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3]. Support for blobs and clobs is an optional capability, and is discussed further in xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§3.3].
+
+If the implementation supports the formal metamodel scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§3.1.2], then each of these datatypes has a corresponding pre-defined domain type resource xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3].
+
+Support for blobs and clobs is an optional capability, and is discussed further in xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§3.3].
 
 [#_2-6-values]
 == 2.6 Values
@@ -328,26 +821,66 @@ If the implementation supports the formal metamodel scheme xref:section-a/chapte
 The spec defines JSON representations for the values of object properties, collection references and argument values.
 These either being of a value type (e.g. String, date, int) or a reference type (e.g. a link to a Customer, OrderStatus).
 This is true both for property values and for argument values; collections only ever contain reference types.
+
 For value types, the value that appears in the JSON is the actual JSON value, either a number, a Boolean, a string or a null.
-In the case of a string value this may may be the formatted version of some other datatype, such as a date §2.5. For example, if the 'createdOn' property is a date, then its value would be represented thus:
-"createdOn": { ...
-"memberType": "property", "value": "2011-06-14", "format": "date", ...
-} For reference properties, the value held is a link.
-For example, if 'orderStatus' is a property of type OrderStatus, then its representation would be something like:
-"orderStatus": { ...
-"memberType": "property", "value": { "rel": ".../value;property=\"orderStatus\"", "href": "http://~/objects/ORS/IN_PROGRESS", "type": "application/json;profile=\".../object\"", "title": "In Progress", "method": "GET" }, ...
+In the case of a string value this may may be the formatted version of some other datatype, such as a date xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§2.5].
+
+For example, if the 'createdOn' property is a date, then its value would be represented thus:
+
+[source,javascript]
+----
+"createdOn": {
+    "memberType": "property",
+    "value": "2011-06-14",
+    "format": "date",
+    ...
 }
+----
+
+For reference properties, the value held is a link.
+For example, if 'orderStatus' is a property of type OrderStatus, then its representation would be something like:
+
+[source,javascript]
+----
+"orderStatus": {
+    "memberType": "property",
+    "value": {
+        "rel": ".../value;property=\"orderStatus\"",
+        "href": "http://~/objects/ORS/IN_PROGRESS",
+        "type": "application/json;profile=\".../object\"",
+        "title": "In Progress",
+        "method": "GET"
+    },
+    ...
+}
+----
 
 [#_2-7-link-representation]
 == 2.7 Link representation
 
 Every JSON representation may have relationships to other representations, and each such relationship is described through a standard link representation with the format:
-{ "rel": ".../xxx", "href": "http://~/objects/ORD/123", "type": "application/json;profile=\".../object\"", "method": "GET", "title": "xxx", "arguments": { ... }, "value": { ... } } where:
-JSON-Property Description rel Indicates the nature of the relationship of the related resource to the resource that generated this representation; described in more detail below href The (absolute) address of the related resource.
+
+[source,javascript]
+----
+{
+    "rel": ".../xxx",                                  //<.>
+    "href": "http://~/objects/ORD/123",                //<.>
+    "type": "application/json;profile=\".../object\"", //<.>
+    "method": "GET",                                   //<.>
+    "title": "xxx",                                    //<.>
+    "arguments": { ... },                              //<.>
+    "value": { ... }                                   //<.>
+}
+----
+<.> Indicates the nature of the relationship of the related resource to the resource that generated this representation; described in more detail xref:#_2-7-1-rel[below].
+<.> The (absolute) address of the related resource.
 Any characters that are invalid in URLs must be URL encoded.
-type The media type that the linked resource will return; see §2.4. method The HTTP method to use to traverse the link (GET, POST, PUT or DELETE) title (optional) string that the consuming application may use to render the link without having to traverse the link in advance arguments (optional) map that may be used as the basis for any data (arguments or properties) required to follow the link.
+<.> The media type that the linked resource will return; see §2.4.
+<.> The HTTP method to use to traverse the link (GET, POST, PUT or DELETE)
+<.> (optional) string that the consuming application may use to render the link without having to traverse the link in advance
+<.> (optional) map that may be used as the basis for any data (arguments or properties) required to follow the link.
 Discussed further below.
-value (optional) value that results from traversing the link.
+<.> (optional) value that results from traversing the link.
 This is to support eager loading of links by resources.
 For example, an Order representation may have a collection of OrderItems, and may want to provide that representation to avoid an additional round-trip request by the client.
 
@@ -356,50 +889,235 @@ For example, an Order representation may have a collection of OrderItems, and ma
 
 The "rel" json-property indicates the nature of the relationship of the related resource to the resource that generated this representation.
 The value of this property is a URN, meaning that it is unique value within a defined namespace (specific to Restful Objects).
+
 The value of the "rel" json-property either takes one of the IANA-specified rel values or a value specific to Restful Objects.
 
 [#_2-7-1-1-iana-specified-rel-values]
 ==== 2.7.1.1 IANA-specified rel values
 
-rel Description describedby "Refers to a resource providing information about the link's context"; in other words the domain metamodel information about a domain object or object member help "Refers to context-sensitive help" icon "Refers to an icon representing the link's context." A scalable icon for any purpose previous "Refers to the previous resource in an ordered series of resources" next "Indicates that the link's context is a part of a series, and that the next in the series is the link target".
-self "Conveys an identifier for the link's context", in other words, following this link returns the same representation.
-Discussed further in §2.8. up Link from member to parent object/type, or from action param to its action
+[table,cols="<2a,<4a",options=header]
+|===
+
+|rel
+|Description
+
+|describedby
+|"Refers to a resource providing information about the link's context"; in other words the domain metamodel information about a domain object or object member
+
+|help
+|"Refers to context-sensitive help"
+
+|icon
+|"Refers to an icon representing the link's context." A scalable icon for any purpose
+
+|previous
+|"Refers to the previous resource in an ordered series of resources"
+|next
+|"Indicates that the link's context is a part of a series, and that the next in the series is the link target".
+
+|self
+|"Conveys an identifier for the link's context", in other words, following this link returns the same representation.
+Discussed further in xref:#_2-8-self[§2.8].
+|up
+|Link from member to parent object/type, or from action param to its action
+|===
+
 
 [#_2-7-1-2-restful-objects-specified-rel-values]
 ==== 2.7.1.2 Restful Objects-specified rel values
 
 The format of Restful Objects-specified rel values is:
-urn:org.restfulobjects:rels/xxx[;yyy=zzz;www=vvv]
+
+    urn:org.restfulobjects:rels/xxx[;yyy=zzz;www=vvv]
+
 where
-* urn:org.restfulobjects:rels/ o is a fixed prefix indicating that the rel is defined by the Restful Objects specification
-* xxx o is a unique value for the rel within the above namespace
-* yyy=zzz, www=vvv o are additional parameters that are used for some rel values to disambiguate the link The optional parameters are modelled after the optional parameters of media types (§2.4.1, §2.4.2).
+
+* urn:org.restfulobjects:rels/
++
+is a fixed prefix indicating that the rel is defined by the Restful Objects specification
+
+* xxx
++
+is a unique value for the rel within the above namespace
+
+* yyy=zzz, www=vvv
++
+are additional parameters that are used for some rel values to disambiguate the link
+
+The optional parameters are modelled after the optional parameters of media types (§2.4.1, §2.4.2).
 Using them clients can, for example, distinguish a link more precisely without having to rely on the location of the link within the JSON representation.
+
 For example:
-urn.org.restfulobjects:rels/details;property=\"deliveryOption\" is the rel value of a link to property details resource, xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1]. The table below lists all the supported rel values defined by Restul Objects.
+
+    urn.org.restfulobjects:rels/details;property=\"deliveryOption\"
+
+is the rel value of a link to property details resource, xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1].
+
+The table below lists all the supported rel values defined by Restul Objects.
 For brevity the "urn:org.restfulobjects:rels/" prefix is abbreviated to ".../".
-rel Parameters Description .../action Description of an action xref:section-d/chapter-25.adoc[§D25], as linked from a domain type xref:section-d/chapter-22.adoc[§D22] .../action-param Description of an action parameter xref:section-d/chapter-26.adoc[§D26], as linked from an action resource xref:section-d/chapter-25.adoc[§D25] .../add-to; collection=\"collectionName\" Add to a domain object collection xref:section-c/chapter-17.adoc#_17_2_http_put[§C17.2], xref:section-c/chapter-17.adoc#_17_3_http_post[§C17.3] .../attachment; property=\"propertyName\" An attachment for a property value; see xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§A3]. .../choice; property=\"propertyName\"
-- or - action=\"actionName\"; param=\"paramName\" A domain object (or scalar value) acting as a choice for a property xref:section-c/chapter-16.adoc#_16_4_1_property_values_and_choices[§C16.4.1] or an action parameter xref:section-c/chapter-18.adoc#_18_2_1_action_parameters[§C18.2.1] .../clear property=\"propertyName\" Clear a domain object property xref:section-c/chapter-16.adoc#_16_3_http_delete[§C16.3] .../collection Description of a collection xref:section-d/chapter-24.adoc[§D24], as linked from a domain type xref:section-d/chapter-22.adoc[§D22] .../default; action=\"actionName\"; param=\"paramName\" A domain object (or scalar value) acting as a default for an action parameter .../delete Link to delete a domain object xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14] .../details; property=\"propertyName\"
-- or - collection=\"collectionName\"
-- or - action=\"actionName\" Details of a property xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1], collection xref:section-c/chapter-17.adoc#_17_1_http_get[§C17.1] or action xref:section-c/chapter-18.adoc#_18_1_http_get[§C18.1], as linked from a domain object xref:section-c/chapter-14.adoc#_14_1_http_get[§C14.1] or domain service xref:section-c/chapter-15.adoc#_15_1_http_get[§C15.1]. .../domain-type Link to a domain type xref:section-d/chapter-22.adoc[§D22]. .../domain-types Link to the catalogue of domain types available in the system xref:section-d/chapter-21.adoc[§D21] .../element Link to a domain object xref:section-c/chapter-14.adoc[§C14] from a list returned by an action xref:section-b/chapter-11.adoc[§B11]. .../element-type The domain type xref:section-d/chapter-22.adoc[§D22] which represents the element of a list or collection .../invoke; action=\"actionName\"
-- or - typeaction=\"typeActionName\" Link to invoke a domain object action xref:section-c/chapter-19.adoc[§C19], or to invoke a domain type action xref:section-d/chapter-27.adoc[§D27] .../modify property=\"propertyName\" Link to modify a single domain object property C16.2. (See also the …/update rel).
-.../persist Link to persist a proto-persistent object xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1] .../property Description of a property xref:section-d/chapter-23.adoc[§D23], as linked from a domain type xref:section-d/chapter-22.adoc[§D22] .../remove-from; collection=\"collectionName\" Remove from a domain object collection, xref:section-c/chapter-17.adoc#_17_4_http_delete[§C17.4] .../return-type The domain type xref:section-d/chapter-22.adoc[§D22] which represents the (return) type of a property, collection, action or param .../service; serviceId=\"serviceId\" A domain service, xref:section-c/chapter-15.adoc#_15_1_http_get[§C15.1] .../services The set of available domain services, xref:section-b/chapter-07.adoc#_7-1-http-get[§B7] .../update Link to modify all properties of a domain object xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]. .../user The current user, xref:section-b/chapter-06.adoc#_6-1-http-get[§B6.1] .../value; property=\"propertyName\"
-- or - collection=\"collectionName\" Link to an object xref:section-c/chapter-14.adoc[§C14] that is the value of a property xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1] or held within a collection xref:section-c/chapter-17.adoc#_17_1_http_get[§C17.1]. .../version Version of the spec and implementation, xref:section-b/chapter-08.adoc#_8_1_http_get[§B8.1]
+
+[table,cols="<3a,<4a,<5a",options=header]
+|===
+
+|rel
+|Parameters
+|Description
+
+|.../action
+|
+|Description of an action xref:section-d/chapter-25.adoc[§D25], as linked from a domain type xref:section-d/chapter-22.adoc[§D22]
+
+|.../action-param
+|
+|Description of an action parameter xref:section-d/chapter-26.adoc[§D26], as linked from an action resource xref:section-d/chapter-25.adoc[§D25]
+
+|.../add-to;
+|collection= +
+\"collectionName\"
+|Add to a domain object collection xref:section-c/chapter-17.adoc#_17_2_http_put[§C17.2], xref:section-c/chapter-17.adoc#_17_3_http_post[§C17.3]
+
+|.../attachment;
+|property=\"propertyName\"
+|An attachment for a property value; see xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§A3].
+
+|.../choice;
+|property=\"propertyName\" +
+|A domain object (or scalar value) acting as a choice for a property xref:section-c/chapter-16.adoc#_16_4_1_property_values_and_choices[§C16.4.1]
+
+|.../choice;
+|action=\"actionName\"; +
+param=\"paramName\" +
+|A domain object (or scalar value) acting as a choice for an action parameter xref:section-c/chapter-18.adoc#_18_2_1_action_parameters[§C18.2.1]
+
+|.../clear
+|property=\"propertyName\"
+|Clear a domain object property xref:section-c/chapter-16.adoc#_16_3_http_delete[§C16.3]
+
+|.../collection
+|
+|Description of a collection xref:section-d/chapter-24.adoc[§D24], as linked from a domain type xref:section-d/chapter-22.adoc[§D22]
+
+|.../default;
+|action=\"actionName\"; +
+param=\"paramName\"
+|A domain object (or scalar value) acting as a default for an action parameter
+
+|.../delete
+|
+|Link to delete a domain object xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14]
+
+|.../details;
+|property= +
+\"propertyName\"
+|Details of a property xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1] as linked from a domain object xref:section-c/chapter-14.adoc#_14_1_http_get[§C14.1]
+
+|.../details;
+|collection= +
+\"collectionName\" +
+|Details of a collection xref:section-c/chapter-17.adoc#_17_1_http_get[§C17.1] as linked from a domain object xref:section-c/chapter-14.adoc#_14_1_http_get[§C14.1].
+
+|.../details;
+|action= +
+\"actionName\" +
+|Details of an action xref:section-c/chapter-18.adoc#_18_1_http_get[§C18.1], as linked from a domain object xref:section-c/chapter-14.adoc#_14_1_http_get[§C14.1] or domain service xref:section-c/chapter-15.adoc#_15_1_http_get[§C15.1].
+
+|.../domain-type
+|
+|Link to a domain type xref:section-d/chapter-22.adoc[§D22].
+
+|.../domain-types
+|
+|Link to the catalogue of domain types available in the system xref:section-d/chapter-21.adoc[§D21]
+
+|.../element
+|
+|Link to a domain object xref:section-c/chapter-14.adoc[§C14] from a list returned by an action xref:section-b/chapter-11.adoc[§B11].
+
+|.../element-type
+|
+|The domain type xref:section-d/chapter-22.adoc[§D22] which represents the element of a list or collection
+
+|.../invoke;
+|action= +
+\"actionName\" +
+|Link to invoke a domain object action xref:section-c/chapter-19.adoc[§C19]
+
+|.../invoke;
+|typeaction= +
+\"typeActionName\" +
+|Link to invoke a domain type action xref:section-d/chapter-27.adoc[§D27]
+
+|.../modify property=\"propertyName\"
+|
+|Link to modify a single domain object property C16.2. (See also the …/update rel).
+
+|.../persist
+|
+|Link to persist a proto-persistent object xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]
+
+|.../property
+|
+|Description of a property xref:section-d/chapter-23.adoc[§D23], as linked from a domain type xref:section-d/chapter-22.adoc[§D22]
+
+|.../remove-from;
+|collection= +
+\"collectionName\"
+|Remove from a domain object collection, xref:section-c/chapter-17.adoc#_17_4_http_delete[§C17.4]
+
+|.../return-type
+|
+|The domain type xref:section-d/chapter-22.adoc[§D22] which represents the (return) type of a property, collection, action or param
+
+|.../service;
+|serviceId= +
+\"serviceId\"
+|A domain service, xref:section-c/chapter-15.adoc#_15_1_http_get[§C15.1]
+
+|.../services
+|
+|The set of available domain services, xref:section-b/chapter-07.adoc#_7-1-http-get[§B7]
+
+|.../update
+|
+|Link to modify all properties of a domain object xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2].
+
+|.../user
+|
+|The current user, xref:section-b/chapter-06.adoc#_6-1-http-get[§B6.1]
+
+|.../value;
+|property=\"propertyName\" +
+|Link to an object xref:section-c/chapter-14.adoc[§C14] that is the value of a property xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1].
+
+|.../value;
+|collection=\"collectionName\"
+|Link to an object xref:section-c/chapter-14.adoc[§C14] that is held within a collection xref:section-c/chapter-17.adoc#_17_1_http_get[§C17.1].
+
+|.../version
+|
+|Version of the spec and implementation, xref:section-b/chapter-08.adoc#_8_1_http_get[§B8.1]
+|===
 
 [#_2-7-2-type]
 === 2.7.2 "type"
 
 The "type" json-property indicates the media type §2.4 of the representation obtained if the link is followed.
 This will always be "application/json" and will (depending on the implementation xref:section-b/chapter-08.adoc[§B8]) have an additional "profile" parameter to further describe the representation.
+
 For example:
-application/json; profile="urn:org.restfulobjects:repr-types/object" To make examples more readable, throughout the rest of the spec the "urn:org.restfulobjects:repr-types" literal within the profile parameter is abbreviated to "…"; the above example is written as:
-application/json;profile=".../object"
+
+    application/json; profile="urn:org.restfulobjects:repr-types/object"
+
+To make examples more readable, throughout the rest of the spec the "urn:org.restfulobjects:repr-types" literal within the profile parameter is abbreviated to "…"; the above example is written as:
+
+    application/json;profile=".../object"
 
 [#_2-7-3-arguments]
 === 2.7.3 "arguments"
 
 Sometimes a link represents a resource that requires additional data to be specified.
 When a representation includes a link to these resources, it may optionally include an "arguments" json-property, for example to provide a default value for an action argument.
+
 Note that the client is not obliged to use this information.
 The representation of arguments is itself well-defined, see §2.9.
 
@@ -407,6 +1125,7 @@ The representation of arguments is itself well-defined, see §2.9.
 === 2.7.4 "value"
 
 The optional "value" json-property of a link contains the representation that would be returned from following the link.
+
 Currently the spec does not define any functionality that uses this capability.
 Future versions of this specification may define a syntax to allow clients to request eager loading of links, xref:section-e/chapter-34.adoc#_34_4_minimizing_round_trips_x_ro_follow_links[§E34.4].
 
@@ -414,24 +1133,54 @@ Future versions of this specification may define a syntax to allow clients to re
 == 2.8 "self"
 
 The majority of representations include a "self" link, specifying the resource by which the representation may be obtained again.
+
 For example, the following might be the initial part of a representation of an Order:
-{ ...
-"links": [
-{ "rel": "self", "href": "http://~/objects/ORD-123", "type": "application/json;profile=\".../object\"", "method": "GET" }, ...
-]
-} while the following is the initial part of a Customer's firstName property:
-{ ...
-"links": [
-{ "rel": "self", "href": "http://~/objects/CUS/001/properties/firstName", "type": "application/json;profile=\".../object-property\"", "method": "GET" }, ...
-]
-} In addition, the invocation of a query-only action (using GET xref:section-c/chapter-19.adoc#_19_1_http_get[§C19.1]) will also have a "self" link, this time linking back to the action.
+
+[source,javascript]
+----
+{
+  ...
+  "links": [
+    {
+      "rel": "self",
+      "href": "http://~/objects/ORD-123",
+      "type": "application/json;profile=\".../object\"",
+      "method": "GET"
+    }, ...
+  ]
+}
+----
+
+while the following is the initial part of a Customer's firstName property:
+
+[source,javascript]
+----
+{
+  ...
+  "links": [
+    {
+      "rel": "self",
+      "href": "http://~/objects/CUS/001/properties/firstName",
+      "type": "application/json;profile=\".../object-property\"",
+      "method": "GET"
+    },
+    ...
+  ]
+}
+----
+In addition, the invocation of a query-only action (using GET xref:section-c/chapter-19.adoc#_19_1_http_get[§C19.1]) will also have a "self" link, this time linking back to the action.
 This allows clients to copy (bookmark) the action link if they so wish.
+
 There are however two types of representation that do not have a "self" link.
+
 The first is a representation of a proto-persistent object or of a view model §2.2, where there is no server-side resource to address.
+
 The second is the representation returned by any action invoked by either a PUT or POST method xref:section-c/chapter-19.adoc#_19_2_http_put[§C19.2], xref:section-c/chapter-19.adoc#_19_3_http_post[§C19.3]. These have no self link, to minimize the risk of a client repeating the action and inadvertently causing side effects in the system.
 
 [#_2-9-resource-argument-representation]
 == 2.9 Resource argument representation
+
+[UP TO HERE]
 
 In many cases the resources defined by the Restful Objects spec require additional data, for example representing either action arguments or object properties.
 Restful Objects defines two mechanisms for passing in such arguments.

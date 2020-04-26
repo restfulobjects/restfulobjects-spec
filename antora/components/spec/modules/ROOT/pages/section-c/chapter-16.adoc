@@ -12,6 +12,7 @@ where:
 
 * {propertyId} is the property identifier
 
+[#_16_1_http_get]
 == 16.1 HTTP GET
 
 Obtain a detailed representation of a property xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4]. This resource is typically requested as a result of following a link from the domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4].
@@ -135,6 +136,7 @@ Note that optional validation (x-ro-validate-only) and domain type metadata pref
 
 As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object property representation xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4].
 
+[#_16_3_http_delete]
 == 16.3 HTTP DELETE
 
 This is the recommended resource for clearing a property value, or for validating that a property can be cleared but without making the change.
