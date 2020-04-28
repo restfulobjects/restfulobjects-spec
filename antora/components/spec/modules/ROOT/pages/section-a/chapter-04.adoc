@@ -1,5 +1,7 @@
 = 4	SPECIFIED ELEMENTS
 
+[ UP TO HERE ]
+
 This section summarises the standard json-properties, headers and status codes that are understood by Restful Objects implementations.
 
 [#_4_1_specified_json_properties]

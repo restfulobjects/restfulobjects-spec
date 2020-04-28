@@ -162,36 +162,76 @@ Alternatively, an implementation may choose to synthesise ordering information, 
 [UP TO HERE]
 
 The formal scheme of providing domain type information defines separate resources that generate representations of the domain metamodel.
-If this scheme is followed then such resources are obtained by rel="describedby" link in the "links" json-property.
+If this scheme is followed then such resources are obtained by rel="*describedby*" link in the "*links*" json-property.
+
 For example, suppose that the Customer class has an (int) "id" property, a date "since" property, and a "blacklist" action.
+
 In .NET, this could be written as:
-public class Customer { ...
-public int Id {get; set; } public DateTime Since {get; set; } public bool Blacklist(string reason) { ... } ...
-} while in Java it might look like:
-public class Customer { ...
-private int id; private Date since;
 
-  public int getId() { return this.id; }
-  public void setId(int id) { this.id = id; {}
-
-  public Date getSince() { return this.since; }
-  public void setSince(Date since) { this.since = since; }
-
-  public boolean blacklist(String reason) { ... }
-  ...
+[source,java]
+----
+public class Customer {
+    ...
+    public int Id {get; set; }
+    public DateTime Since {get; set; }
+    public bool Blacklist(string reason) { ... }
+    ...
 }
+----
+
+while in Java it might look like:
+
+[source,java]
+----
+public class Customer {
+    ...
+    private int id;
+    public int getId() { return this.id; }
+    public void setId(int id) { this.id = id; {}
+
+    private Date since;
+    public Date getSince() { return this.since; }
+    public void setSince(Date since) { this.since = since; }
+
+    public boolean blacklist(String reason) { ... }
+    ...
+}
+----
+
 The resources to expose the metadata for an instance of this class are shown in xref:section-d.adoc[§D].
 
-FIGURE 3: DOMAIN OBJECTS VS DOMAIN TYPES Domain type resources are pre-defined for the scalar types xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3]. For non-scalar types, the domain type is the concatenation of "http://~/domain-types/"  + the domain type id.
+.FIGURE 3: DOMAIN OBJECTS VS DOMAIN TYPES
+image::from-spec-doc/figure-3.png[width="600px",link="{imagesdir}/from-spec-doc/figure-3.png"]
+
+Domain type resources are pre-defined for the scalar types xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3]. For non-scalar types, the domain type is the concatenation of "http://~/domain-types/"  + the domain type id.
+
 The link to the domain type resource is shown in the domain object representation as:
-{ ...
-"links": [ { "rel": "describedby", "href": "http://~/domain-types/CUS", "type": "application/json;profile=\".../domain-type\"", "method": "GET" }, ...
-]
-… } where the referenced domain type resource will return a representation that describes the domain object instance.
-Restricting access to formal metadata Implementations that implement the formal scheme should be aware that there is a potential security risk: clients will be able to ascertain the existence of an object's members, even if the member is not returned in any representation that they obtain of that member.
+
+[source,javascript]
+----
+{
+  ...
+  "links": [ {
+      "rel": "describedby",
+      "href": "http://~/domain-types/CUS",
+      "type": "application/json;profile=\".../domain-type\"",
+      "method": "GET"
+    },
+    ...
+  ]
+  ...
+}
+----
+where the referenced domain type resource will return a representation that describes the domain object instance.
+
+==== Restricting access to formal metadata
+
+Implementations that implement the formal scheme should be aware that there is a potential security risk: clients will be able to ascertain the existence of an object's members, even if the member is not returned in any representation that they obtain of that member.
+
 For example, an Employee object might have a salary property that is only visible to users with certain permissions (e.g. an "HR" role).
 An ordinary user browsing representations of Employee objects would be able to view the name and phone, but the salary would be hidden from view.
 However, navigating to the formal domain type resource would show that a salary property does exist.
+
 Because domain types are intended to be cacheable, implementations should not attempt to alter the metadata representations on a user-by-user basis.
 If an implementation intends to support use cases where the above issue might be considered a security risk, then it should also offer the simple scheme and provide an implementation-specific mechanism to disable formal scheme support.
 
@@ -200,38 +240,69 @@ If an implementation intends to support use cases where the above issue might be
 
 If validation logic has been defined for a property value, a collection reference, or an action’s parameter(s), then the server implementation is expected to perform that validation prior to initiating any change.
 For example, a Customer’s firstName property might disallow certain characters , or its showPayments() action might require that the toDate parameter is greater than the fromDate.
-A validation failure will generate a 422 "unprocessable entity" status code, and in addition, a warning message will be returned.
-This will either be a simple Warning header, or, dependent on the request, may be part of the response, in the form of an"invalidReason" json-property.
-x-ro-validate-only reserved query parameter On occasion a client may want to validate one or more property fields, before attempting to modify an object, or may want to validate arguments before attempting to invoke the action.
-Restful Objects defines an optional capability xref:section-b/chapter-08.adoc[§B8] whereby the client can set the reserved x–ro-validate-only query param for the request to indicate that only validation should be performed:
-If the validation completes, then a 204 "No content " status code will be returned.
-If a validation failure occurs, then the response will be 422 "unprocessable entity" with corresponding Warning header / "invalidReason" json-properties.
+
+A validation failure will generate a *422* "unprocessable entity" status code, and in addition, a warning message will be returned.
+This will either be a simple *Warning* header, or, dependent on the request, may be part of the response, in the form of an "*invalidReason*" json-property.
+
+=== x-ro-validate-only reserved query parameter
+
+On occasion a client may want to validate one or more property fields, before attempting to modify an object, or may want to validate arguments before attempting to invoke the action.
+
+Restful Objects defines an optional capability xref:section-b/chapter-08.adoc[§B8] whereby the client can set the reserved *x–ro-validate-only* query param for the request to indicate that only validation should be performed:
+
+If the validation completes, then a *204* "No content " status code will be returned.
+
+If a validation failure occurs, then the response will be *422* "unprocessable entity" with corresponding *Warning* header / "*invalidReason*" json-properties.
 
 [#_3_3_blobsclobs_and_attachments]
 == 3.3 Blobs/Clobs and Attachments
 
-As well as properties representing strings and dates, etc, the specification also defines optional support for properties whose value is a blob (binary large object) or a clob (character large object) §2.5. A typical example is a property representing a media item such as a picture or document.
+As well as properties representing strings and dates, etc, the specification also defines optional support for properties whose value is a blob (binary large object) or a clob (character large object) xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§2.5].
+A typical example is a property representing a media item such as a picture or document.
+
 If an implementation does support blobs/clobs, then the value of the blob/clob is suppressed from the property representation.
-Instead, the representation includes a "rel"="…/attachment;" link.
-If followed, such a link returns a representation with the appropriate content-type, e.g. image/jpeg, application/pdf, etc For example, if a property is a blob representing an image, then its representation would include a link with a corresponding attachment:
-{ "links": [
-{ "rel": ".../attachment;property=\"photo\"", "href": "http://~/objects/CUS/123/properties/photo", "type": "image/jpeg", "method": "GET" } ...
-]
-} The href of this link should be the same as the property resource xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1], however the client should provide a different Accept header in order to obtain the attachment.
+Instead, the representation includes a "*rel*"="…/attachment;" link.
+If followed, such a link returns a representation with the appropriate content-type, e.g. image/jpeg, application/pdf, etc.
+
+For example, if a property is a blob representing an image, then its representation would include a link with a corresponding attachment:
+
+[source,javascript]
+----
+{
+  "links": [ {
+    "rel": ".../attachment;property=\"photo\"",
+    "href": "http://~/objects/CUS/123/properties/photo",
+    "type": "image/jpeg",
+    "method": "GET"
+    }
+    ...
+  ]
+}
+----
+
+The href of this link should be the same as the property resource xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1], however the client should provide a different *Accept* header in order to obtain the attachment.
+
 The values of blob or clob properties are set/cleared using PUT (xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2]) and DELETE (xref:section-c/chapter-16.adoc#_16_3_http_delete[§C16.3]), as for any other property.
-The Content-Type header specifies the media type when being PUT (e.g. image/jpeg).
+The *Content-Type* header specifies the media type when being PUT (e.g. image/jpeg).
+
 A client can determine whether an implementation supports blobs/clobs by inspecting the version resource xref:section-b/chapter-08.adoc[§B8].
 
 [#_3_4_proto_persistent_objects]
 == 3.4 Proto-persistent Objects
 
-As described in §2.2, a proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
-The ultimate persistence of the entity is therefore under the control of the client, which is done by POSTing to the Objects of Type resource, xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]. Support for proto-persistent objects is an optional capability because providing a general-purpose persistence capability may not be practicable for some implementations.
+As described in xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§2.2], a proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
+
+The ultimate persistence of the entity is therefore under the control of the client, which is done by POSTing to the Objects of Type resource, xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1].
+
+Support for proto-persistent objects is an optional capability because providing a general-purpose persistence capability may not be practicable for some implementations.
 
 [#_3_5_object_deletion]
 == 3.5 Object Deletion
 
-Persisted objects can be deleted through the DELETE Object resource, xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14]. This is an optional capability because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
+Persisted objects can be deleted through the DELETE Object resource, xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14].
+
+This is an optional capability because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
+
 If the implementation does support the capability then it must also determine that it is safe to delete the object.
-A 405 ("method not allowed") error will be returned otherwise.
+A *405* ("method not allowed") error will be returned otherwise.
 
