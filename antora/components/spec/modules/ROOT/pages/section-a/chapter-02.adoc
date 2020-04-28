@@ -1119,7 +1119,7 @@ Sometimes a link represents a resource that requires additional data to be speci
 When a representation includes a link to these resources, it may optionally include an "arguments" json-property, for example to provide a default value for an action argument.
 
 Note that the client is not obliged to use this information.
-The representation of arguments is itself well-defined, see §2.9.
+The representation of arguments is itself well-defined, see xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§2.9].
 
 [#_2-7-4-value]
 === 2.7.4 "value"
@@ -1202,7 +1202,7 @@ This form of arguments also cannot be used when updating multiple properties xre
 [#_2-9-2-formal-arguments]
 === 2.9.2 Formal Arguments
 
-Although simple arguments §2.9.1 are convenient to use, their applicability is limited.
+Although simple arguments xref:section-a/chapter-02.adoc#_2-9-1-simple-arguments[§2.9.1] are convenient to use, their applicability is limited.
 For all other cases arguments must be provided using a more formal syntax, either as a single argument node, or as a map or argument nodes:
 
 * resources that require a single value (xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2], xref:section-c/chapter-17.adoc#_17_2_http_put[§C17.2]) take a single argument node;
@@ -1416,13 +1416,13 @@ Note that the spec does not currently support obtaining the set of choices of on
 [#_2-10-passing-arguments-to-resources]
 == 2.10	Passing arguments to resources
 
-As noted previously, calling a resource using GET with simple arguments §2.9.1 is straight-forward: the arguments are simply passed as key/value pairs.
+As noted previously, calling a resource using GET with simple arguments xref:section-a/chapter-02.adoc#_2-9-1-simple-arguments[§2.9.1] is straight-forward: the arguments are simply passed as key/value pairs.
 
 For example:
 
     GET services/x.TaskRepository/actions/findTasks?tagged=urgent
 
-Passing formal arguments §2.9.2 through to resources that accept a PUT or a POST is also easy: a string representation of the arguments map should simply be provided as the body of the request.
+Passing formal arguments xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§2.9].2 through to resources that accept a PUT or a POST is also easy: a string representation of the arguments map should simply be provided as the body of the request.
 
 However, if formal arguments need to be passed through to a resource using GET and DELETE then matters are slightly more complex, because the HTTP spec footnote:[link:http://www.w3.org/Protocols/rfc2616/rfc2616.html[], sec 4.3 and 9.7.] does not guarantee that resources called using GET and DELETE will receive a body footnote:[Emperical testing confirms that bodies are not preserved by servlet containers such as Tomcat and Jetty.  Proxies may also strip out the body.].
 Therefore, any query arguments to such resources must be encoded within the URL.

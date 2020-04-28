@@ -1,5 +1,7 @@
 = 5	HOME PAGE RESOURCE & REPRESENTATION
 
+[UP TO HERE]
+
 The 'home page' is a well-known resource which acts as the starting point for any client.
 From it all other resources may be discovered.
 

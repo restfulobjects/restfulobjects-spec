@@ -1,7 +1,5 @@
 = 4	SPECIFIED ELEMENTS
 
-[ UP TO HERE ]
-
 This section summarises the standard json-properties, headers and status codes that are understood by Restful Objects implementations.
 
 [#_4_1_specified_json_properties]
@@ -9,20 +7,49 @@ This section summarises the standard json-properties, headers and status codes t
 
 There are a number of json-properties specified by Restful Objects that have well-defined and fixed meanings, irrespective of which representation they appear within.
 They are:
-JSON-Property Description disabledReason Provides the reason (or the literal "disabled") why an object property or collection is un-modifiable, or, in the case of an action, unusable (and hence no links to mutate that member's state, or invoke the action, are provided).
-invalidReason Provides the reason (or the literal "invalid’) why a proposed value for a property, collection or action argument is invalid.
-Appears within an argument representation §2.9 returned as a response.
-x-ro-invalidReason Provides the reason why a SET OF proposed values for properties or arguments is invalid.
+
+[cols="2a,6a",options="header"]
+|===
+
+|JSON-Property
+|Description
+
+|disabledReason
+|Provides the reason (or the literal "disabled") why an object property or collection is un-modifiable, or, in the case of an action, unusable (and hence no links to mutate that member's state, or invoke the action, are provided).
+
+|invalidReason
+|Provides the reason (or the literal "invalid’) why a proposed value for a property, collection or action argument is invalid.
+Appears within an argument representation xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§2.9] returned as a response.
+
+|x-ro-invalidReason
+|Provides the reason why a SET OF proposed values for properties or arguments is invalid.
 The "x-ro-" prefix is to avoid name clashes with the property/argument names.
-links A list of additional links from the representation to other resources.
-Implementation-specific links may also be present in this list; see §2.11. extensions Map of additional information about the resource.
-Implementation-specific json-properties may also be present in this map; see §2.11.
+
+|links
+|A list of additional links from the representation to other resources.
+Implementation-specific links may also be present in this list; see xref:section-a/chapter-02.adoc#_2-11-extensible-representations[§2.11].
+
+|extensions
+|Map of additional information about the resource.
+Implementation-specific json-properties may also be present in this map; see xref:section-a/chapter-02.adoc#_2-11-extensible-representations[§2.11].
+|===
 
 == 4.2 Specified (reserved) query parameters
 
 The query parameters reserved by Restful Objects are:
-Header Description x-ro-domain-model Which domain model scheme xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§3.1] the server should return.
-Understood only by servers that provide "selectable" for the "domainModel" capability xref:section-b/chapter-08.adoc[§B8]. x-ro-validate-only Indicates that parameters should be validated but no change in state should occur.
+
+[cols="2a,6a",options="header"]
+|===
+
+|Header
+|Description
+
+|x-ro-domain-model
+|Which domain model scheme xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§3.1] the server should return.
+Understood only by servers that provide "selectable" for the "domainModel" capability xref:section-b/chapter-08.adoc[§B8]
+|x-ro-validate-only
+|Indicates that parameters should be validated but no change in state should occur.
+|===
 
 == 4.3 Specified headers
 
@@ -31,56 +58,117 @@ Restful Objects defines both request and response headers.
 === 4.3.1 Request headers
 
 The request headers specified by Restful Objects are:
-Header Description Accept The list of media types accepted by the client.
-If-Match The value of the ETag response header for the most recently obtained representation of a resource.
+
+[cols="2a,6a",options="header"]
+|===
+
+|Header
+|Description
+
+|Accept
+|The list of media types accepted by the client.
+
+|If-Match
+|The value of the ETag response header for the most recently obtained representation of a resource.
+|===
 
 === 4.3.2 Response headers
 
 The response headers specified by Restful Objects are:
-Header Description Allow The HTTP methods that are supported by the resource.
-Returned only in conjunction with a 406 ("Not allowed") Cache-Control Whether the representation may be cached or not.
+
+[cols="2a,6a",options="header"]
+|===
+
+|Header
+|Description
+
+|Allow
+|The HTTP methods that are supported by the resource.
+Returned only in conjunction with a 406 ("Not allowed")
+
+|Cache-Control
+|Whether the representation may be cached or not.
 Representations of resources representing domain objects will typically disable caching, but some representations (for example, of immutable objects, or of domain types) may be cached.
-Last-Modified The last modified timestamp of a persistent resource.
+
+|Last-Modified
+|The last modified timestamp of a persistent resource.
 The value of this should be passed as the If-Unmodified-Since header.
-Warning Header to describe either any errors returned by the server implementation, or, as raised by the domain object business logic (e.g. if the request was syntactically valid but could not be completed).
-Content-Type Depends upon representation; in the form "application/json;profile=http:// restfulobjects.org/xxx ".
+
+|Warning
+|Header to describe either any errors returned by the server implementation, or, as raised by the domain object business logic (e.g. if the request was syntactically valid but could not be completed).
+
+|Content-Type
+|Depends upon representation; in the form "application/json;profile=http:// restfulobjects.org/xxx ".
+|===
 
 == 4.4 Specified status return codes
 
 The status return codes specified by Restful Objects are:
-Code Description When
 
-200 Success Successfully generated representation
+[cols="1a,6a,2a",options="header"]
+|===
 
-204 No content Request was successful but generated no representation; or validation (x-ro-validate-only) succeeded.
+|Code
+|Description
+|When
+
+|200
+|Success
+|Successfully generated representation
+
+|204
+|No content
+|Request was successful but generated no representation; or validation (x-ro-validate-only) succeeded.
 Note however that invoking a void action DOES return a representation xref:section-c/chapter-19.adoc#_19_4_representation[§C19.4].
 
-400 Bad request Represents any of: a syntactically invalid request, missing mandatory information (e.g. If-Unmodified-Since header), or a warning message generated by the application.
+|400
+|Bad request
+|Represents any of: a syntactically invalid request, missing mandatory information (e.g. If-Unmodified-Since header), or a warning message generated by the application.
 
-401 Not authorized Problem wih user's credentials (ie user is not authenticated).
+|401
+|Not authorized
+|Problem wih user's credentials (ie user is not authenticated).
 
-403 Forbidden User is not authorized to invoke resource (modify property or collection, or invoke action)
+|403
+|Forbidden
+|User is not authorized to invoke resource (modify property or collection, or invoke action)
 
-404 Not found Property, collection or action not found (could be that the member is hidden for the requesting user)
+|404
+|Not found
+|Property, collection or action not found (could be that the member is hidden for the requesting user)
 
-405 Method not allowed An attempt was made to invoke a resource with an HTTP method that is not supported by that resource.
+|405
+|Method not allowed
+|An attempt was made to invoke a resource with an HTTP method that is not supported by that resource.
 
-406 Not acceptable Content type of the representation that would be returned is incompatible with the provided Accept header (in other words, the server is unable to comply with the accept instruction).
+|406
+|Not acceptable
+|Content type of the representation that would be returned is incompatible with the provided Accept header (in other words, the server is unable to comply with the accept instruction).
 
-422 Precondition failed Concurrency error; the object' has been modified and its current etag does not match that provided in the If-Match header.
+|422
+|Precondition failed
+|Concurrency error; the object' has been modified and its current etag does not match that provided in the If-Match header.
 
-500 Internal server error Indicates that the domain object threw an exception in its business logic
+|500
+|Internal server error
+|Indicates that the domain object threw an exception in its business logic
 
-501 Not implemented This implementation of Restful Objects does not support the feature requested.
+|501
+|Not implemented
+|This implementation of Restful Objects does not support the feature requested.
 
-All client- and server-side errors (4xx and 5xx) will also result in a Warning header being returned to describe the nature of the problem.
-The format of this Warning should be :
+|===
 
-109 RestfulObjects xxx
+All client- and server-side errors (4xx and 5xx) will also result in a *Warning* header being returned to describe the nature of the problem.
+The format of this Warning should be footnote:[link:http://www.ietf.org/rfc/rfc2616.txt[]]:
+
+    109 RestfulObjects xxx
 
 where:
 
 * 199 indicates a miscellaneous "warn-code" (as per HTTP/1.1 spec)
 * RestfulObjects is the "warn-agent"
-* xxx is the text of the message generated by the implementation In some cases the implementation will be able to provide a detailed error message; otherwise it should return a standard generic message.
+* xxx is the text of the message generated by the implementation
+
+In some cases the implementation will be able to provide a detailed error message; otherwise it should return a standard generic message.
 The sections describing resource responses detail these messages.
