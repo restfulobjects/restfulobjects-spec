@@ -1,6 +1,7 @@
 = 6	USER RESOURCE & REPRESENTATION
 
 The 'user' resource represents the currently logged-in user.
+
 The endpoint URL for this resource is:
 /user r
 

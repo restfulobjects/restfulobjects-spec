@@ -1,25 +1,31 @@
+[#_5_home_page_resource_representation]
 = 5	HOME PAGE RESOURCE & REPRESENTATION
-
-[UP TO HERE]
 
 The 'home page' is a well-known resource which acts as the starting point for any client.
 From it all other resources may be discovered.
 
+[#_5_1_http_get]
 == 5.1 HTTP GET
 
 Obtain the representation of the home page resource.
+
 The endpoint URL for this resource is:
-/ (in other words the base directory).
+
+    /
+
+(in other words the base directory).
 
 === 5.1.1 Request
 
-==== 5.1.1.1 Query String
+==== 5.1.1.1 Query String footnote:[http://en.wikipedia.org/wiki/Query_string]
 
 None
 
 ==== 5.1.1.2 Headers
 
-* Accept o application/json o application/json;profile=…/homepage
+* *Accept*
+** application/json
+** application/json;profile=…/homepage
 
 ==== 5.1.1.3 Body
 
@@ -33,25 +39,95 @@ None
 
 ==== 5.1.2.2 Headers
 
-* Content-Type o application/json;profile=".../homepage"
+* *Content-Type*
+** application/json;profile=".../homepage"
 * Caching headers:
-o NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  since home page changes only on redeployment
+** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
++
+since home page changes only on redeployment
 
 ==== 5.1.2.3 Body
 
-As per §5.2.
+As per xref:#_5_2_representation[§5.2].
 
+[#_5_2_representation]
 == 5.2 Representation
 
 The links from the home page representation to other resources are as shown in the diagram below:
 
-FIGURE 4: HOME PAGE REPRESENTATION The link to the domain types resource is only present if the formal scheme (xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2]) capability is supported.
+.HOME PAGE REPRESENTATION
+image::Slide2.PNG[width="800px",link="{imagesdir}/Slide2.PNG"]
+
+The link to the domain types resource is only present if the formal scheme (xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2]) capability is supported.
+
 The JSON representation is as follows:
-{ "links": [ { "rel": "self", "href": "http://~/", "type": "application/json;profile=\".../homepage\"", "method": "GET" }, { "rel": ".../user", "href": "http://~/user", "type": "application/json;profile=\".../user\"", "method": "GET" }, { "rel": ".../services", "href": "http://~/services", "type": "application/json;profile=\".../list\"", "method": "GET" }, { "rel": ".../version", "href": "http://~/version", "type": "application/json;profile=\".../version\"", "method": "GET" }, { "rel": ".../domain-types", "href": "http://~/domain-types", "type": "application/json;profile=\".../type-list\"", "method": "GET" }, ...
-], "extensions": { ... } } where:
-JSON-Property Description links list of links to resources.
-link[rel=self]    link back to the resource that generated this representation.
-link[rel=…/user]    link to the user resource §6 link[rel=…/services]    link to the services resource §7 link[rel=…/version]    link to the version resource §8 link[rel=…/types]    link to the domain types resource xref:section-d/chapter-21.adoc[§D21] extensions additional information about the resource.
-Restful Objects defines no standard json-properties for "extensions".
-Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require.
+
+[source,javascript]
+----
+{
+  "links": [ {
+      "rel": "self",
+      "href": "http://~/",
+      "type": "application/json;profile=\".../homepage\"", "method": "GET"
+    }, {
+      "rel": ".../user",
+      "href": "http://~/user",
+      "type": "application/json;profile=\".../user\"",
+      "method": "GET"
+    }, {
+      "rel": ".../services",
+      "href": "http://~/services",
+      "type": "application/json;profile=\".../list\"",
+      "method": "GET"
+    }, {
+      "rel": ".../version",
+      "href": "http://~/version",
+      "type": "application/json;profile=\".../version\"",
+      "method": "GET"
+    }, {
+      "rel": ".../domain-types",
+      "href": "http://~/domain-types",
+      "type": "application/json;profile=\".../type-list\"",
+      "method": "GET"
+    }, ...
+  ],
+  "extensions": {
+    ...
+  }
+}
+----
+
+where:
+
+[cols="2a,6a",options="header"]
+|===
+
+|JSON-Property
+|Description
+
+|links
+|list of links to resources.
+
+|link[rel=self]
+|link back to the resource that generated this representation.
+
+|link[rel=…/user]
+|link to the user resource xref:section-b/chapter-06.adoc[§6]
+
+|link[rel=…/services]
+|link to the services resource xref:section-b/chapter-07.adoc[§7]
+
+|link[rel=…/version]
+|link to the version resource xref:section-b/chapter-08.adoc[§8]
+
+|link[rel=…/types]
+|link to the domain types resource xref:section-d/chapter-21.adoc[§D21]
+
+|extensions
+|additional information about the resource.
+
+|===
+
+Restful Objects defines no standard json-properties for "*extensions*".
+Implementations are free to add to their own links/json-properties to "*links*" and "*extensions*" as they require.
 
