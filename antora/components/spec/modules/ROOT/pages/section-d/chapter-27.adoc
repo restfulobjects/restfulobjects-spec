@@ -62,7 +62,7 @@ For example:
 
 ==== 27.1.2.2 Headers
 
-* Content-Type
+* *Content-Type*
 
 ** application/json;profile=".../type-action-result"
 
@@ -139,7 +139,7 @@ For example:
 
 ==== 27.2.2.2 Headers
 
-* Content-Type
+* *Content-Type*
 
 ** application/json;profile=".../type-action-result"
 

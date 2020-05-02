@@ -70,19 +70,19 @@ In addition, the following may optionally be included in the map:
 
 ** size of the entity body
 
-* Content-Type (if returning a domain object):
+* *Content-Type* (if returning a domain object):
 
 ** application/json;profile=".../action-result";x-ro-domain-type="yyy"
 *** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
 **** URI of domain type (if formal scheme)
 
-* Content-Type (if returning a list of domain objects):
+* *Content-Type* (if returning a list of domain objects):
 
 ** application/json;profile=".../action-result";x-ro-element-type="yyy"
 *** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
 **** URI of domain type (if formal scheme)
 
-* Content-Type (if returning a scalar or void):
+* *Content-Type* (if returning a scalar or void):
 
 ** application/json;profile=".../action-result"
 
@@ -216,19 +216,19 @@ Successfully invoking an action with possible side effects can return either a 2
 
 ** size of the entity body
 
-* Content-Type (if returning a domain object):
+* *Content-Type* (if returning a domain object):
 
 ** application/json;profile=".../action-result";x-ro-domain-type="yyy"
 *** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
 **** URI of domain type (if formal scheme)
 
-* Content-Type (if returning a list of domain objects):
+* *Content-Type* (if returning a list of domain objects):
 
 ** application/json;profile=".../action-result";x-ro-element-type="yyy"
 *** where yyy indicates the domain type (of the objects referenced in the list, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
 **** URI of domain type (if formal scheme)
 
-* Content-Type (if returning a scalar or void):
+* *Content-Type* (if returning a scalar or void):
 
 ** application/json;profile=".../action-result"
 

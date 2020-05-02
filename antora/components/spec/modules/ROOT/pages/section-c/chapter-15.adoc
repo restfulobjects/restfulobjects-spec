@@ -8,8 +8,11 @@ Domain services can be accessed from the object list representation xref:section
 == 15.1 HTTP GET
 
 Obtain summary representation of a domain service..
+
 The endpoint URL for this resource is:
-/services/{serviceId}
+
+    /services/{serviceId}
+
 where:
 
 * {serviceId} is a unique identifier for the service

@@ -31,7 +31,7 @@ For resources that return a body containing some representation.
 
 ** size of the entity body
 
-* Content-Type:
+* *Content-Type*:
 
 ** application/json;profile=".../xxx"  where xxx indicates the representation type, xref:section-a/chapter-02.adoc#_2-4-1-representationtype-profile-parameter[§A2.4.1]
 

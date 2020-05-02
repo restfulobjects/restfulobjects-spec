@@ -35,7 +35,7 @@ Obtain a representation of the implementation's version and optional capabilitie
 
 ==== 8.1.2.2 Headers
 
-* Content-Type
+* *Content-Type*
 ** application/json;profile=".../version"
 * Caching headers:
 ** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]

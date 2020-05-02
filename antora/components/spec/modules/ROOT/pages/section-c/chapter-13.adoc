@@ -192,7 +192,7 @@ The representation will depend on the resource being requested.
 
 ** size of the entity body
 
-* Content-Type:
+* *Content-Type*:
 
 ** application/json;profile=".../object";x-ro-domain-type="yyy"
 *** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]
