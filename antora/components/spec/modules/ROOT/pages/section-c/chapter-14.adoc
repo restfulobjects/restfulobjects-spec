@@ -158,40 +158,121 @@ It may also be obtained as the result updating multiple properties xref:section-
 
 The links from the domain object representation to other resources are as shown in the diagram below:
 
-[UP TO HERE]
+.DOMAIN OBJECT REPRESENTATION
+image::Slide8.PNG[width="700px",link="{imagesdir}/Slide8.PNG"]
 
-FIGURE 8: DOMAIN OBJECT REPRESENTATION For example, the representation of a (persistent domain entity) Order might be:
-{ "domainType": "ORD", "instanceId": " 123", "title": "Joe Blogg's Order #1", "members": { ...
-}, "links": [ { "rel": "self", "href": "http://~/objects/ORD/123", "type": "application/json;profile=\".../object\"", "method": "GET", }, ...
-], "extensions": { ... } } where:
-JSON-Property Description links list of links to other resources.
-links[rel=self]    (optional); link to a resource that can obtain this representation.
+
+
+For example, the representation of a (persistent domain entity) Order might be:
+[source,javascript]
+----
+{
+  "domainType": "ORD",
+  "instanceId": " 123",
+  "title": "Joe Blogg's Order #1",
+  "members": {
+    ...
+  },
+  "links": [ {
+      "rel": "self",
+      "href": "http://~/objects/ORD/123",
+      "type": "application/json;profile=\".../object\"",
+      "method": "GET"
+    }, ...
+  ], "extensions": { ... }
+}
+----
+
+where:
+
+[cols="2a,6a",options="header"]
+|===
+
+|JSON-Property
+|Description
+
+|links
+|list of links to resources.
+
+|links[rel=self]
+|(optional); link to a resource that can obtain this representation.
 Note that the href for a service will be http://~/services/{serviceId}.
+Discussed further xref:#_instanceid_serviceid_and_linksrelself[below].
+
+|domainType
+|(optional) the domain type to use when building template URIs.
+Discussed further xref:#domaintype[below].
+
+|instanceId
+|(optional) the instance identifier, to use when building template URIs.
+Discussed further xref:#_instanceid_serviceid_and_linksrelself[below].
+
+|serviceId
+|(optional) the service Id.
+Present only if the object is a domain service xref:section-c/chapter-15.adoc[§C15].
+
+|title
+|a string identifier of the object, suitable for rendering in a UI.
+
+|members
+|map of object members (properties, collections, actions).
+Discussed further xref:#_members[below].
+
+
+|links[rel=.../persist]
+|(optional) persist the (proto-persistent) domain object.
 Discussed further below.
-domainType (optional) the domain type to use when building template URIs.
-Discussed further below instanceId (optional) the instance identifier, to use when building template URIs.
-Discussed further below.
-serviceId (optional) the service Id.
-Present only if the object is a domain service xref:section-c/chapter-15.adoc[§C15]. title a string identifier of the object, suitable for rendering in a UI.
-members map of object members (properties, collections, actions) links[rel=.../persist]    (optional) persist the (proto-persistent) domain object.
-Discussed further below.
-links[rel=.../update]    (optional) link to modify multiple properties of the domain object (using xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]).
+
+|links[rel=.../update]
+|(optional) link to modify multiple properties of the domain object (using xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]).
 The link is present only for persistent domain entities that have at least one modifiable property.
 Discussed further below.
-links[rel=.../delete]    (optional) delete the (persistent) domain object.
-Discussed further below.
-links[rel=icon]    (optional) link to an image representing a scalable icon for this object extensions additional information about the resource.
-"domainType" The "domainType" json-property is only present for the simple scheme xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§B3.1.1]; if the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§B3.1.2] is supported then the "domainType" can be obtained from the domain-type representation xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2]. Domain services do not have a "domainType" json-property.
-"instanceId" , "serviceId" and "links[rel=self]" The "instanceId" json-properties is present for persistent domain entities and for addressable view models xref:section-a/chapter-02.adoc[§A2.2], and can (with the "domainType" json-property) be used to construct URLs to other resources for the domain object as required.
-Proto-persistent domain objects and (non-addressable) view models xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2] do not have an "instanceId" because they do not correspond to any server-side state that can be directly addressed; nor do they have a ‘self’ link, for the same reasons.The "serviceId" json-property performs much the same function as "instanceId", allowing the URL for domain services to be constructed.
-The "serviceId" is present only for domain services.
-Domain services do not have a "instanceId" json-property.
-"members" The "members" map contains an entry for every (visible) member.
+
+|links[rel=.../delete]
+|(optional) delete the (persistent) domain object.
+Discussed further xref:#_ below.
+
+|links[rel=icon]
+|(optional) link to an image representing a scalable icon for this object
+
+|extensions
+|additional information about the resource.
+
+|===
+
+=== "domainType"
+
+The "*domainType*" json-property is only present for the simple scheme xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§B3.1.1]; if the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§B3.1.2] is supported then the "*domainType*" can be obtained from the domain-type representation xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2].
+
+Domain services do not have a "domainType" json-property.
+
+[#_instanceid_serviceid_and_linksrelself]
+=== "instanceId" , "serviceId" and "links[rel=self]"
+
+The "*instanceId*" json-properties is present for persistent domain entities and for addressable view models xref:section-a/chapter-02.adoc[§A2.2], and can (with the "*domainType*" json-property) be used to construct URLs to other resources for the domain object as required.
+
+Proto-persistent domain objects and (non-addressable) view models xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2] do not have an "*instanceId*" because they do not correspond to any server-side state that can be directly addressed; nor do they have a ‘self’ link, for the same reasons.The "*serviceId*" json-property performs much the same function as "*instanceId*", allowing the URL for domain services to be constructed.
+The "*serviceId*" is present only for domain services.
+Domain services do not have a "*instanceId*" json-property.
+
+[#_members]
+=== "members"
+
+The "*members*" map contains an entry for every (visible) member.
 It is described in more detail in the sections below xref:section-c/chapter-14.adoc#_14_4_1_properties[§C14.4.1], xref:section-c/chapter-14.adoc#_14_4_2_collections[§C14.4.2], xref:section-c/chapter-14.adoc#_14_4_3_actions[§C14.4.3] .
-"links[rel=.../update]" For persistent domain objects, there may optionally be a rel=".../update" link to update all properties of the domain object.
+
+[#_linksrel__update]
+=== "links[rel=.../update]"
+
+For persistent domain objects, there may optionally be a *rel=".../update"* link to update all properties of the domain object.
+
 This link is not guaranteed to be present, however; if none of the properties of an object are updatable then the update properties link will not be present.
+
 Also, proto-persistent domain objects and view models will never have an update link.
-"links[rel=.../delete]" For persistent domain objects, there may optionally be a rel=".../delete" link to delete the domain object.
+
+=== "links[rel=.../delete]"
+
+For persistent domain objects, there may optionally be a rel=".../delete" link to delete the domain object.
 This links is not guaranteed to be present, however.
 Support for deleting objects is an optional capability xref:section-b/chapter-08.adoc#_8_2_representation[§B8.2], and so is not guaranteed to be supported by every framework implementation.
 If it is supported, then the implementation should define its own mechanism to restrict which objects can be deleted, and which may not.
@@ -208,7 +289,7 @@ For example, the "persist" link for an Order might look like:
 ]
 Note that there is no need to specify the domain type within the "arguments" map because it can be inferred from the href being posted to.
 "links" and "extensions" Domain model information about the type is available through either the "links" or the "extensions" json-properties.
-This is discussed separately in xref:section-c/chapter-14.adoc#_14_4_4_domain_model_information[§C14.4.4]. Implementations are free to add to their own links/properties to "links" and "extensions" as they require.
+This is discussed separately in xref:section-c/chapter-14.adoc#_14_4_4_domain_model_information[§C14.4.4].Implementations are free to add to their own links/properties to "links" and "extensions" as they require.
 
 [#_14_4_1_properties]
 === 14.4.1 Properties

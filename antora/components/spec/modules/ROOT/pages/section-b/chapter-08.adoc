@@ -46,6 +46,7 @@ version and capabilities will not change between deployments
 
 As per §8.2.
 
+[#_8_2_representation]
 == 8.2 Representation
 
 The links from the version representation to other resources are as shown in the diagram below:
