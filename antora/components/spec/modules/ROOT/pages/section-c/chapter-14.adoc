@@ -29,7 +29,7 @@ Obtain a summary representation of a domain object xref:section-c/chapter-14.ado
 
 ==== 14.1.1.1 Query String
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 ** "simple"
 
@@ -60,7 +60,7 @@ Update multiple properties of the object at the same time, or alternatively vali
 
 === 14.2.1 Request
 
-The request can either be to update the properties, or to request validation of the proposed values using the x-ro-validate-only query param xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2].
+The request can either be to update the properties, or to request validation of the proposed values using the x-ro-validate-only query param xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2].
 
 ==== 14.2.1.1 Query String
 
@@ -79,13 +79,13 @@ The body is the map of new properties, as per xref:section-a/chapter-02.adoc#_2-
 (Contrast this to updating of individual properties where the value of a blob/clob can be PUT in its native media type, xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2]).
 In addition, it may include the reserved query parameters:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 ** "simple"
 
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 
 ** "true"
 *** only validate the request, do not modify the property
@@ -221,16 +221,16 @@ Discussed further xref:#_members[below].
 
 |links[rel=.../persist]
 |(optional) persist the (proto-persistent) domain object.
-Discussed further below.
+Discussed further xref:#_linksrel__persist[below].
 
 |links[rel=.../update]
 |(optional) link to modify multiple properties of the domain object (using xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]).
 The link is present only for persistent domain entities that have at least one modifiable property.
-Discussed further below.
+Discussed further xref:#_linksrel__update[below].
 
 |links[rel=.../delete]
 |(optional) delete the (persistent) domain object.
-Discussed further xref:#_ below.
+Discussed further xref:#_linksrel__delete[below].
 
 |links[rel=icon]
 |(optional) link to an image representing a scalable icon for this object
@@ -242,7 +242,7 @@ Discussed further xref:#_ below.
 
 === "domainType"
 
-The "*domainType*" json-property is only present for the simple scheme xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§B3.1.1]; if the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§B3.1.2] is supported then the "*domainType*" can be obtained from the domain-type representation xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2].
+The "*domainType*" json-property is only present for the simple scheme xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§A3.1.1]; if the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2] is supported then the "*domainType*" can be obtained from the domain-type representation xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2].
 
 Domain services do not have a "domainType" json-property.
 
@@ -270,115 +270,330 @@ This link is not guaranteed to be present, however; if none of the properties of
 
 Also, proto-persistent domain objects and view models will never have an update link.
 
+[#_linksrel__delete]
 === "links[rel=.../delete]"
 
-For persistent domain objects, there may optionally be a rel=".../delete" link to delete the domain object.
+For persistent domain objects, there may optionally be a *rel=".../delete"* link to delete the domain object.
+
 This links is not guaranteed to be present, however.
 Support for deleting objects is an optional capability xref:section-b/chapter-08.adoc#_8_2_representation[§B8.2], and so is not guaranteed to be supported by every framework implementation.
 If it is supported, then the implementation should define its own mechanism to restrict which objects can be deleted, and which may not.
+
 Also, proto-persistent domain objects and view models will never have a delete link.
-"links[rel=.../persist]" For proto-persistent domain objects, a rel=".../persist" link is provided.
-The "arguments" map for this link is a subset of the object representation itself, containing a single "members" map for the (property) members of the domain object itself.
+
+[#_linksrel__persist]
+=== "links[rel=.../persist]"
+
+For proto-persistent domain objects, a *rel=".../persist"* link is provided.
+
+The "*arguments*" map for this link is a subset of the object representation itself, containing a single "*members*" map for the (property) members of the domain object itself.
 The keys of the "members" map correspond to every mandatory property of the domain object (note: not just those that are visible to the user).
+
 For example, the "persist" link for an Order might look like:
+
+[source,javascript]
+----
 "links": [
-{ "rel": ".../persist", "href": "http://~/objects/ORD", "type": "application/json;profile=\".../object\"", "method": "POST", "arguments": { "members": { "placedBy": { "value": ...
-}, "placedOn": { "value": ...
-}, ...
-} } }, ...
+  {
+    "rel": ".../persist",
+    "href": "http://~/objects/ORD",
+    "type": "application/json;profile=\".../object\"",
+    "method": "POST",
+    "arguments": {
+      "members": {
+        "placedBy": {
+          "value": ...
+        },
+        "placedOn": {
+          "value": ...
+        },
+        ...
+      }
+    }
+  },
+  ...
 ]
-Note that there is no need to specify the domain type within the "arguments" map because it can be inferred from the href being posted to.
-"links" and "extensions" Domain model information about the type is available through either the "links" or the "extensions" json-properties.
-This is discussed separately in xref:section-c/chapter-14.adoc#_14_4_4_domain_model_information[§C14.4.4].Implementations are free to add to their own links/properties to "links" and "extensions" as they require.
+----
+
+Note that there is no need to specify the domain type within the "*arguments*" map because it can be inferred from the href being posted to.
+
+=== "links" and "extensions"
+
+Domain model information about the type is available through either the "*links*" or the "*extensions*" json-properties.
+This is discussed separately in xref:section-c/chapter-14.adoc#_14_4_4_domain_model_information[§C14.4.4].
+
+Implementations are free to add to their own links/properties to "links" and "extensions" as they require.
 
 [#_14_4_1_properties]
 === 14.4.1 Properties
 
-The "members" map contains an entry for every (visible) property.
-This entry contains a subset of the information shown in the detailed property representation xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4]. The intention is to provide enough information to render the property value in a user interface without having to make additional requests.
+The "*members*" map contains an entry for every (visible) property.
+This entry contains a subset of the information shown in the detailed property representation xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4].The intention is to provide enough information to render the property value in a user interface without having to make additional requests.
+
 For example, the "createdOn" property would look something like:
-"members": { "createdOn": { "memberType": "property", "value": ..., "disabledReason": ..., "links": [ { "rel": ".../details;property=\"createdOn\"", "href": "http://~/objects/ORD/123/properties/createdOn", "type": "application/json;profile=\".../object-property\"", "method": "GET" }, ...
-], "extensions": { ... } }, ...
-} where the member's id (“createdOn” in the example above) is used as a unique key in the "members" map, and its value being the following map:
-JSON-Property Description memberType the constant value "property" value (optional) the current value of the property, either a scalar, a (link representing a) reference, or null.
-Discussed further below.
-disabledReason (optional) if populated then indicates the reason why the property cannot be modified.
-links list of links to resources.
-links[rel=…/details]    (optional) link to the detailed representation of the property, xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4] (e.g. to access defaults and choices).
-links[rel=…/attachment]    (optional) link to the property value if it is an attachment.
-Discussed further below extensions map of additional information about the resource.
-"value" and "links[rel=…/attachment;...]" The "value" json-property holds the in-lined value of the property, though depending on the nature of the domain object and the type of the property, it may or may not be present:
 
-* if the property value is null, then the "value" json-property will be present and set to the JSON null value
+[source,javascript]
+----
+"members": {
+  "createdOn": {
+    "memberType": "property",
+    "value": ...,
+    "disabledReason": ...,
+    "links": [ {
+        "rel": ".../details;property=\"createdOn\"",
+        "href": "http://~/objects/ORD/123/properties/createdOn",
+        "type": "application/json;profile=\".../object-property\"",
+        "method": "GET"
+      }, ...
+    ],
+    "extensions": { ... }
+  }, ...
+}
+----
 
-* for proto-persistent domain objects and (non-addressable) view models (xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2]), the "value" is always present.
+where the member's id ("createdOn" in the example above) is used as a unique key in the "members" map, and its value being the following map:
 
-* for persistent domain objects and addressable view models (with server-side state xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2]), the "value" is always present for non-blobs/clobs xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§A2.5]
+[cols="2a,6a",options="header"]
+|===
 
-* for blobs/clobs in implementations that do not support attachments §A-46, again the "value" is present
+|JSON-Property
+|Description
 
-* however, for persistent domain objects which support attachments the "value" is omitted.
+|memberType
+|the constant value "property"
+
+|value
+|(optional) the current value of the property, either a scalar, a (link representing a) reference, or null.
+Discussed further xref:#_value_and_linksrelattachment_[below].
+
+|disabledReason
+|(optional) if populated then indicates the reason why the property cannot be modified.
+
+|links
+|list of links to resources.
+
+|links[rel=…/details]
+|(optional) link to the detailed representation of the property, xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4] (e.g. to access defaults and choices).
+
+|links[rel=…/attachment]
+|(optional) link to the property value if it is an attachment.
+Discussed further xref:#_value_and_linksrelattachment_[below].
+
+|extensions
+|map of additional information about the resource.
+|===
+
+[#_value_and_linksrelattachment_]
+==== "value" and "links[rel=…/attachment;...]"
+
+The "*value*" json-property holds the in-lined value of the property, though depending on the nature of the domain object and the type of the property, it may or may not be present:
+
+* if the property value is null, then the "*value*" json-property will be present and set to the JSON null value
+
+* for proto-persistent domain objects and (non-addressable) view models (xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2]), the "*value*" is always present.
+
+* for persistent domain objects and addressable view models (with server-side state xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2]), the "*value*" is always present for non-blobs/clobs xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§A2.5]
+
+* for blobs/clobs in implementations that do not support attachments §A-46, again the "*value*" is present
+
+* however, for persistent domain objects which support attachments the "*value*" is omitted.
 Instead a link to the attachment will be available.
 This link serves up the property value directly with the correct media type (e.g. as an image/jpg).
-From the client's perspective, this means that there is always either a "value" json-property or a "links[rel=…/attachment;…]" json-property.
-"links" and "extensions" Other domain model information about the property is available through either the "links" or the "extensions" json-properties.
-The information provided through these json-properties is the same as provided in the domain object property representation, see xref:section-c/chapter-16.adoc#_16_4_3_domain_model_information[§C16.4.3]. Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require
+
+From the client's perspective, this means that there is always either a "*value*" json-property or a "*links[rel=…/attachment;…]*" json-property.
+
+==== "links" and "extensions"
+
+Other domain model information about the property is available through either the "*links*" or the "*extensions*" json-properties.
+
+The information provided through these json-properties is the same as provided in the domain object property representation, see xref:section-c/chapter-16.adoc#_16_4_3_domain_model_information[§C16.4.3].
+
+Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require.
 
 [#_14_4_2_collections]
 === 14.4.2 Collections
 
-The "members" map also contains an entry for every (visible) collection, which provides a link to the corresponding Object Collection resource.
+The "*members*" map also contains an entry for every (visible) collection, which provides a link to the corresponding Object Collection resource.
+
 The member entry may also provide summary information about the collection (for example, its size) so that the client can render the collection without having to make additional requests to the server.
-However, if the domain object being represented has no corresponding server-side state (xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2]), then the collection's representation also in-lines the collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. As for (object) properties, the json-property representing a collection has a type, a details link, and links to the state.
+
+However, if the domain object being represented has no corresponding server-side state (xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2]), then the collection's representation also in-lines the collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5].
+
+As for (object) properties, the json-property representing a collection has a type, a details link, and links to the state.
+
 For example, the Order's items collection would look something like:
-"members": { ..., "items": { "memberType": "collection", "disabledReason": ..., "value": [ ... ], "size": ..., "links": [ { "rel": ".../details;collection=\"items\"", "href": "http://~/objects/ORD/123/collections/items", "type": "application/json;profile=\".../object-collection\"", "method": "GET" }, ... ], "extensions": { ... } }, ...
+
+[source,javascript]
+----
+"members": {
+  ...,
+  "items": {
+    "memberType": "collection",
+    "disabledReason": ...,
+    "value": [ ... ],
+    "size": ...,
+    "links": [ {
+        "rel": ".../details;collection=\"items\"",
+        "href": "http://~/objects/ORD/123/collections/items",
+        "type": "application/json;profile=\".../object-collection\"",
+        "method": "GET"
+      }, ... ],
+    "extensions": { ... }
+  },
+  ...
 ]
+----
+
 where the member's id is used as a unique key in the "members" map, and its value being the following map:
-JSON-Property Description memberType the constant value "collection" disabledReason (optional) if populated then indicates the reason why it is not possible to add to or remove from the collection.
-value (optional) contains a representation of the contents of the collection.
-Discussed further below.
-size (optional) contains a count of the elements in the collection.
-Discussed further below.
-links links to other resources.
-links[rel=.../details]    (optional) link to the detailed representation of the collection, xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5], which includes such information as defaults and choices.
-Discussed further below.
-extensions additional information about the resource.
-"links[rel=.../details]", "value" and "size" As noted above, representations of domain objects without corresponding server-side state (xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2]) will in-line the "value" of the collection.
-For these domain objects, there is no "size" json-property and there is no "links[rel=…/details;...]" link.
-Domain objects with server-side state, however, need not provide a "value".
-Instead, they may provide a "links[rel=.../details]" which when followed will return the value in the collection's detailed representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. This behaviour allows implementations to load only the object and not all of its related references (in other words, lazy loading).
-"links" and "extensions" Other domain model information about the collection is available through either the "links" or the "extensions" json-properties.
-The information provided through these json-properties is the same as provided in the domain object collection representation, see xref:section-c/chapter-17.adoc#_17_5_3_domain_model_information[§C17.5.3]. Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require
+
+[cols="2a,6a",options="header"]
+|===
+
+|JSON-Property
+|Description
+
+|memberType
+|the constant value "collection" disabledReason (optional) if populated then indicates the reason why it is not possible to add to or remove from the collection.
+
+|value
+|(optional) contains a representation of the contents of the collection.
+Discussed further xref:#_linksrel__details_value_and_size[below].
+
+|size
+|(optional) contains a count of the elements in the collection.
+Discussed further xref:#_linksrel__details_value_and_size[below].
+
+|links
+|links to other resources.
+
+|links[rel=.../details]
+|(optional) link to the detailed representation of the collection, xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5], which includes such information as defaults and choices.
+Discussed further xref:#_linksrel__details_value_and_size[below].
+
+|extensions
+|additional information about the resource.
+|===
+
+[#_linksrel__details_value_and_size]
+==== "links[rel=.../details]", "value" and "size"
+
+As noted above, representations of domain objects without corresponding server-side state (xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2]) will in-line the "*value*" of the collection.
+
+For these domain objects, there is no "*size*" json-property and there is no "links[rel=…/details;...]" link.
+
+Domain objects with server-side state, however, need not provide a "*value*".
+Instead, they may provide a "links[rel=.../details]" which when followed will return the value in the collection's detailed representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5].
+
+This behaviour allows implementations to load only the object and not all of its related references (in other words, lazy loading).
+
+==== "links" and "extensions"
+
+Other domain model information about the collection is available through either the "*links*" or the "*extensions*" json-properties.
+The information provided through these json-properties is the same as provided in the domain object collection representation, see xref:section-c/chapter-17.adoc#_17_5_3_domain_model_information[§C17.5.3].
+
+Implementations are free to add to their own links/json-properties to "links" and "extensions" as they require
 
 [#_14_4_3_actions]
 === 14.4.3 Actions
 
-The "members" map also contains an entry for every (visible) action.
+The "*members*" map also contains an entry for every (visible) action.
 Note however that only domain objects with corresponding server-side state (xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2]) will have actions.
-The information provided is a subset of the information shown in the detailed action representation xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2] (obtainable from the GET Action resource xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]).
+
+The information provided is a subset of the information shown in the detailed action representation xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2] (obtainable from the GET Action resource xref:section-c/chapter-18.adoc[§C18]).
 The intention is to provide enough information to render the action without having to make additional requests.
+
 Like a property or a collection, an action has a link to 'details' which allows additional information (specifically, choices and defaults on parameters) to be obtained that might otherwise be expensive to compute.
 It also includes a link to follow in order to invoke the action.
+
 For example, the Order's submit() action might be represented as:
+
+[source,javascript]
+----
 "members": { ...
-"submit": { "memberType": "action", "disabledReason": ..., "links": [ { "rel": ".../details;action=\"submit\"", "href": "http://~/objects/ORD/101/actions/submit", "type": "application/json;profile=\".../object-action\"", "method": "GET" } ... ], "extensions": { ... } }, ...
-} where the member's id is used as a unique key in the "members" map, and its value being the following map:
-JSON-Property Description memberType the constant value "action" disabledReason (optional) if populated then indicates the reason why the action may not be invoked.
-links list of links to other resources.
-links[rel=.../details]    link to the detailed representation of the action, xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]. extensions additional metadata about the resource "links" and "extensions" Other domain model information about the action is available through either the "links" or the "extensions" json-properties.
-The information provided through these json-properties is the same as provided in the domain object action representation, see xref:section-c/chapter-18.adoc#_18_2_3_domain_model_information_for_action[§C18.2.3]. Restful Objects defines no further standard links/json-properties for "links" or "extensions".
+  "submit": {
+    "memberType": "action",
+    "disabledReason": ...,
+    "links": [ {
+        "rel": ".../details;action=\"submit\"",
+        "href": "http://~/objects/ORD/101/actions/submit",
+        "type": "application/json;profile=\".../object-action\"",
+        "method": "GET"
+      } ... ],
+    "extensions": { ... }
+  }, ...
+}
+----
+
+
+where the member's id is used as a unique key in the "members" map, and its value being the following map:
+
+[cols="2a,6a",options="header"]
+|===
+
+|JSON-Property
+|Description
+
+|memberType
+|the constant value "action" disabledReason (optional) if populated then indicates the reason why the action may not be invoked.
+
+|links
+|list of links to other resources.
+
+|links[rel=.../details]
+|link to the detailed representation of the action, xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]
+
+|extensions
+|additional metadata about the resource
+|===
+
+==== "links" and "extensions"
+
+Other domain model information about the action is available through either the "*links*" or the "*extensions*" json-properties.
+
+The information provided through these json-properties is the same as provided in the domain object action representation, see xref:section-c/chapter-18.adoc#_18_2_3_domain_model_information_for_action[§C18.2.3].
+
+Restful Objects defines no further standard links/json-properties for "links" or "extensions".
 However, implementations are free to add to their own links/json-properties as they require.
 
 [#_14_4_4_domain_model_information]
 === 14.4.4 Domain model information
 
 Domain model information is available through either the "links" or the "extensions" json-properties.
-Simple scheme Implementations that support the simple scheme provide extra data in the "extensions" json-properties.
+
+==== Simple scheme
+
+Implementations that support the simple scheme provide extra data in the "extensions" json-properties.
+
 For example:
-"extensions": { "domainType": "ORD", "friendlyName": "Order", "pluralName": "Orders", "description": "An order that has been placed by a customer", "isService": false "memberOrder": 1 } See xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§B3.1.1] for the full definitions of these json-properties.
-Formal scheme Implementations that support the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§B3.1.2] provide an additional link in the "links" json-property:
-"links": [
-{ "rel": "describedby", "href": "http://~/domain-types/ORD", "type": "application/json;profile=\".../domain-type\"", "method": "GET" }, ...
+
+[source,javascript]
+----
+"extensions": {
+    "domainType": "ORD",
+    "friendlyName": "Order",
+    "pluralName": "Orders",
+    "description": "An order that has been placed by a customer",
+    "isService": false,
+    "memberOrder": 1
+}
+----
+
+See xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§A3.1.1] for the full definitions of these json-properties.
+
+==== Formal scheme
+
+Implementations that support the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2] provide an additional link in the "links" json-property:
+
+[source,javascript]
+----
+"links": [ {
+    "rel": "describedby",
+    "href": "http://~/domain-types/ORD",
+    "type": "application/json;profile=\".../domain-type\"",
+    "method": "GET"
+  }, ...
 ]
+----
+
 which links to the domain type resource xref:section-d/chapter-22.adoc[§D22] corresponding to this domain object.
 

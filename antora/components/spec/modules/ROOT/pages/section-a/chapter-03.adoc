@@ -35,7 +35,7 @@ By default such implementations will return both simple and formal domain metada
 [#_3_1_1_simple_scheme]
 === 3.1.1 Simple Scheme
 
-In the simple scheme, Restful Objects allows that implementations may in-line certain domain type information within the “*extensions*” json-property of the domain object representation.
+In the simple scheme, Restful Objects allows that implementations may in-line certain domain type information within the "*extensions*" json-property of the domain object representation.
 
 For example, the fact that a property is required (may not be left empty) is captured using:
 

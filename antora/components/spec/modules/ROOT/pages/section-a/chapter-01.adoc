@@ -122,7 +122,7 @@ Other platforms are likely to have their own equivalent conventions.
 For conciseness, this has been shown by an "x" placeholder: `x.Customer`.
 
 There are two important concepts in the spec that both have the name "property": a domain object property, and a property within a JSON representation (the key value of a JSON map).
-The spec always refers to the former as a "property", and to the latter as a “json-property”.
+The spec always refers to the former as a "property", and to the latter as a "json-property".
 
 Finally, Restful Objects defines a set of "rel" values for links.
 To distinguish these from IANA-specified links, these each have the prefix "urn:org.restfulobjects:rels/".

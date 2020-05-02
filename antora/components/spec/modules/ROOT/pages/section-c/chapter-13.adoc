@@ -219,7 +219,7 @@ Representation of a domain object, see xref:section-c/chapter-14.adoc#_14_4_repr
 [#_13_3_request_succeeded_but_generated_no_content]
 == 13.3 Request succeeded, but generated no content
 
-This response is most often generated as the result of a validation succeeding (if `x-ro-validate-only` is supported, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2]).
+This response is most often generated as the result of a validation succeeding (if `x-ro-validate-only` is supported, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2]).
 Note, by contrast, that invoking a void action DOES return a representation xref:section-c/chapter-19.adoc#_19_4_4_action_returning_a_void[§C19.4.4].
 
 === 13.3.1 Status code

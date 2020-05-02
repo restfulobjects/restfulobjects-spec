@@ -319,7 +319,7 @@ The header row indicates the resources as templated URIs.footnote:[http://tools.
 
 * {DType} is the domain type identifier that uniquely represents the domain type.
 +
-Depending on the implementation this may take an abbreviated form e.g. "CUS" for Customer, or could be the fully qualified class name, eg “com.mycompany.myapp.Customer”.
+Depending on the implementation this may take an abbreviated form e.g. "CUS" for Customer, or could be the fully qualified class name, eg "com.mycompany.myapp.Customer".
 +
 The spec requires only that the value is unique;
 
@@ -498,7 +498,7 @@ actions/FindByName]
 |-
 |Action (to display to user as a dialog)
 
-|Invoke this (query-only) action with “cycle” as the parameter
+|Invoke this (query-only) action with "cycle" as the parameter
 |GET
 |link:http://~/services/x.ProductRepository/actions/FindByName/invoke/?Name=cycle[http://~/services/x.ProductRepository/ +actions/FindByName/invoke/?Name=cycle]
 |-
@@ -1184,7 +1184,7 @@ In many cases the resources defined by the Restful Objects spec require addition
 
 Restful Objects defines two mechanisms for passing in such arguments.
 The ‘Formal’ mechanism may be used in all circumstances.
-However, for certain specific situations there is the option to use the “Simple” form, which has the advantage of being simpler to construct and easier for a human to read.
+However, for certain specific situations there is the option to use the "Simple" form, which has the advantage of being simpler to construct and easier for a human to read.
 
 [#_2-9-1-simple-arguments]
 === 2.9.1 Simple Arguments
@@ -1598,7 +1598,7 @@ Note that *If-Modified* is not appropriate for concurrency control because its p
 When an action is invoked the business logic may raise an informational, warning or error message.
 The client may in turn display a warning dialog in the UI.
 
-To support this, Restful Objects allows that the standard “Warning” HTTP header can be set.
+To support this, Restful Objects allows that the standard "Warning" HTTP header can be set.
 The HTTP status code indicates whether this message should be considered as information (200), or a warning (4xx or 5xx).
 
 [#_2-17-malformed-json-representations]

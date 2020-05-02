@@ -31,7 +31,7 @@ where:
 |list of links to resources.
 
 |links[rel=…/return-type]
-|(optional – only if the "formal” scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2] capability is supported) link to the domain type xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3] of the value
+|(optional – only if the "formal" scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2] capability is supported) link to the domain type xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3] of the value
 
 |extensions
 |additional metadata about the representation.

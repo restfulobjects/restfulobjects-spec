@@ -52,7 +52,7 @@ where:
 Present only for domain services.
 
 |links[rel=…/element-type]
-|link to the domain type for the elements within the list – if the “domainModel” optional capability xref:section-b/chapter-08.adoc[§B8] is implemented.
+|link to the domain type for the elements within the list – if the "domainModel" optional capability xref:section-b/chapter-08.adoc[§B8] is implemented.
 
 |value
 |the actual list of links to the domain object resources (or domain service resources)

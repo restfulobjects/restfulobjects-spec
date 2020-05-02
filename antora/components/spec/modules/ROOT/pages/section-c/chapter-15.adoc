@@ -18,7 +18,7 @@ where:
 
 ==== 15.1.1.1 Query String
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 
 ** "simple"

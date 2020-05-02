@@ -29,7 +29,7 @@ Obtain a detailed representation of an action xref:section-c/chapter-18.adoc#_18
 
 ==== 18.1.1.1 Query String
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 ** "simple"
 
@@ -138,12 +138,12 @@ For example:
 "parameters": { "product": { ...
 "extensions": { "friendlyName": "Product", "description": "The product being ordered", "returnType": ...
 "optional": false, "format": ... // for string params only "maxLength": ... // for string params only "pattern": ... // for string params only } } ...
-} See xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§B3.1.1] for the full definitions of these json-properties.
+} See xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§A3.1.1] for the full definitions of these json-properties.
 Implementations may also provide their own extensions.
 
 ==== 18.2.3.2 Formal scheme
 
-Implementations that support the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§B3.1.2] provide several additional links about the action in the "links" json-property.
+Implementations that support the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2] provide several additional links about the action in the "links" json-property.
 For example:
 "links": [
 { "rel": ".../returntype", "href": "http://~/domain-types/x.OrderReceipt", "type": "application/json;profile=\".../domain-type\"", "method": "GET" }, { "rel": "describedby", "href": "http://~/domain-types/ORD/actions/submit", "type": "application/json;profile=\".../type-action\"", "method": "GET" }, ...

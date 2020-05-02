@@ -27,7 +27,7 @@ The action cannot be void (it must return some representation).
 
 === 19.1.1 Request
 
-The request can either be to invoke the action, or to request validation of arguments using the reserved x-ro-validate-only query parameter xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2].
+The request can either be to invoke the action, or to request validation of arguments using the reserved x-ro-validate-only query parameter xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2].
 
 ==== 19.1.1.1 Query String
 
@@ -35,13 +35,13 @@ Query arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-
 Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob) .
 In addition, the following may optionally be included in the map:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 ** "simple"
 
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 
 ** "true"  the argument map can be incomplete; only those arguments provided will be validated.
 
@@ -132,13 +132,13 @@ Arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-reso
 Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob).
 In addition:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 ** "simple"
 
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 
 ** "true"
 *** only validate the request, do not invoke the action
@@ -179,13 +179,13 @@ Arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-reso
 Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob).
 In addition:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 ** "simple"
 
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 
 ** "true"
 *** only validate the request, do not invoke the action

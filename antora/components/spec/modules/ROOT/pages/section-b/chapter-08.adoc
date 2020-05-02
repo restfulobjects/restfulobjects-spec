@@ -73,7 +73,7 @@ The JSON representation is:
   ...
   ],
   "specVersion": "1.0",
-  "implVersion": “xxx”,
+  "implVersion": "xxx",
   "optionalCapabilities": {
     "blobsClobs": "attachments",
     "deleteObjects": "no",
@@ -104,7 +104,7 @@ where:
 |link to the home page resource, xref:section-b/chapter-05.adoc[§5].
 
 |specVersion
-|The "major.minor" parts of the version of the spec supported by this implementation, e.g. “1.0”, see  xref:#_specversion[below].
+|The "major.minor" parts of the version of the spec supported by this implementation, e.g. "1.0", see  xref:#_specversion[below].
 
 
 |implVersion

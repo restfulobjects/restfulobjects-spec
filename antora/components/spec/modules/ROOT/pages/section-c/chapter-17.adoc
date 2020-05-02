@@ -22,7 +22,7 @@ Obtain a detailed representation of a collection xref:section-c/chapter-17.adoc#
 
 ==== 17.1.1.1 Query String
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 ** "simple"
 
@@ -54,7 +54,7 @@ This method is valid only if the collection has Set semantics (the most common c
 
 ==== 17.2.1.1 Query String
 
-* x-ro-domain-model (if domain metadata is "selectable", xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (if domain metadata is "selectable", xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 
 ** "simple"
@@ -74,7 +74,7 @@ This method is valid only if the collection has Set semantics (the most common c
 
 * should be formatted as a single argument node xref:section-a/chapter-02.adoc#_2-9-2-2-single-value-arguments-property-collection[§A2.9.2.2]. In addition:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 
 ** "simple"
@@ -82,7 +82,7 @@ This method is valid only if the collection has Set semantics (the most common c
 
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 
 
 ** "true"
@@ -116,7 +116,7 @@ This method is valid only if the collection has List semantics (where duplicate 
 
 * should be formatted as a single argument node xref:section-a/chapter-02.adoc#_2-9-2-2-single-value-arguments-property-collection[§A2.9.2.2]. In addition:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 
 ** "simple"
@@ -124,7 +124,7 @@ This method is valid only if the collection has List semantics (where duplicate 
 
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 
 
 ** "true"
@@ -147,7 +147,7 @@ A single query argument should be formatted as a single argument node xref:secti
 { "value": { "href": "http://~/objects/XXX/yyyy"
 } } In addition:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§B3.1])
+* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 
 
 ** "simple"
@@ -155,7 +155,7 @@ A single query argument should be formatted as a single argument node xref:secti
 
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
+* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 
 
 ** "true"
@@ -244,11 +244,11 @@ Domain model information is available through either the "links" or the "extensi
 Implementations that support the simple scheme provide extra data in the "extensions" json-properties.
 For example:
 "extensions": { "friendlyName": "items", "description": "Line items (details) of the order", "returnType": "list", "elementType": "ORI", "pluralForm": "Order Items" } Note that the combination of the "size" json-property and the "pluralForm" json-property make it easy for a client to render useful summary information (e.g. "3 Customers").
-See xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§B3.1.1] for the full definitions of these json-properties.
+See xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§A3.1.1] for the full definitions of these json-properties.
 
 ==== 17.5.3.2 Formal scheme
 
-Implementations that support the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§B3.1.2] provide an additional link only in the "links" json-property:
+Implementations that support the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2] provide an additional link only in the "links" json-property:
 "links": [
 { "rel": "describedby", "href": "http://~/domain-types/ORD/collections/items", "type": "application/json;profile=\".../type-collection\"", "method": "GET" }, ...
 ]
