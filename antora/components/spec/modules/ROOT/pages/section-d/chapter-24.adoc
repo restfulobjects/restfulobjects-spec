@@ -9,7 +9,7 @@ where:
 
 * {domainType} is either
 
-* *the domain type id, or
+** the domain type id, or
 
 * *is a built-in JSON type
 

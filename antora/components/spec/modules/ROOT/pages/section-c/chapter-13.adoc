@@ -77,30 +77,30 @@ This is to discourage clients from bookmarking the link.
 
 * Content-Length:
 
-* *size of the entity body
+** size of the entity body
 
 * Content-Type (objects):
 
-* *application/json;profile=".../xxx";x-ro-domain-type="yyy"  where xxx indicates the representation type of either "object" or "action-result" (for an action returning an object); see §2.4.1  where yyy indicates the domain type identifier §2.4.2;  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
+** application/json;profile=".../xxx";x-ro-domain-type="yyy"  where xxx indicates the representation type of either "object" or "action-result" (for an action returning an object); see §2.4.1  where yyy indicates the domain type identifier §2.4.2;  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
 
 * Content-Type (lists):
 
-* *application/json;profile=".../xxx";x-ro-element-type="yyy"  where xxx indicates the representation type of either "object-collection", "list" and "action-result" (for an action returning a list); see §2.4.1  where yyy indicates the element type, §2.4.2):
+** application/json;profile=".../xxx";x-ro-element-type="yyy"  where xxx indicates the representation type of either "object-collection", "list" and "action-result" (for an action returning a list); see §2.4.1  where yyy indicates the element type, §2.4.2):
  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
 
 * Content-Type (other):
 
-* *application/json;profile=".../xxx "  where xxx indicates any other representation type, see §2.4.1
+** application/json;profile=".../xxx "  where xxx indicates any other representation type, see §2.4.1
 
 * Caching headers:
 
-* *TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
+** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
 
-* *NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
+** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
 
 * ETag
 
-* *digest of timestamp
+** digest of timestamp
 
 === 13.1.3 Body (representation)
 
@@ -116,23 +116,23 @@ The representation will depend on the resource being requested.
 
 * Content-Length:
 
-* *size of the entity body
+** size of the entity body
 
 * Content-Type:
 
-* *application/json;profile=".../object";x-ro-domain-type="yyy"  where yyy indicates the domain type (for object representations, §2.4.2)  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
+** application/json;profile=".../object";x-ro-domain-type="yyy"  where yyy indicates the domain type (for object representations, §2.4.2)  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
 
 * Caching headers:
 
-* *TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
+** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
 
 * ETag
 
-* *digest of timestamp
+** digest of timestamp
 
 * Location:
 
-* *the URI of the resource of the object just created
+** the URI of the resource of the object just created
 
 === 13.2.3 Body (representation)
 

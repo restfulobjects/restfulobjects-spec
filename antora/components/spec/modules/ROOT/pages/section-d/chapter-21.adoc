@@ -16,9 +16,9 @@ The endpoint URL for this resource is simply:
 
 * Accept
 
-* *application/json
+** application/json
 
-* *application/json;profile=".../type-list"
+** application/json;profile=".../type-list"
 
 ==== 21.1.1.3 Body
 

@@ -10,9 +10,9 @@ The endpoint URL for this resource is:
 
 * {domainType} is either
 
-* *the domain type id or
+** the domain type id or
 
-* *is a built-in JSON type
+** is a built-in JSON type
 
 * {typeactionId} identifies the action Both of the defined type actions take a single argument representing a link to the supertype.
 As for the invocation of object actions (xref:section-c/chapter-19.adoc[§C19]), type actions return a representation that links back to the type action and also to the result of the action.
@@ -46,9 +46,9 @@ For example:
 
 * Accept
 
-* *application/json
+** application/json
 
-* *application/json;profile=".../type-action-result"
+** application/json;profile=".../type-action-result"
 
 ==== 27.1.1.3 Body
 
@@ -64,11 +64,11 @@ For example:
 
 * Content-Type
 
-* *application/json;profile=".../type-action-result"
+** application/json;profile=".../type-action-result"
 
 * Caching headers:
 
-* *NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  the structure of a domain type will not vary between deployments
+** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  the structure of a domain type will not vary between deployments
 
 ==== 27.1.2.3 Body (representation)
 
@@ -90,11 +90,11 @@ and other properties are as described earlier.
 
 * Warning:
 
-* *No such domain type {domainType}.
+** No such domain type {domainType}.
 
-* *No such domain type action { actionId} in domain type {domainType}
+** No such domain type action { actionId} in domain type {domainType}
 
-* *No such super/subtype
+** No such super/subtype
 
 ==== 27.1.3.3 Body
 
@@ -123,9 +123,9 @@ For example:
 
 * Accept
 
-* *application/json
+** application/json
 
-* *application/json;profile=".../type-action-result"
+** application/json;profile=".../type-action-result"
 
 ==== 27.2.1.3 Body
 
@@ -141,11 +141,11 @@ For example:
 
 * Content-Type
 
-* *application/json;profile=".../type-action-result"
+** application/json;profile=".../type-action-result"
 
 * Caching headers:
 
-* *NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  the structure of a domain type will not vary between deployments
+** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  the structure of a domain type will not vary between deployments
 
 ==== 27.2.2.3 Body (representation)
 
@@ -167,11 +167,11 @@ and other properties are as described earlier.
 
 * Warning:
 
-* *No such domain type {domainType}.
+** No such domain type {domainType}.
 
-* *No such domain type action { actionId} in domain type {domainType}
+** No such domain type action { actionId} in domain type {domainType}
 
-* *No such super/subtype
+** No such super/subtype
 
 ==== 27.2.3.3 Body
 

@@ -1,12 +1,12 @@
 = 9 OBJECTS OF TYPE RESOURCE
 
-The "Object of Type " resource is the target of a persist link to persist a proto-persistent ("not yet persisted") object xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2] of a given domain type.
+The "Object of Type" resource is the target of a persist link to persist a proto-persistent ("not yet persisted") object xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2] of a given domain type.
 
 The overall process is:
 
 * client invokes an action that creates a proto-persistent object representation
 
-* client uses the "arguments" json-property of the "rel"=".../persist" link to determine the information required
+* client uses the "*arguments*" json-property of the "*rel"=".../persist*" link to determine the information required
 
 * client obtains the required information, for example, prompting for it in a user interface
 
@@ -14,9 +14,10 @@ The overall process is:
 
 * assuming that the values are valid, a representation of the newly persisted domain object is returned
 
-* *the response code is 201, and will have the Location header
+** the response code is 201, and will have the *Location* header
 
-* *the representation itself will now include the "self" link, the "instanceId" json-property (and the "domainType" json-property if simple scheme xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§A3.1.1]).
+** the representation itself will now include the "*self*" link, the "*instanceId*" json-property (and the "*domainType*" json-property if simple scheme xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§A3.1.1]).
+
 The endpoint for this resource is:
 /objects/{domainType}
 where:
@@ -33,28 +34,38 @@ Persist a domain object by posting a cut-down version of its representation.
 ==== 9.1.1.1 Headers
 
 * Accept
-
-* *application/json
-
-* *application/json;profile=".../object"
+** application/json
+** application/json;profile=".../object"
 
 ==== 9.1.1.2 Body
 
-Because this resource is in a sense "uploading" a new object, the body is the cut-down version of the domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]. It consists of:
+Because this resource is in a sense "uploading" a new object, the body is the cut-down version of the domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4] footnote:[Note that this is different from the body provided to PUT Object §C14.2 used to update multiple properties.]. It consists of:
 
 * members[memberType=property]
+
 In other words, it includes all properties and their values (including those that would normally be hidden), along with a reference to the domaintype of the object being persisted.
+
 In addition, it may include the reserved query parameter:
 
 * x-ro-validate-Only
+** "true"
+*** validate that the representation provided could be persisted as a new object, without actually persisting it.
 
-* *"true"  validate that the representation provided could be persisted as a new object, without actually persisting it.
 For example:
-{ "members": { "firstName": { "value": ...
-}, "lastName": { "value": ...
-}, ...
-]
+
+[source,javascript]
+----
+{
+  "members": {
+    "firstName": {
+      "value": ...
+    },
+    "lastName": {
+      "value": ...
+    }, ...
+  }
 }
+----
 
 === 9.1.2 POST Successful Response
 
@@ -86,11 +97,11 @@ For example, if the body is malformed, or any other syntax error.
 
 * Warning
 
-* *summary message – indicating the nature of the error
+** summary message – indicating the nature of the error
 
 ==== 9.1.4.3 Body
 
-Error representation, §10.
+Error representation, xref:section-b/chapter-10.adoc[§10].
 
 === 9.1.5 POST Validation Failed Response
 
@@ -101,14 +112,27 @@ Error representation, §10.
 ==== 9.1.5.2 Headers
 
 * Warning
-
-* *summary message
+** summary message
 
 ==== 9.1.5.3 Body
 
 Body is the same as that posted, but indicating the properties that were invalid, with a reason in each case.
+
 For example:
-{ "members": { "firstName": { "value": "Joe", }, { "lastName": { "value": null "invalidReason": "Mandatory" }, ...
-]
+
+[source,javascript]
+----
+{
+  "members": {
+    "firstName": {
+      "value": "Joe"
+    }, {
+      "lastName": {
+      "value": null,
+      "invalidReason": "Mandatory"
+    },
+    ...
+  }
 }
+----
 

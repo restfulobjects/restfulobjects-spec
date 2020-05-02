@@ -175,7 +175,7 @@ This is not currently the case with Restful Objects, as there are no definitions
 
 * ~/objects/{domainType}
 
-* *except for POST; see also xref:section-e/chapter-34.adoc#_34_7_listable_instances[§34.7].
+** except for POST; see also xref:section-e/chapter-34.adoc#_34_7_listable_instances[§34.7].
 
 * ~/objects/{domainType}/{instanceId}/properties
 
@@ -204,19 +204,19 @@ The "actionResult" optional capability would return:
 
 * "in-line"
 
-* *return a representation of the domain object in-line
+** return a representation of the domain object in-line
 
-* *ie the current behaviour
+** ie the current behaviour
 
 * "seeOther"
 
-* *return a 303 response to the returned domain object
+** return a 303 response to the returned domain object
 
-* *ie the behaviour suggested above
+** ie the behaviour suggested above
 
 * "selectable"
 
-* *as requested by the client If the last option were supported, the client could then use a new "x ro action-result" query parameter to indicate its preference:
+** as requested by the client If the last option were supported, the client could then use a new "x ro action-result" query parameter to indicate its preference:
 
 * "in-line"
 

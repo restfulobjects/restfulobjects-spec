@@ -52,7 +52,12 @@ As per xref:#_7_2_representation[§7.2].
 
 The returned representation is a simple list xref:section-b/chapter-11.adoc[§11], but with an additional link with a rel="up" referring back to the homepage resource xref:section-b/chapter-05.adoc[§5]
 
-For example:
+The links from the services representation to other resources are as shown in the diagram below:
+
+.SERVICES REPRESENTATION
+image::Slide5.PNG[width="500px",link="{imagesdir}/Slide5.PNG"]
+
+The JSON representation is:
 
 [source,javascript]
 ----
@@ -88,10 +93,19 @@ For example:
 }
 ----
 
-The links from the services representation to other resources are as shown in the diagram below:
+where:
 
-.SERVICES REPRESENTATION
-image::Slide5.PNG[width="500px",link="{imagesdir}/Slide5.PNG"]
+[cols="2a,6a",options="header"]
+|===
 
+|JSON-Property
+|Description
 
-Note that the links in this list will point to domain service resources xref:section-c/chapter-15.adoc[§C15], rather than to domain object resources xref:section-c/chapter-14.adoc[§C14].
+|links
+|list of links to resources.
+
+|value
+|list of links to to domain service resources xref:section-c/chapter-15.adoc[§C15].
+
+|===
+
