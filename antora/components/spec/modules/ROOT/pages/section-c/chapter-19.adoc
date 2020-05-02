@@ -31,7 +31,7 @@ The request can either be to invoke the action, or to request validation of argu
 
 ==== 19.1.1.1 Query String
 
-Query arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§B2.9.2]), and encoded in the URL (xref:section-a/chapter-02.adoc#_2-9-2-3-argument-maps-actions-properties[§B2.9.2.3]).
+Query arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9.2]), and encoded in the URL (xref:section-a/chapter-02.adoc#_2-9-2-3-argument-maps-actions-properties[§A2.9.2.3]).
 Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob) .
 In addition, the following may optionally be included in the map:
 
@@ -72,11 +72,15 @@ In addition, the following may optionally be included in the map:
 
 * Content-Type (if returning a domain object):
 
-** application/json;profile=".../action-result";x-ro-domain-type="yyy"  where yyy indicates the domain type (for object representations, §2.4.2);  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
+** application/json;profile=".../action-result";x-ro-domain-type="yyy"
+*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
+**** URI of domain type (if formal scheme)
 
 * Content-Type (if returning a list of domain objects):
 
-** application/json;profile=".../action-result";x-ro-element-type="yyy"  where yyy indicates the domain type (for object representations, §2.4.2);  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
+** application/json;profile=".../action-result";x-ro-element-type="yyy"
+*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
+**** URI of domain type (if formal scheme)
 
 * Content-Type (if returning a scalar or void):
 
@@ -84,9 +88,11 @@ In addition, the following may optionally be included in the map:
 
 * Caching headers:
 
-** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
+** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
+*** if the object is transactional
 
-** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data) Note that an ETag is never returned for an action result.
+** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
+*** if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data) Note that an ETag is never returned for an action result.
 A client that wishes to modify the returned domain object must therefore re-retrieve it explicitly.
 
 ==== 19.1.2.3 Body
@@ -121,7 +127,7 @@ An example might be Order#submit(), which (depending on how the application logi
 
 ==== 19.2.1.3 Body
 
-Arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§B2.9.2]), and sent as the body (xref:section-a/chapter-02.adoc#_2-9-2-3-argument-maps-actions-properties[§B2.9.2.3]).
+Arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9.2]), and sent as the body (xref:section-a/chapter-02.adoc#_2-9-2-3-argument-maps-actions-properties[§A2.9.2.3]).
 Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob).
 In addition:
 
@@ -166,7 +172,7 @@ The action invoked can have side effects and need not be idempotent.
 
 ==== 19.3.1.3 Body
 
-Arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§B2.9.2]), and sent as the body (xref:section-a/chapter-02.adoc#_2_9_2_5obtaining_argument_choices[§B2.9.2.5]).
+Arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9.2]), and sent as the body (xref:section-a/chapter-02.adoc#_2_9_2_5obtaining_argument_choices[§A2.9.2.5]).
 Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob).
 In addition:
 
@@ -208,11 +214,15 @@ Successfully invoking an action with possible side effects can return either a 2
 
 * Content-Type (if returning a domain object):
 
-** application/json;profile=".../action-result";x-ro-domain-type="yyy"  where yyy indicates the domain type (for object representations, §2.4.2);  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
+** application/json;profile=".../action-result";x-ro-domain-type="yyy"
+*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
+**** URI of domain type (if formal scheme)
 
 * Content-Type (if returning a list of domain objects):
 
-** application/json;profile=".../action-result";x-ro-element-type="yyy"  where yyy indicates the domain type (of the objects referenced in the list, §2.4.2);  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
+** application/json;profile=".../action-result";x-ro-element-type="yyy"
+*** where yyy indicates the domain type (of the objects referenced in the list, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
+**** URI of domain type (if formal scheme)
 
 * Content-Type (if returning a scalar or void):
 
@@ -220,9 +230,11 @@ Successfully invoking an action with possible side effects can return either a 2
 
 * Caching headers:
 
-** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
+** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
+*** if the object is transactional
 
-** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data) Note that an ETag is never returned for an action result.
+** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
+*** if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data) Note that an ETag is never returned for an action result.
 A client that wishes to modify the returned domain object must therefore follow the self link on the in-lined object to retrieve that object directly as an object representation (which will then have an Etag).
 
 ==== 19.3.2.3 Body
@@ -272,11 +284,11 @@ FIGURE 12: ACTION RESULT FOR OBJECT For example, the following might be the resu
 
 * links[rel=self]
 
-* *is the link to the action invocation.
+** is the link to the action invocation.
 
 * result.links[rel=self]
 
-* *is the link to the returned domain object.
+** is the link to the returned domain object.
 If the action returned null, then the "result" json-property will still be present, but set to the JSON value null:
 { ...
 "resultType": "object", "result": null ...

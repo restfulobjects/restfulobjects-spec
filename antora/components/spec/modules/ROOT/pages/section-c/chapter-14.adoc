@@ -64,7 +64,7 @@ The request can either be to update the properties, or to request validation of 
 
 ==== 14.2.1.3 Body
 
-The body is the map of new properties, as per xref:section-a/chapter-02.adoc#_2-9-2-3-argument-maps-actions-properties[§B2.9.2.3]. Note that any blob/clob properties must be in-lined within this map.
+The body is the map of new properties, as per xref:section-a/chapter-02.adoc#_2-9-2-3-argument-maps-actions-properties[§A2.9.2.3]. Note that any blob/clob properties must be in-lined within this map.
 (Contrast this to updating of individual properties where the value of a blob/clob can be PUT in its native media type, xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2]).
 In addition, it may include the reserved query parameters:
 
@@ -149,7 +149,7 @@ links[rel=.../delete]    (optional) delete the (persistent) domain object.
 Discussed further below.
 links[rel=icon]    (optional) link to an image representing a scalable icon for this object extensions additional information about the resource.
 "domainType" The "domainType" json-property is only present for the simple scheme xref:section-a/chapter-03.adoc#_3_1_1_simple_scheme[§B3.1.1]; if the formal scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§B3.1.2] is supported then the "domainType" can be obtained from the domain-type representation xref:section-d/chapter-22.adoc#_22_2_representation[§D22.2]. Domain services do not have a "domainType" json-property.
-"instanceId" , "serviceId" and "links[rel=self]" The "instanceId" json-properties is present for persistent domain entities and for addressable view models xref:section-a/chapter-02.adoc[§B2.2], and can (with the "domainType" json-property) be used to construct URLs to other resources for the domain object as required.
+"instanceId" , "serviceId" and "links[rel=self]" The "instanceId" json-properties is present for persistent domain entities and for addressable view models xref:section-a/chapter-02.adoc[§A2.2], and can (with the "domainType" json-property) be used to construct URLs to other resources for the domain object as required.
 Proto-persistent domain objects and (non-addressable) view models xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2] do not have an "instanceId" because they do not correspond to any server-side state that can be directly addressed; nor do they have a ‘self’ link, for the same reasons.The "serviceId" json-property performs much the same function as "instanceId", allowing the URL for domain services to be constructed.
 The "serviceId" is present only for domain services.
 Domain services do not have a "instanceId" json-property.

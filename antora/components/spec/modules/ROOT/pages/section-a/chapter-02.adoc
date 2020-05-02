@@ -944,7 +944,7 @@ is a unique value for the rel within the above namespace
 +
 are additional parameters that are used for some rel values to disambiguate the link
 
-The optional parameters are modelled after the optional parameters of media types (§2.4.1, §2.4.2).
+The optional parameters are modelled after the optional parameters of media types (xref:section-a/chapter-02.adoc#_2-4-1-representationtype-profile-parameter[§A2.4.1], xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2].
 Using them clients can, for example, distinguish a link more precisely without having to rely on the location of the link within the JSON representation.
 
 For example:

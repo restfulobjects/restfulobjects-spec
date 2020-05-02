@@ -30,9 +30,9 @@ Obtain a representation of a description of a domain action parameter, within th
 
 * Accept
 
-* *application/json
+** application/json
 
-* *application/json;profile=".../action-param-description"
+** application/json;profile=".../action-param-description"
 
 ==== 26.1.1.3 Body
 

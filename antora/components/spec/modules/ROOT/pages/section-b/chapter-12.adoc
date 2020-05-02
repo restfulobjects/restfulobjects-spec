@@ -20,6 +20,7 @@ The representation itself consists of the following json-properties:
 ----
 
 where:
+
 [cols="2a,6a",options="header"]
 |===
 

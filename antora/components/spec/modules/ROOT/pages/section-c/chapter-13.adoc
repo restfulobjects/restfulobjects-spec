@@ -25,47 +25,111 @@ These can be distinguished by the HTTP status return code
 
 * 428 – Required precondition header missing
 
-* 500 – Domain logic failed In addition, a 401 code may be returned for any resource if the user's credentials are invalid (that is, they have not authenticated themselves).
+* 500 – Domain logic failed
+
+In addition, a 401 code may be returned for any resource if the user's credentials are invalid (that is, they have not authenticated themselves).
+
 The following indicates which codes may be returned by a resource:
-Method Res.
-Repr. 200 201 204 400 403 404 405 406 412 422 428 500 Service GET 15 B11 y y y y y Object GET C14.1
 
-14.4
+[cols="2a,2a,1a,1a,1a,1a,1a,1a,1a,1a,1a,1a,1a,1a,1a,1a", options="header"]
+|===
+|
+|Method
+|Res.
+|Repr.
+                             |200|201|204|400|403|404|405|406|412|422|428|500
+|Service
+|GET
+|xref:section-c/chapter-15.adoc[§C15]
+|xref:section-b/chapter-11.adoc[§B11]
+                             |y  |   |   |y  |   |y  |   |y  |   |   |   |y
+.3+|Object
+|GET
+|xref:section-c/chapter-14.adoc#_14_1_http_get[§C14.1]
+|xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]
+                             |y  |   |   |y  |   |y  |   |y  |   |   |   |y
 
-y y y y y PUT C14.2
---- y y y y y y y y y DELETE C14.3
---- y y y y y y y y y y Prop'y GET C16.1
+|PUT
+|xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]
+|\--
+                             |y  |   |   |y  |y  |y  |   |y  |y  |y  |y  |y
+|DELETE
+|xref:section-c/chapter-14.adoc#_14_3_http_delete[§C14.3]
+|\--
+                             |   |   |y  |y  |y  |y  |y  |y  |y  |y  |y  |y
+.3+|Prop'y
+|GET
+|xref:section-c/chapter-16.adoc#_16_1_http_get[§C16.1]
+|xref:section-c/chapter-16.adoc#_16_4_representation[§C16.4]
+                             |y  |   |   |y  |   |y  |   |y  |   |   |   |y
+|PUT
+|xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2]
+|\--                         |y  |   |   |y  |y  |y  |   |y  |y  |y  |y  |y
+|DELETE
+|xref:section-c/chapter-16.adoc#_16_3_http_delete[§C16.3]
+|\--                         |y  |   |   |y  |y  |y  |   |y  |y  |y  |y  |y
+.4+|Coll'n
+|GET
+|xref:section-c/chapter-17.adoc#_17_1_http_get[§C17.1]
+|xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]
+                             |y  |   |   |y  |   |y  |   |y  |   |   |   |y
+|PUT
+|xref:section-c/chapter-17.adoc#_17_2_http_put[§C17.2]
+|\--
+                             |y  |   |   |y  |y  |y  |y  |y  |y  |y  |y  |y
+|POST
+|xref:section-c/chapter-17.adoc#_17_3_http_post[§C17.3]
+|\--
+                             |y  |   |   |y  |y  |y  |y  |y  |y  |y  |y  |y
+|DELETE
+|xref:section-c/chapter-17.adoc#_17_4_http_delete[§C17.4]
+|\--
+                             |y  |   |   |y  |y  |y  |   |y  |y  |y  |y  |y
+|Action
+|GET
+|xref:section-c/chapter-18.adoc#_18_1_http_get[§C18.1]
+|xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2]
+                             |y  |   |   |y  |   |y  |y  |y  |   |   |   |y
+.3+|Action +
+invoke
+|GET
+|xref:section-c/chapter-19.adoc#_19_1_http_get[§C19.1]
+|xref:section-b/chapter-11.adoc[§B11] +
+xref:section-b/chapter-12.adoc[§B12] +
+xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]
+                             |y  |   |   |y  |   |y  |y  |y  |   |y  |   |y
+|PUT
+|xref:section-c/chapter-19.adoc#_19_2_http_put[§C19.2]
+|\--
+                             |y  |   |   |y  |y  |y  |y  |y  |y  |y  |y  |y
+|POST
+|xref:section-c/chapter-19.adoc#_19_3_http_post[§C19.3]
+|\--
+                             |y  |y  |   |y  |y  |y  |y  |y  |y  |y  |y  |y
+|Objects
+|POST
+|xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]
+|xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]
+                            |   |y  |   |y  |   |   |y  |y  |   |   |   |y
+|===
 
-16.4
 
-y y y y y PUT C16.2
---- y y y y y y y y y DELETE C16.3
---- y y y y y y y y y Coll'n GET C17.1
 
-17.5
 
-y y y y y PUT C17.2
---- y y y y y y y y y y POST C17.3
---- y y y y y y y y y y DELETE C17.4
---- y y y y y y y y y Action GET C18.1
 
-18.2
 
-y y y y y y Action invoke GET C19.1 B11 B12
 
-14.4
+For a given status code, the specific headers and body returned by these resources vary little between the different resources; this is especially so for the failure scenarios (4xx and 5xx).
 
-y y y y y y y PUT C19.2
---- y y y y y y y y y y POST C19.3
---- y y y y y y y y y y y Objects POST xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1] xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4] y y y y y For a given status code, the specific headers and body returned by these resources vary little between the different resources; this is especially so for the failure scenarios (4xx and 5xx).
 This section (xref:section-c/chapter-13.adoc[§C13]) describes all the responses irrespective of the resource called.
-Sections xref:section-c/chapter-14.adoc[§C14] to § C18.2 identify the various request/response scenarios for each of the domain object resources.
+Sections xref:section-c/chapter-14.adoc[§C14] to xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2] identify the various request/response scenarios for each of the domain object resources.
 In each case they define the request URL, headers and body, and also identify the standard (success) response headers and body, if any.
 
 [#_13_1_request_succeeded_and_generated_a_representation]
 == 13.1 Request succeeded, and generated a representation
 
 For resources that return a body containing some representation.
+
 If the response has been generated by a resource that has also modified the state (e.g. modifying a property or collection or invoking an action), then there will be no self link.
 This is to discourage clients from bookmarking the link.
 
@@ -79,24 +143,34 @@ This is to discourage clients from bookmarking the link.
 
 ** size of the entity body
 
-* Content-Type (objects):
+* *Content-Type* (objects):
 
-** application/json;profile=".../xxx";x-ro-domain-type="yyy"  where xxx indicates the representation type of either "object" or "action-result" (for an action returning an object); see §2.4.1  where yyy indicates the domain type identifier §2.4.2;  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
+** application/json;profile=".../xxx";x-ro-domain-type="yyy"
+*** where xxx indicates the representation type of either "object" or "action-result" (for an action returning an object); see xref:section-a/chapter-02.adoc#_2-4-1-representationtype-profile-parameter[§A2.4.1]
+*** where yyy indicates the domain type identifier xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2];
+**** the domain type id (if simple scheme)
+**** URI of domain type (if formal scheme)
 
-* Content-Type (lists):
+* *Content-Type* (lists):
 
-** application/json;profile=".../xxx";x-ro-element-type="yyy"  where xxx indicates the representation type of either "object-collection", "list" and "action-result" (for an action returning a list); see §2.4.1  where yyy indicates the element type, §2.4.2):
- the domain type id (if simple scheme)  URI of domain type (if formal scheme)
+** application/json;profile=".../xxx";x-ro-element-type="yyy"
+*** where xxx indicates the representation type of either "object-collection", "list" and "action-result" (for an action returning a list); see xref:section-a/chapter-02.adoc#_2-4-1-representationtype-profile-parameter[§A2.4.1]
+*** where yyy indicates the element type, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]:
+**** the domain type id (if simple scheme)
+**** URI of domain type (if formal scheme)
 
-* Content-Type (other):
+* *Content-Type* (other):
 
-** application/json;profile=".../xxx "  where xxx indicates any other representation type, see §2.4.1
+** application/json;profile=".../xxx "
+*** where xxx indicates any other representation type, see xref:section-a/chapter-02.adoc#_2-4-1-representationtype-profile-parameter[§A2.4.1]
 
 * Caching headers:
 
-** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
+** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
+*** if the object is transactional
 
-** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
+** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
+*** if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
 
 * ETag
 
@@ -120,11 +194,15 @@ The representation will depend on the resource being requested.
 
 * Content-Type:
 
-** application/json;profile=".../object";x-ro-domain-type="yyy"  where yyy indicates the domain type (for object representations, §2.4.2)  the domain type id (if simple scheme)  URI of domain type (if formal scheme)
+** application/json;profile=".../object";x-ro-domain-type="yyy"
+*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]
+**** the domain type id (if simple scheme)
+**** URI of domain type (if formal scheme)
 
 * Caching headers:
 
-** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§B2.13]  if the object is transactional
+** TRANSACTIONAL, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
+*** if the object is transactional
 
 * ETag
 
@@ -151,8 +229,7 @@ Note, by contrast, that invoking a void action DOES return a representation xref
 === 13.3.2 Headers
 
 * Warning (optional)
-
-* *indicates an informational message generated by the domain object's business logic
+** indicates an informational message generated by the domain object's business logic
 
 === 13.3.3 Body
 
@@ -165,22 +242,30 @@ Generated either as the result of a syntactically invalid request
 === 13.4.1 Status code
 
 * 400 ("bad request")
-
-* *missing arguments
-
-* *arguments are malformed
+** missing arguments
+** arguments are malformed
 
 === 13.4.2 Headers
 
 * Warning
-
-* *Message text is implementation-specific, but should describe the error condition sufficiently to enable developer-level debugging
+** Message text is implementation-specific, but should describe the error condition sufficiently to enable developer-level debugging
 
 === 13.4.3 Body
 
-If arguments xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§B2.9.2] /properties (xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], xref:section-b/chapter-09.adoc#_9-1-http-post[§B9]) are malformed, (for example, incorrect datatype), then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid.
+If arguments xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9.2] /properties (xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], xref:section-b/chapter-09.adoc#_9-1-http-post[§B9]) are malformed, (for example, incorrect datatype), then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "*invalidReason*" json-property to indicate why they are invalid.
+
 For example:
-{ "fromDate": { "value": "2009-13-33" "invalidReason": "could not be parsed as a date" } ..., }
+
+[source,javascript]
+----
+{
+  "fromDate": {
+    "value": "2009-13-33",
+    "invalidReason": "could not be parsed as a date"
+  },
+  ...,
+}
+----
 
 == 13.5 Not authorized (user is not authenticated)
 
@@ -191,8 +276,7 @@ For example:
 === 13.5.2 Headers
 
 * WWW-Authenticate
-
-* *standard authentication challenge header
+** standard authentication challenge header
 
 === 13.5.3 Body
 
@@ -209,8 +293,7 @@ If the user attempts to invoke a resource that is disabled.
 === 13.6.2 Headers
 
 * Warning
-
-* *same text as "disabledReason" in object representation
+** same text as "*disabledReason*" in object representation
 
 === 13.6.3 Body
 
@@ -227,16 +310,11 @@ This is the response if a requested object or object member does not exist, or i
 === 13.7.2 Headers
 
 * Warning
-
-* *No such service {serviceId}
-
-* *No such domain object {oid}
-
-* *No such property {propertyId}
-
-* *No such collection {collectionId}
-
-* *No such action {actionId}
+** No such service {serviceId}
+** No such domain object {oid}
+** No such property {propertyId}
+** No such collection {collectionId}
+** No such action {actionId}
 
 === 13.7.3 Body
 
@@ -251,22 +329,15 @@ This is the response if a requested object or object member does not exist, or i
 === 13.8.2 Headers
 
 * Allow
-
-* *comma-separated list of methods that are supported, as per RFC 2616
+** comma-separated list of methods that are supported, as per RFC 2616
 
 * Warning
-
-* *object is immutable (if attempt any PUT, DELETE or POST)
-
-* *action is not side-effect free (if attempt GET Act/Invoke)
-
-* *action is not idempotent (if attempt PUT Act/Invoke)
-
-* *collection is not a list (if attempt POST Collection)
-
-* *collection is not a set (if attempt PUT Collection)
-
-* *object cannot be safely deleted (if attempt DELETE Object)
+** object is immutable (if attempt any PUT, DELETE or POST)
+** action is not side-effect free (if attempt GET Act/Invoke)
+** action is not idempotent (if attempt PUT Act/Invoke)
+** collection is not a list (if attempt POST Collection)
+** collection is not a set (if attempt PUT Collection)
+** object cannot be safely deleted (if attempt DELETE Object)
 
 === 13.8.3 Body
 
@@ -275,10 +346,13 @@ This is the response if a requested object or object member does not exist, or i
 [#_13_9_not_acceptable]
 == 13.9 Not acceptable
 
-The client has specified an Accept header that does not include a media type provided by the resource.
-For resources that return "application/json" representations, a 406 response code will occur if the Accept header is set to "application/json" but has an incompatible "profile" parameter.
-For example, specifying a profile=".../collection" for anything other than a collection resource xref:section-c/chapter-17.adoc#_17_1_http_get[§C17.1] will return a 406. A 406 can also be returned for blob/clob property resources xref:section-c/chapter-16.adoc#_16_2_2_request_if_blobclobs[§C16.2.2] when there is a mismatch between the Accept header and the media type of the stored blob/clob.
-For example, setting Accept to "image/jpeg" for a "video/h264" will return a 406.
+The client has specified an *Accept* header that does not include a media type provided by the resource.
+
+For resources that return "application/json" representations, a 406 response code will occur if the *Accept* header is set to "application/json" but has an incompatible "profile" parameter.
+For example, specifying a profile=".../collection" for anything other than a collection resource xref:section-c/chapter-17.adoc#_17_1_http_get[§C17.1] will return a 406.
+
+A 406 can also be returned for blob/clob property resources xref:section-c/chapter-16.adoc#_16_2_2_request_if_blobclobs[§C16.2.2] when there is a mismatch between the *Accept* header and the media type of the stored blob/clob.
+For example, setting *Accept* to "image/jpeg" for a "video/h264" will return a 406.
 
 === 13.9.1 Status code
 
@@ -301,9 +375,9 @@ For example, setting Accept to "image/jpeg" for a "video/h264" will return a 406
 === 13.10.2 Headers
 
 * Warning
+** "Object changed by another user".
 
-* *"Object changed by another user".
-The ETag header is deliberately not returned in order to force client to re-retrieve an up-to-date representation
+The *ETag* header is deliberately not returned in order to force client to re-retrieve an up-to-date representation
 
 === 13.10.3 Body
 
@@ -315,28 +389,52 @@ Generated as the result of a validation failure.
 
 === 13.11.1 Status code
 
-* 422 ("unprocesssable entity")
+* 422 ("unprocessable entity")
 
-* *property member values are invalid (if updating multiple properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], or if persisting a proto-persistent object xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]
+** property member values are invalid (if updating multiple properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], or if persisting a proto-persistent object xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1]
 
-* *"Arguments invalid"  details are provided in the body
+** "Arguments invalid"
+*** details are provided in the body
 
 === 13.11.2 Headers
 
-* Warning
-
-* *Message text is implementation-specific, but should describe the error condition sufficiently to enable developer-level debugging
+* *Warning*
+** Message text is implementation-specific, but should describe the error condition sufficiently to enable developer-level debugging
 
 === 13.11.3 Body
 
-If arguments xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§B2.9.2]/properties (xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], xref:section-b/chapter-09.adoc[§B9.1]) are invalid, then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid For example:
-{ "fromDate": { "value": "2009-12-01" "invalidReason": "The from date cannot be in the past" } ..., } If no individual argument/property was invalid, but the set of such is invalid (e.g. fromDate > toDate), then an "x ro invalidReason" json-property is provided at the root of the map.
+If arguments xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9.2]/properties (xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], xref:section-b/chapter-09.adoc[§B9.1]) are invalid, then the response body is the same as the request body, but additionally will indicate the arguments/properties that are invalid using an "invalidReason" json-property to indicate why they are invalid.
+
 For example:
-{ "fromDate": ..., "toDate": ..., "x-ro-invalidReason": "To date cannot be before from date" } The json-property has the prefix "x-ro-" in this case in order to avoid clashes with the argument/property names
+[source,javascript]
+----
+{
+  "fromDate": {
+    "value": "2009-12-01",
+    "invalidReason": "The from date cannot be in the past"
+  },
+  ...
+}
+----
+
+If no individual argument/property was invalid, but the set of such is invalid (e.g. fromDate > toDate), then an "*x-ro-invalidReason*" json-property is provided at the root of the map.
+
+For example:
+
+[source,javascript]
+----
+{
+  "fromDate": ...,
+  "toDate": ...,
+  "x-ro-invalidReason": "To date cannot be before from date"
+}
+----
+
+The json-property has the prefix "*x-ro-*" in this case in order to avoid clashes with the argument/property names
 
 == 13.12 Precondition header missing
 
-This represents a syntax error where a required precondition header (for example, If-Match if modifying state of a resource) was not included in the request.
+This represents a syntax error where a required precondition header (for example, *If-Match* if modifying state of a resource) was not included in the request.
 
 === 13.12.1 Status code
 
@@ -344,9 +442,8 @@ This represents a syntax error where a required precondition header (for example
 
 === 13.12.2 Headers
 
-* Warning
-
-* *"If-Match header required with last-known value of ETag for the resource in order to modify its state".
+* *Warning*
+** "If-Match header required with last-known value of ETag for the resource in order to modify its state".
 
 === 13.12.3 Body
 
@@ -361,10 +458,8 @@ This represents a syntax error where a required precondition header (for example
 === 13.13.2 Headers
 
 * Warning
-
-* *error message raised by business logic in the domain model, or
-
-* *exception message raised by the Restful Objects implementation itself
+** error message raised by business logic in the domain model, or
+** exception message raised by the Restful Objects implementation itself
 
 === 13.13.3 Body
 
