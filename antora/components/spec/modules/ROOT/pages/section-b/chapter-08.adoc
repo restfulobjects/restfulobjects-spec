@@ -52,7 +52,7 @@ As per §8.2.
 The links from the version representation to other resources are as shown in the diagram below:
 
 .VERSION REPRESENTATION
-image::Slide4.PNG[width="500px",link="{imagesdir}/Slide4.PNG"]
+image::Slide4.PNG[width="400px",link="{imagesdir}/Slide4.PNG"]
 
 The JSON representation is:
 

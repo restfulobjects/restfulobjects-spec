@@ -14,9 +14,19 @@ The representation itself consists of the following json-properties:
 
 [source,javascript]
 ----
-{ "value": ..., "links": [ { "rel": ".../return-type", ...
-}, ...
-], "extensions": { ... } }
+{
+  "value": ...,
+  "links": [ {
+      "rel": ".../return-type",
+      ...
+    },
+    ...
+  ],
+  "extensions": {
+    "format": ...,
+    ...
+   }
+}
 ----
 
 where:
