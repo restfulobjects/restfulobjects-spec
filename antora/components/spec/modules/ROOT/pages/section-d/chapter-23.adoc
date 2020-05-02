@@ -27,7 +27,7 @@ Obtain a representation that describes a domain property within the metamodel.
 
 ==== 23.1.1.2 Headers
 
-* Accept
+* *Accept*
 
 ** application/json
 

@@ -33,7 +33,7 @@ Persist a domain object by posting a cut-down version of its representation.
 
 ==== 9.1.1.1 Headers
 
-* Accept
+* *Accept*
 ** application/json
 ** application/json;profile=".../object"
 
@@ -95,7 +95,7 @@ For example, if the body is malformed, or any other syntax error.
 
 ==== 9.1.4.2 Headers
 
-* Warning
+* *Warning*
 
 ** summary message – indicating the nature of the error
 
@@ -111,7 +111,7 @@ Error representation, xref:section-b/chapter-10.adoc[§10].
 
 ==== 9.1.5.2 Headers
 
-* Warning
+* *Warning*
 ** summary message
 
 ==== 9.1.5.3 Body

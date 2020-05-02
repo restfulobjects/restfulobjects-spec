@@ -5,7 +5,7 @@ Ideas for extending the scope of the specification
 [#_34_1_content_negotiation]
 == 34.1 Content Negotiation
 
-Although representations of domain objects indicate the type of the object in the Content-Type header (through the x-ro-domain-type media parameter xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]), this parameter is ignored when set on the Accept header.
+Although representations of domain objects indicate the type of the object in the *Content-Type* header (through the x-ro-domain-type media parameter xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]), this parameter is ignored when set on the Accept header.
 This means that a client cannot insist that a particular representation is of a certain type.
 This idea is for the spec to be extended so that the x-ro-domain-type from an Accept header is checked when invoking an object or service action, and is used as a hint to ensure that a representation of the correct type is returned to the client.
 In this way the spec would support content negotiation (conneg).
@@ -197,7 +197,7 @@ Another simpler option might be to define these resources as returning a 303 "Se
 == 34.9 See other for action-results
 
 Currently the action-results representation xref:section-c/chapter-19.adoc#_19_4_representation[§C19] can return an in-lined domain object.
-This is intended to be a convenience; the ETag header is suppressed.
+This is intended to be a convenience; the *ETag* header is suppressed.
 An alternative design would be to have the action-result return a 303 "see other" in this situation, and include a reference to the object.
 The desired behaviour could be made tunable, akin to the optional capability that the spec provides for domain model schemes.
 The "actionResult" optional capability would return:

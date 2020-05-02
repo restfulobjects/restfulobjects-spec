@@ -37,7 +37,7 @@ Obtain a detailed representation of an action xref:section-c/chapter-18.adoc#_18
 
 ==== 18.1.1.2 Headers
 
-* Accept
+* *Accept*
 
 ** application/json
 
@@ -55,7 +55,7 @@ As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_re
 == 18.2 Representation
 
 The domain object action representation provides full details of an action on a domain object instance, and provides links to resources that can invoke the action (if allowed).
-The Content-Type for the representation is:
+The *Content-Type* for the representation is:
 application/json;profile=".../object-action" The links from the object action representation to other resources are as shown in the diagram below:
 
 FIGURE 11: OBJECT ACTION REPRESENTATION For example, the representation of Order's submit action might be:

@@ -698,7 +698,7 @@ In all the above cases the client can use this value to process the representati
 [#_2-4-3-handling-of-accept-headers]
 === 2.4.3 Handling of Accept headers
 
-The HTTP protocol footnote:[link:http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html[]] defines the Accept request header for the client to specify which media types it can consume; the server then indicates the actual media type using the Content-Type response header.
+The HTTP protocol footnote:[link:http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html[]] defines the Accept request header for the client to specify which media types it can consume; the server then indicates the actual media type using the *Content-Type* response header.
 If the server is unable to return the requested type, then it must return a 406 "not acceptable" status return code.
 
 Restful Objects defines the following behaviour:
@@ -735,7 +735,7 @@ Normally, this would result in a 406 ("Not acceptable") response error.
 In order to accommodate the use of such tools, implementations may wish to provide a "non-strict" mode of operation to suppress Accept header validation.
 However, this is not part of the spec.
 
-Even if Accept header validation has been suppressed, the Content-Type returned should be set to application/json along with the "profile" (and any other) parameter.
+Even if Accept header validation has been suppressed, the *Content-Type* returned should be set to application/json along with the "profile" (and any other) parameter.
 
 [#_2-5-scalar-datatypes-and-formats]
 == 2.5 Scalar datatypes and formats
@@ -1467,7 +1467,7 @@ The URLs defined by the Restful Objects spec follow the rules defined by the HTT
 
 Restful Objects requires that all URLs are encoded using UTF-8. All modern implementation languages (Java, .NET, Ruby, Python etc) provide built-in support for URL encoding to this character set.
 
-The character set of JSON representations is not mandated by the spec; instead the response will indicate the character set through the Content-Type header; for example:
+The character set of JSON representations is not mandated by the spec; instead the response will indicate the character set through the *Content-Type* header; for example:
 
     application/json;profile="...";charset=utf-8
 

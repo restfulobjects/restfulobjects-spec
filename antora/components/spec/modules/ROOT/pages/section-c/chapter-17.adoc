@@ -30,7 +30,7 @@ Obtain a detailed representation of a collection xref:section-c/chapter-17.adoc#
 
 ==== 17.1.1.2 Headers
 
-* Accept
+* *Accept*
 
 ** application/json
 
@@ -42,7 +42,7 @@ Obtain a detailed representation of a collection xref:section-c/chapter-17.adoc#
 
 === 17.1.2 Success Response
 
-As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the Content-Type will include an "x-ro-element-type" parameter.
+As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the *Content-Type* will include an "x-ro-element-type" parameter.
 
 [#_17_2_http_put]
 == 17.2 HTTP PUT
@@ -64,10 +64,11 @@ This method is valid only if the collection has Set semantics (the most common c
 
 ==== 17.2.1.2 Headers
 
-* If-Match
+* *If-Match*
 
 
-** timestamp digest  obtained from ETag header of representation
+** timestamp digest
+*** obtained from *ETag* header of representation
 
 ==== 17.2.1.3 Body
 
@@ -84,11 +85,12 @@ This method is valid only if the collection has Set semantics (the most common c
 * x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
 
 
-** "true"  only validate the request, do not modify the collection
+** "true"
+*** only validate the request, do not modify the collection
 
 === 17.2.2 Success Response
 
-As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the Content-Type will include an "x-ro-element-type" parameter.
+As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the *Content-Type* will include an "x-ro-element-type" parameter.
 
 [#_17_3_http_post]
 == 17.3 HTTP POST
@@ -104,10 +106,11 @@ This method is valid only if the collection has List semantics (where duplicate 
 
 ==== 17.3.1.2 Headers
 
-* If-Match
+* *If-Match*
 
 
-** timestamp digest  obtained from ETag header of representation
+** timestamp digest
+*** obtained from *ETag* header of representation
 
 ==== 17.3.1.3 Body
 
@@ -124,11 +127,12 @@ This method is valid only if the collection has List semantics (where duplicate 
 * x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
 
 
-** "true"  only validate the request, do not modify the collection
+** "true"
+*** only validate the request, do not modify the collection
 
 === 17.3.2 Success Response
 
-As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the Content-Type will include an "x-ro-element-type" parameter.
+As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_representation[§C13.1] (200), returning an object collection representation xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5]. Note that the *Content-Type* will include an "x-ro-element-type" parameter.
 
 [#_17_4_http_delete]
 == 17.4 HTTP DELETE
@@ -154,14 +158,16 @@ A single query argument should be formatted as a single argument node xref:secti
 * x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
 
 
-** "true"  only validate the request, do not modify the collection
+** "true"
+*** only validate the request, do not modify the collection
 
 ==== 17.4.1.2 Headers
 
-* If-Match
+* *If-Match*
 
 
-** timestamp digest  obtained from ETag header of representation
+** timestamp digest
+*** obtained from *ETag* header of representation
 
 ==== 17.4.1.3 Body
 
@@ -175,7 +181,7 @@ As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_re
 == 17.5 Representation
 
 The domain object collection representation provides full details of a collection of a domain object, and provides links to resources that can modify the contents of the collection, if allowable.
-The Content-Type for the representation is:
+The *Content-Type* for the representation is:
 application/json; profile=".../object-collection; x-ro-element-type=yyy" where yyy indicates the domain type:
 
 * the domain type id (if simple scheme)

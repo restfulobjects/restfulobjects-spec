@@ -28,7 +28,7 @@ where:
 
 ==== 15.1.1.2 Headers
 
-* Accept
+* *Accept*
 
 
 ** application/json

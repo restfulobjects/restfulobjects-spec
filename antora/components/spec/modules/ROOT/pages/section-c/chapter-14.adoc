@@ -3,14 +3,22 @@
 The domain object resource can be used to obtain the summary domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4] for a particular domain object, and can also be used to update or delete individual persisted domain object instances (where allowed).
 
 The endpoint URL (using templated URI syntax) for this resource is:
-/objects/{domainType}/{instanceId}
+
+    /objects/{domainType}/{instanceId}
+
 where:
 
 * {domainType} uniquely identifies the object's domain type, and
 
 * {instanceId} uniquely identifies an object instance of that type Together the {domainType}/{instanceId} may be referred to as the object identifier, or oid.
+
 The specification does not mandate the format of either the domainType or the instanceId; the following are all potentially valid forms:
-/objects/customers/123 /objects/myApp.Customer/123 /objects/CUS/123 /objects/ORD/123-456 /objects/countries/USA
+
+* `/objects/customers/123`
+* `/objects/myApp.Customer/123`
+* `/objects/CUS/123`
+* `/objects/ORD/123-456`
+* `/objects/countries/USA`
 
 [#_14_1_http_get]
 == 14.1 HTTP GET
@@ -29,11 +37,13 @@ Obtain a summary representation of a domain object xref:section-c/chapter-14.ado
 
 ==== 14.1.1.2 Headers
 
-* Accept
+* *Accept*
 
 ** application/json
 
-** application/json;profile=".../object" If the "profile" parameter is specified to any value other than "…/object", then a 406 response code should be returned xref:section-c/chapter-13.adoc#_13_9_not_acceptable[§C13.9].
+** application/json;profile=".../object"
+
+If the "profile" parameter is specified to any value other than "…/object", then a 406 response code should be returned xref:section-c/chapter-13.adoc#_13_9_not_acceptable[§C13.9].
 
 ==== 14.1.1.3 Body
 
@@ -58,9 +68,10 @@ The request can either be to update the properties, or to request validation of 
 
 ==== 14.2.1.2 Headers
 
-* If-Match
+* *If-Match*
 
-** timestamp digest  obtained from ETag header of representation
+** timestamp digest
+*** obtained from *ETag* header of representation
 
 ==== 14.2.1.3 Body
 
@@ -76,23 +87,36 @@ In addition, it may include the reserved query parameters:
 
 * x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
 
-** "true"  only validate the request, do not modify the property For example:
-{ "firstName": { "value": ...
-}, "lastName": { "value": ...
-}, ...
+** "true"
+*** only validate the request, do not modify the property
+
+For example:
+[source,javascript]
+----
+{
+  "firstName": {
+    "value": ...
+  },
+  "lastName": {
+    "value": ...
+  }, ...
 }
+----
+
 
 === 14.2.2 Success Response
 
-As per 13.3 (200), returning a domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]. Because the resource has mutated the state, there will be no self link (so that it cannot be bookmarked by clients).
+As per xref:section-c/chapter-13.adoc#_13_3_request_succeeded_but_generated_no_content[§C13.3] (200), returning a domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4].
+Because the resource has mutated the state, there will be no self link (so that it cannot be bookmarked by clients).
 
 [#_14_3_http_delete]
 == 14.3 HTTP DELETE
 
 Deletes an object.
 This is an optional capability xref:section-b/chapter-08.adoc[§B8] because implementing a generic ‘delete object’ capability - which includes managing any references to the deleted object throughout the system - is potentially complex, and not necessarily practicable for many implementations.
+
 If the implementation does support the capability then it must also determine that it is safe to delete the object.
-A 405 ("method not allowed") error will be returned otherwise.
+A *405* ("method not allowed") error will be returned otherwise.
 
 === 14.3.1 DELETE Request
 
@@ -102,9 +126,9 @@ A 405 ("method not allowed") error will be returned otherwise.
 
 ==== 14.3.1.2 Headers
 
-* If-Match
-
-** timestamp digest  obtained from ETag header of representation
+* *If-Match*
+** timestamp digest
+*** obtained from *ETag* header of representation
 
 ==== 14.3.1.3 Body
 
@@ -119,13 +143,22 @@ As per xref:section-c/chapter-13.adoc#_13_3_request_succeeded_but_generated_no_c
 
 The domain object representation provides summary information about a single domain object instance, along with links to other sub-resources by which the domain object may be interacted with, or mutated.
 As such, it the single most important representation defined by Restful Objects.
-The Content-Type for the representation is:
-application/json;profile=".../object";x-ro-domain-type="yyy" where yyy identifies the domain type identifier:
+
+The *Content-Type* for the representation is:
+
+    application/json;profile=".../object";x-ro-domain-type="yyy"
+
+where yyy identifies the domain type identifier:
 
 * the domain type id of the returned object (simple scheme)
+* the URI to the domain type of the returned object (formal scheme).
 
-* the URI to the domain type of the returned object (formal scheme) The representation is typically generated from the Domain Object resource xref:section-c/chapter-14.adoc#_14_1_http_get[§C14.1], though it can also be generated by the Domain Service resource xref:section-c/chapter-15.adoc[§C15] (since Restful Objects regards a domain service as being just a well-known domain object).
-It may also be obtained as the result updating multiple properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], or of persisting a proto-persistent object xref:section-b/chapter-09.adoc[§B9]. The links from the domain object representation to other resources are as shown in the diagram below:
+The representation is typically generated from the Domain Object resource xref:section-c/chapter-14.adoc#_14_1_http_get[§C14.1], though it can also be generated by the Domain Service resource xref:section-c/chapter-15.adoc[§C15] (since Restful Objects regards a domain service as being just a well-known domain object).
+It may also be obtained as the result updating multiple properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2], or of persisting a proto-persistent object xref:section-b/chapter-09.adoc[§B9].
+
+The links from the domain object representation to other resources are as shown in the diagram below:
+
+[UP TO HERE]
 
 FIGURE 8: DOMAIN OBJECT REPRESENTATION For example, the representation of a (persistent domain entity) Order might be:
 { "domainType": "ORD", "instanceId": " 123", "title": "Joe Blogg's Order #1", "members": { ...

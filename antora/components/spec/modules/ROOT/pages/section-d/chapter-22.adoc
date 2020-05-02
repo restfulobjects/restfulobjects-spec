@@ -27,7 +27,7 @@ Obtain a representation of a domain type within the metamodel.
 
 ==== 22.1.1.2 Headers
 
-* Accept
+* *Accept*
 
 ** application/json
 

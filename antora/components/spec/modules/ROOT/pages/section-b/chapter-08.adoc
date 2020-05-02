@@ -19,7 +19,7 @@ Obtain a representation of the implementation's version and optional capabilitie
 
 ==== 8.1.1.2 Headers
 
-* Accept
+* *Accept*
 ** application/json
 ** application/json;profile=".../version"
 

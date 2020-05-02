@@ -40,7 +40,7 @@ Such an application would be an example of the Naked Objects pattern (it could u
 While Naked Objects is not a common architecture, it is worth noting the similarity with web browsers; a web brower can consume any text/html and render it to a user.
 A generic Restful Objects application would in effect be doing the same thing.
 The last case to consider is an independently-developed client that is bespoke; in other words it makes hard-coded assumptions about the structure of the JSON representations.
-For these cases, it is currently the case that Restful Objects offers limited support; the domain type of the representation is advertised through the "x-ro-domain-type" media type parameter of the Content-Type header, but it is not possible for the client to request a particular representation by setting the Accept header.
+For these cases, it is currently the case that Restful Objects offers limited support; the domain type of the representation is advertised through the "x-ro-domain-type" media type parameter of the *Content-Type* header, but it is not possible for the client to request a particular representation by setting the Accept header.
 This is likely to be added as a future enhancement, see xref:section-e/chapter-34.adoc#_34_1_content_negotiation[§34.1].
 
 == 33.4 But isn't exposing domain entities just the wrong thing to do?  Surely I should be exposing use cases as resources?

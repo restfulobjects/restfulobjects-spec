@@ -27,7 +27,7 @@ Obtain a representation of a description of a domain collection, within the meta
 
 ==== 24.1.1.2 Headers
 
-* Accept
+* *Accept*
 
 ** application/json
 

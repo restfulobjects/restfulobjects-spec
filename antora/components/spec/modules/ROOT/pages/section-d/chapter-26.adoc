@@ -28,7 +28,7 @@ Obtain a representation of a description of a domain action parameter, within th
 
 ==== 26.1.1.2 Headers
 
-* Accept
+* *Accept*
 
 ** application/json
 

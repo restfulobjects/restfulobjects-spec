@@ -34,7 +34,7 @@ To return a representation xref:section-c/chapter-16.adoc#_16_4_representation[�
 
 ==== 16.1.1.2 Headers
 
-* Accept
+* *Accept*
 
 
 ** application/json
@@ -58,7 +58,7 @@ This link refers back to the same resource URL, but indicates the media type for
 
 ==== 16.1.2.2 Headers
 
-* Accept
+* *Accept*
 
 
 ** as specified in the rel=…/attachment link
@@ -94,10 +94,12 @@ Updating non-blobClob properties is performed by PUTting the value in-lined with
 
 * Content-Type: application/json
 
-* If-Match
+* *If-Match*
 
 
-** timestamp digest  obtained from ETag header of representation  only validate the request, do not modify the property
+** timestamp digest
+*** obtained from *ETag* header of representation
+**** only validate the request, do not modify the property
 
 ==== 16.2.1.3 Body
 
@@ -114,7 +116,8 @@ Updating non-blobClob properties is performed by PUTting the value in-lined with
 * x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
 
 
-** "true"  only validate the request, do not modify the property
+** "true"
+*** only validate the request, do not modify the property
 
 [#_16_2_2_request_if_blobclobs]
 === 16.2.2 Request (if blobClobs)
@@ -133,10 +136,12 @@ Note that optional validation (x-ro-validate-only) and domain type metadata pref
 
 ** eg image/jpeg, image/png, application/pdf
 
-* If-Match
+* *If-Match*
 
 
-** timestamp digest  obtained from ETag header of representation  only validate the request, do not modify the property
+** timestamp digest
+*** obtained from *ETag* header of representation
+**** only validate the request, do not modify the property
 
 ==== 16.2.2.3 Body
 
@@ -163,10 +168,12 @@ However, the DELETE Object Property resource has been included in the spec becau
 
 ==== 16.3.1.2 Headers
 
-* If-Match
+* *If-Match*
 
 
-** timestamp digest  obtained from ETag header of representation  only validate the request, do not modify the property
+** timestamp digest
+*** obtained from *ETag* header of representation
+**** only validate the request, do not modify the property
 
 ==== 16.3.1.3 Body
 
@@ -181,7 +188,8 @@ However, the DELETE Object Property resource has been included in the spec becau
 * x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§B3.2])
 
 
-** "true"  only validate the request, do not modify the property
+** "true"
+*** only validate the request, do not modify the property
 
 === 16.3.2 Success Response
 
@@ -191,7 +199,7 @@ As per xref:section-c/chapter-13.adoc#_13_1_request_succeeded_and_generated_a_re
 == 16.4 Representation
 
 The domain object property representation provides full details about a property of a domain object instance, and provides links to resources to allow the property to be modified (if it is not disabled).
-The Content-Type for the representation is:
+The *Content-Type* for the representation is:
 application/json;profile=".../object-property" The links from the object property representation to other resources are as shown in the diagram below:
 
 FIGURE 9: OBJECT PROPERTY REPRESENTATION For example, the representation of an Order's deliveryOption property might be:

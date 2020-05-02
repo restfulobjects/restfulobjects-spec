@@ -53,7 +53,7 @@ This is the response if a requested type or type member does not exist, or if th
 
 === 20.2.2 Headers
 
-* Warning
+* *Warning*
 
 ** No such domain type {domainType}
 
