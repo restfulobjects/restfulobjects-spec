@@ -83,7 +83,8 @@ For example:
 
 * Caching headers:
 
-** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  the structure of a domain type will not vary between deployments
+** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
+*** the structure of a domain type will not vary between deployments
 
 ==== 27.1.2.3 Body (representation)
 
@@ -155,12 +156,11 @@ For example:
 ==== 27.2.2.2 Headers
 
 * *Content-Type*
-
 ** application/json;profile=".../type-action-result"
 
 * Caching headers:
-
-** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]  the structure of a domain type will not vary between deployments
+** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
+*** the structure of a domain type will not vary between deployments
 
 ==== 27.2.2.3 Body (representation)
 

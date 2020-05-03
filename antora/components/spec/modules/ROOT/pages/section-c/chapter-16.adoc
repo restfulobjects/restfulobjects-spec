@@ -96,17 +96,11 @@ Updating non-blobClob properties is performed by PUTting the value in-lined with
 
 In addition, it may include the reserved query parameters:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
-
-
+* *x-ro-domain-model* (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 ** "simple"
-
-
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
-
-
+* *x-ro-validate-only* (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 ** "true"
 *** only validate the request, do not modify the property
 
@@ -171,7 +165,7 @@ However, the DELETE Object Property resource has been included in the spec becau
 ** "simple"
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
+* *x-ro-validate-only* (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 ** "true"
 *** only validate the request, do not modify the property
 

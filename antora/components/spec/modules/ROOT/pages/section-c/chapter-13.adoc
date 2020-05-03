@@ -139,7 +139,7 @@ This is to discourage clients from bookmarking the link.
 
 === 13.1.2 Headers
 
-* Content-Length:
+* *Content-Length*:
 
 ** size of the entity body
 
@@ -188,7 +188,7 @@ The representation will depend on the resource being requested.
 
 === 13.2.2 Headers
 
-* Content-Length:
+* *Content-Length*:
 
 ** size of the entity body
 
@@ -208,7 +208,7 @@ The representation will depend on the resource being requested.
 
 ** digest of timestamp
 
-* Location:
+* *Location*:
 
 ** the URI of the resource of the object just created
 

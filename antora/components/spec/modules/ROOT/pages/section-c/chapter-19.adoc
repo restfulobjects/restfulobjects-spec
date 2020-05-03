@@ -27,36 +27,40 @@ where:
 
 Invoke an action and return a representation.
 Alternatively, validate the query arguments without invoking the action.
+
 The action invoked must be query-only (does not modify any persisted objects); a typical example is to search for objects from a domain service repository.
+
 The action cannot be void (it must return some representation).
 
 === 19.1.1 Request
 
-The request can either be to invoke the action, or to request validation of arguments using the reserved x-ro-validate-only query parameter xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2].
+The request can either be to invoke the action, or to request validation of arguments using the reserved *x-ro-validate-only* query parameter xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2].
 
 ==== 19.1.1.1 Query String
 
 Query arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9.2]), and encoded in the URL (xref:section-a/chapter-02.adoc#_2-9-2-3-argument-maps-actions-properties[§A2.9.2.3]).
-Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob) .
+Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob)
+footnote:[It seems highly unlikely that a query-only action would have a blob/clob argument, but it is theoretically allowable.
+One hi-tech use case could be to search images of Customers' faces against an image obtained from a webcam.
+However, if the encoded size of the blob/clob exceeds the query string limit, then the action must be marked as idempotent in order that the argument be passed in the request body of a PUT.].
+
 In addition, the following may optionally be included in the map:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
-
+* *x-ro-domain-model* (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 ** "simple"
-
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
-
-** "true"  the argument map can be incomplete; only those arguments provided will be validated.
+* *x-ro-validate-only* (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
+** "true"
+*** the argument map can be incomplete; only those arguments provided will be validated.
 
 ==== 19.1.1.2 Headers
 
 * *Accept*
-
 ** application/json
+** application/json;profile=".../action-result"
 
-** application/json;profile=".../action-result" There is no need to pass If-Match for query-only actions.
+There is no need to pass *If-Match* for query-only actions.
 
 ==== 19.1.1.3 Body
 
@@ -71,20 +75,22 @@ In addition, the following may optionally be included in the map:
 
 ==== 19.1.2.2 Headers
 
-* Content-Length:
+* *Content-Length*:
 
 ** size of the entity body
 
 * *Content-Type* (if returning a domain object):
 
 ** application/json;profile=".../action-result";x-ro-domain-type="yyy"
-*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
+*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]);
+**** the domain type id (if simple scheme)
 **** URI of domain type (if formal scheme)
 
 * *Content-Type* (if returning a list of domain objects):
 
 ** application/json;profile=".../action-result";x-ro-element-type="yyy"
-*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
+*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]);
+**** the domain type id (if simple scheme)
 **** URI of domain type (if formal scheme)
 
 * *Content-Type* (if returning a scalar or void):
@@ -97,7 +103,9 @@ In addition, the following may optionally be included in the map:
 *** if the object is transactional
 
 ** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
-*** if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data) Note that an ETag is never returned for an action result.
+*** if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
+
+Note that an *ETag* is never returned for an action result.
 A client that wishes to modify the returned domain object must therefore re-retrieve it explicitly.
 
 ==== 19.1.2.3 Body
@@ -109,8 +117,9 @@ As per xref:section-c/chapter-19.adoc#_19_4_representation[§C19.4].
 
 Invoke an action and return a representation if the action returns a result.
 Alternatively, validate the query arguments but do not invoke the action.
+
 The action invoked must be idempotent (though may have side-effects).
-An example might be Order#submit(), which (depending on how the application logic is written) might have the same post-conditions irrespective of whether the order has already been submitted or not.
+An example might be `Order#submit()`, which (depending on how the application logic is written) might have the same post-conditions irrespective of whether the order has already been submitted or not.
 
 === 19.2.1 Request
 
@@ -121,13 +130,10 @@ An example might be Order#submit(), which (depending on how the application logi
 ==== 19.2.1.2 Headers
 
 * *Accept*
-
 ** application/json
-
 ** application/json;profile=".../action-result"
 
 * *If-Match*
-
 ** timestamp digest
 *** obtained from *ETag* header of representation
 
@@ -135,16 +141,14 @@ An example might be Order#submit(), which (depending on how the application logi
 
 Arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9.2]), and sent as the body (xref:section-a/chapter-02.adoc#_2-9-2-3-argument-maps-actions-properties[§A2.9.2.3]).
 Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob).
+
 In addition:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
-
+* *x-ro-domain-model* (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 ** "simple"
-
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
-
+* *x-ro-validate-only* (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 ** "true"
 *** only validate the request, do not invoke the action
 
@@ -182,16 +186,14 @@ The action invoked can have side effects and need not be idempotent.
 
 Arguments should be formatted as a map (xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9.2]), and sent as the body (xref:section-a/chapter-02.adoc#_2_9_2_5obtaining_argument_choices[§A2.9.2.5]).
 Note that if any argument is a blob/clob, then its value must be in-lined (URL encoded for a blob).
+
 In addition:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
-
+* *x-ro-domain-model* (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 ** "simple"
-
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
-
+* *x-ro-validate-only* (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 ** "true"
 *** only validate the request, do not invoke the action
 
@@ -213,24 +215,22 @@ Successfully invoking an action with possible side effects can return either a 2
 
 ==== 19.3.2.2 Headers
 
-* Location: (if returning 201)
-
+* *Location* (if returning 201):
 ** URL of the newly-created action
 
-* Content-Length:
-
+* *Content-Length*:
 ** size of the entity body
 
 * *Content-Type* (if returning a domain object):
-
 ** application/json;profile=".../action-result";x-ro-domain-type="yyy"
-*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
+*** where yyy indicates the domain type (for object representations, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2];
+**** the domain type id (if simple scheme)
 **** URI of domain type (if formal scheme)
 
 * *Content-Type* (if returning a list of domain objects):
-
 ** application/json;profile=".../action-result";x-ro-element-type="yyy"
-*** where yyy indicates the domain type (of the objects referenced in the list, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]; **** the domain type id (if simple scheme)
+*** where yyy indicates the domain type (of the objects referenced in the list, xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2];
+**** the domain type id (if simple scheme)
 **** URI of domain type (if formal scheme)
 
 * *Content-Type* (if returning a scalar or void):
@@ -243,106 +243,288 @@ Successfully invoking an action with possible side effects can return either a 2
 *** if the object is transactional
 
 ** NON_EXPIRING, see xref:section-a/chapter-02.adoc#_2-13-caching-cache-control-and-other-headers[§A2.13]
-*** if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data) Note that an ETag is never returned for an action result.
+*** if the implementation can determine that the returned representation is safe to cache (e.g. the returned objects are immutable reference data)
+
+Note that an *ETag* is never returned for an action result.
 A client that wishes to modify the returned domain object must therefore follow the self link on the in-lined object to retrieve that object directly as an object representation (which will then have an Etag).
 
 ==== 19.3.2.3 Body
 
-As per xref:section-c/chapter-19.adoc#_19_4_representation[§C19.4]. If a 201 is returned, the "resultType" json-property must be "object".
+As per xref:section-c/chapter-19.adoc#_19_4_representation[§C19.4]. If a 201 is returned, the "*resultType*" json-property must be "object".
 
 [#_19_4_representation]
 == 19.4 Representation
 
-If the "x-ro-validate-only" query parameter was passed in and the validation succeeded, then no representation will be returned.
+If the "*x-ro-validate-only*" query parameter was passed in and the validation succeeded, then no representation will be returned.
 Instead:
 
 * if the validation succeeded, then a 204 (success, no content) is returned
-
 * If the validation failed then a representation will be returned, with a status code 400 (bad request).
+
 See xref:section-c/chapter-13.adoc[§C13] for further details.
+
 Otherwise (ie, if the invocation was not validate-only), then all action invocations will return an actionresult representation.
 This representation provides details of the action invocation, and (for non-void actions) also in-lines the representation of the result of the invocation.
+
 For example:
-{ "links": [ { "rel": "self", "href": "http://~/services/TaskRepository/actions/countUrgentTasksFor/invoke", "type": "application/json;profile=\".../action-result\"", "arguments": { "employee": { "href": "http://~/objects/EMP/090123"
-} } }
-], "resultType": ...
-"value": ..., "extensions": { ... } } where:
-JSON-Property Description links list of links to other resources.
-links[rel=self]    (optional) link to the action invocation resource that generated the representation (applies only to query-only actions) resultType either "object", "list", "scalar" or "void" result (optional) the action result itself.
+
+[source,javascript]
+----
+{
+  "links": [ {
+      "rel": "self",
+      "href": "http://~/services/TaskRepository/actions/countUrgentTasksFor/invoke",
+      "type": "application/json;profile=\".../action-result\"",
+      "arguments": {
+        "employee": {
+          "href": "http://~/objects/EMP/090123"
+        }
+      }
+    }, ...
+  ],
+  "resultType": ...
+  "value": ...,
+  "extensions": { ... }
+}
+----
+
+where:
+
+[cols="2a,6a",options="header"]
+|===
+
+|JSON-Property
+|Description
+
+|links
+|list of links to other resources.
+
+|links[rel=self]
+|(optional) link to the action invocation resource that generated the representation (applies only to query-only actions)
+|resultType
+|either "object", "list", "scalar" or "void" result (optional) the action result itself. +
 Not present if void action.
-extensions additional metadata about the representation.
-The "self" link can be used as a bookmark so that the action can easily be resubmitted.
+
+|extensions
+|additional metadata about the representation.
+|===
+
+The "*self*" link can be used as a bookmark so that the action can easily be resubmitted.
 However, the link is only included in the representation if the action is query-only.
 This is to prevent accidental bookmarking of links that if followed would result in side-effects.
-The "resulttype" indicates whether there is an in-lined representation (for an action returning a domain object, a list, a scalar) or none (if void).
-Finally, the "result" holds the representation of the returned domain object, list, or scalar.
+
+The "*resulttype*" indicates whether there is an in-lined representation (for an action returning a domain object, a list, a scalar) or none (if void).
+
+Finally, the "*result*" holds the representation of the returned domain object, list, or scalar.
 This is discussed in sections below.
 
 === 19.4.1 Action returning a Domain Object
 
 If the action invocation returns a domain object, then the actionresult representation will in-line the domain object's representation (xref:section-c/chapter-14.adoc#_14_1_http_get[§C14.1]):
 
-FIGURE 12: ACTION RESULT FOR OBJECT For example, the following might be the result of invoking an action representing Customer's favoriteProduct() action:
-{ "links": [ { "rel": "self", "href":
-"http://~/objects/CUS/123/actions/favoriteProduct/invoke", "type": "application/json;profile=\".../action-result\"", "arguments": {}, "method": "GET" }
-], "resultType": "object", "result": { "links": [ { "rel": "self", "href": "http://~/objects/PRD/2468"
-"type": "application/json;profile=\".../object\"", "method": "GET" }, ...
-], "members": { ...
-}, "extensions": { ... } ...
-} "extensions": { ... } } Note that this representation has two "self" links:
 
-* links[rel=self]
+.ACTION RESULT FOR OBJECT
+image::Slide17.PNG[width="500px",link="{imagesdir}/Slide17.PNG"]
 
+For example, the following might be the result of invoking an action representing ``Customer``'s `favoriteProduct()` action:
+
+[source,javascript]
+----
+{
+  "links": [ {
+      "rel": "self",
+      "href": "http://~/objects/CUS/123/actions/favoriteProduct/invoke",
+      "type": "application/json;profile=\".../action-result\"",
+      "arguments": {},
+      "method": "GET"
+  } ],
+  "resultType": "object", "
+  result": {
+    "links": [ {
+        "rel": "self",
+        "href": "http://~/objects/PRD/2468",
+        "type": "application/json;profile=\".../object\"",
+        "method": "GET"
+      }, ...
+    ],
+    "members": { ... },
+    "extensions": { ... } ...
+  },
+  "extensions": { ... }
+}
+----
+
+Note that this representation has two "self" links:
+
+* `links[rel=self]`
 ** is the link to the action invocation.
 
-* result.links[rel=self]
-
+* `result.links[rel=self]`
 ** is the link to the returned domain object.
-If the action returned null, then the "result" json-property will still be present, but set to the JSON value null:
-{ ...
-"resultType": "object", "result": null ...
+
+If the action returned null, then the "*result*" json-property will still be present, but set to the JSON value null:
+
+[source,javascript]
+----
+{
+  ...
+  "resultType": "object",
+  "result": null,
+  ...
 }
+----
+
 
 === 19.4.2 Action Returning a List
 
 If the action invocation returns a list, then the actionresult representation will in-line a list representation (xref:section-b/chapter-11.adoc[§B11]):
 
-FIGURE 13: ACTION RESULT FOR LIST For example, the following might be the result of invoking an action resource xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5] representing CustomerRepository's findBlacklistedCustomers() action:
-{ "links": [ { "rel": "self", "href": "http://~/services/CustomerRepository/actions/findBlackListedCustomers/invoke", "type": "application/json;profile=\".../action-result\"", "arguments": {}, "method": "GET" }
-], "resultType": "list", "result": { "links": [{ "rel": ".../element-type", "href": "http://~/domain-types/CUS, "type": "application/json;profile=\".../domain-type\"", "method": "GET" },
-], "value": [ { "ref": ".../element", "href": "http://~/objects/CUS/123", "type": "application/json;profile=\".../object\"", "method": "GET" }, { "ref": ".../element", "href": "http://~/objects/CUS/456", "type": "application/json;profile=\".../object\"", "method": "GET" }, ...
-], "extensions": { ... } }, "extensions": { ... } } Actions that return no links typically are expected to return an empty list:
-{ ...
-"resultType": "list", "result": { ...
-"value": [ ]
-...
-} ...
-} Although not recommended, it is also legal for actions to return a null list.
-In this case the "result" json-property will still be present, but will be set to the JSON value null:
-{ ...
-"resultType": "list", "result": null ...
+.ACTION RESULT FOR LIST
+image::Slide6.PNG[width="600px",link="{imagesdir}/Slide6.PNG"]
+
+For example, the following might be the result of invoking an action resource xref:section-c/chapter-17.adoc#_17_5_representation[§C17.5] representing ``CustomerRepository``'s `findBlacklistedCustomers()` action:
+
+[source,javascript]
+----
+{
+  "links": [ {
+      "rel": "self",
+      "href": "http://~/services/CustomerRepository/actions/findBlackListedCustomers/invoke",
+      "type": "application/json;profile=\".../action-result\"",
+      "arguments": {},
+      "method": "GET"
+  } ],
+  "resultType": "list",
+  "result": {
+    "links": [ {
+        "rel": ".../element-type",
+        "href": "http://~/domain-types/CUS,
+        "type": "application/json;profile=\".../domain-type\"",
+        "method": "GET"
+    } ],
+    "value": [ {
+        "ref": ".../element",
+        "href": "http://~/objects/CUS/123",
+        "type": "application/json;profile=\".../object\"",
+        "method": "GET"
+      }, {
+        "ref": ".../element",
+        "href": "http://~/objects/CUS/456",
+        "type": "application/json;profile=\".../object\"",
+        "method": "GET"
+      }, ...
+    ],
+    "extensions": { ... }
+  },
+  "extensions": { ... }
 }
+----
+
+Actions that return no links typically are expected to return an empty list:
+
+[source,javascript]
+----
+{
+  ...
+  "resultType": "list",
+  "result": {
+    ...
+    "value": [ ]
+    ...
+  },
+  ...
+}
+----
+
+
+Although not recommended, it is also legal for actions to return a null list.
+In this case the "*result*" json-property will still be present, but will be set to the JSON value null:
+
+[source,javascript]
+----
+{
+  ...
+  "resultType": "list",
+  "result": null
+  ...
+}
+----
+
 
 === 19.4.3 Action returning a Scalar Value
 
 If the action invocation returns a scalar, then the actionresult representation will in-line a scalar representation (xref:section-b/chapter-12.adoc[§B12]):
 
-FIGURE 14: ACTION RESULT FOR SCALAR For example, the TaskRepository's countUrgentTasksFor(Employee) action might generate the following representation:
-{ "links": [ { "rel": "self", "href": "http://~/services/TaskRepository/actions/countUrgentTasksFor/invoke", "type": "application/json;profile=\".../action-result\"", "arguments": { "employee": { "href": "http://~/objects/EMP/090123"
-} }, "method": "GET" }
-], "resultType": "scalar", "result": { "links": [ { "rel": ".../returntype", "href": "http://~/domain-types/int, "type": "application/json;profile=\".../domain-type\"", "method": "GET" }
-], "value": 25, "extensions": { ... } }, "extensions": { ... } } As for actions returning lists and domain objects, if the scalar return type is non-primitive and a null is returned, then the "result" json-property will be set to the JSON null value:
-{ ...
-"resultType": "scalar", "result": null ...
+.ACTION RESULT FOR SCALAR
+image::Slide7.PNG[width="400px",link="{imagesdir}/Slide7.PNG"]
+
+For example, the ``TaskRepository``'s `countUrgentTasksFor(Employee)` action might generate the following representation:
+
+[source,javascript]
+----
+{
+  "links": [ {
+      "rel": "self",
+      "href": "http://~/services/TaskRepository/actions/countUrgentTasksFor/invoke",
+      "type": "application/json;profile=\".../action-result\"",
+      "arguments": {
+        "employee": {
+          "href": "http://~/objects/EMP/090123"
+         }
+      },
+      "method": "GET"
+  } ],
+  "resultType": "scalar",
+  "result": {
+    "links": [ {
+        "rel": ".../returntype",
+        "href": "http://~/domain-types/int,
+        "type": "application/json;profile=\".../domain-type\"",
+        "method": "GET"
+    } ],
+    "value": 25,
+    "extensions": { ... }
+  },
+  "extensions": { ... }
 }
+----
+
+As for actions returning lists and domain objects, if the scalar return type is non-primitive and a null is returned, then the "result" json-property will be set to the JSON null value:
+
+[source,javascript]
+----
+{
+  ...
+  "resultType": "scalar",
+  "result": null ...
+}
+----
+
 
 [#_19_4_4_action_returning_a_void]
 === 19.4.4 Action returning a Void
 
 If the action invocation does not have a return type (known as a ‘void’ method in some programming languages), then the simple actionresult representation (with no in-lined representation) will be returned.
 
-FIGURE 15: ACTION RESULT FOR VOID For example, the Customer's toggleBlacklistStatus() action might generate the following representation:
-{ "links": [ { "rel": "self", "href":
-"http://~/objects/CUS/123/actions/toggleBlacklistStatus/invoke", "type": "application/json;profile=\".../action-result\"", "arguments": {}
-], "method": "GET" }, ...
-], "resultType": "void", "extensions": { ... } } Note that there is no "result" json-property.
+.ACTION RESULT FOR VOID
+image::Slide18.PNG[width="300px",link="{imagesdir}/Slide18.PNG"]
+
+For example, the ``Customer``'s `toggleBlacklistStatus()` action might generate the following representation:
+
+[source,javascript]
+----
+{
+  "links": [ {
+      "rel": "self",
+      "href": "http://~/objects/CUS/123/actions/toggleBlacklistStatus/invoke",
+      "type": "application/json;profile=\".../action-result\"",
+      "arguments": {},
+      "method": "GET"
+    }, ...
+  ],
+  "resultType": "void",
+  "extensions": { ... }
+}
+----
+
+Note that there is no "*result*" json-property.

@@ -27,13 +27,14 @@ For resources that return a body containing some representation.
 
 === 20.1.2 Headers
 
-* Content-Length:
+* *Content-Length*:
 
 ** size of the entity body
 
 * *Content-Type*:
 
-** application/json;profile=".../xxx"  where xxx indicates the representation type, xref:section-a/chapter-02.adoc#_2-4-1-representationtype-profile-parameter[§A2.4.1]
+** application/json;profile=".../xxx"
+*** where xxx indicates the representation type, xref:section-a/chapter-02.adoc#_2-4-1-representationtype-profile-parameter[§A2.4.1]
 
 * Caching headers:
 

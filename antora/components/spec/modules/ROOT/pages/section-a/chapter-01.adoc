@@ -145,13 +145,9 @@ This document uses semantic versioning.footnote:[http://semver.org].
 Minor edits and clarifications from preceding version (0.69.0):
 
 * versioned using semver;
-
 * specVersion property;
-
-* x-ro-domain-model="selectable" behaviour;
-
+* *x-ro-domain-model*="selectable" behaviour;
 * href for persist link of proto-persistent entities; no longer any need to provide domaintype within arguments map;
-
 * typos Added reference to github repository.
 
 Removed change history prior to v1.0.0 (see github repo for details, if required).

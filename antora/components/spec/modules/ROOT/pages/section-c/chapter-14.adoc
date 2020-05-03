@@ -31,18 +31,14 @@ Obtain a summary representation of a domain object xref:section-c/chapter-14.ado
 
 ==== 14.1.1.1 Query String
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
-
+* *x-ro-domain-model* (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 ** "simple"
-
 ** "formal"
 
 ==== 14.1.1.2 Headers
 
 * *Accept*
-
 ** application/json
-
 ** application/json;profile=".../object"
 
 If the "profile" parameter is specified to any value other than "…/object", then a 406 response code should be returned xref:section-c/chapter-13.adoc#_13_9_not_acceptable[§C13.9].
@@ -81,14 +77,11 @@ The body is the map of new properties, as per xref:section-a/chapter-02.adoc#_2-
 (Contrast this to updating of individual properties where the value of a blob/clob can be PUT in its native media type, xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2]).
 In addition, it may include the reserved query parameters:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
-
+* *x-ro-domain-model* (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 ** "simple"
-
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
-
+* *x-ro-validate-only* (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 ** "true"
 *** only validate the request, do not modify the property
 
@@ -223,7 +216,7 @@ Discussed further xref:#_members[below].
 
 |links[rel=.../persist]
 |(optional) persist the (proto-persistent) domain object.
-Discussed further xref:#_linksrel__persist[below].
+Discussed further xref:#_linksrel__persist[below]
 
 |links[rel=.../update]
 |(optional) link to modify multiple properties of the domain object (using xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]).

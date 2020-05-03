@@ -53,19 +53,13 @@ This method is valid only if the collection has Set semantics (the most common c
 
 ==== 17.2.1.1 Query String
 
-* x-ro-domain-model (if domain metadata is "selectable", xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
-
-
+* *x-ro-domain-model* (if domain metadata is "selectable", xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 ** "simple"
-
-
 ** "formal"
 
 ==== 17.2.1.2 Headers
 
 * *If-Match*
-
-
 ** timestamp digest
 *** obtained from *ETag* header of representation
 
@@ -73,11 +67,11 @@ This method is valid only if the collection has Set semantics (the most common c
 
 * should be formatted as a single argument node xref:section-a/chapter-02.adoc#_2-9-2-2-single-value-arguments-property-collection[§A2.9.2.2]. In addition:
 
-* x-ro-domain-model (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
+* *x-ro-domain-model* (optional, xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1])
 ** "simple"
 ** "formal"
 
-* x-ro-validate-only (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
+* *x-ro-validate-only* (optional, xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2])
 ** "true"
 *** only validate the request, do not modify the collection
 
