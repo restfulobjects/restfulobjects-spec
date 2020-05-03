@@ -216,6 +216,8 @@ For example, the representation of an Order’s items collection might be:
 }
 ----
 
+where:
+
 [cols="2a,6a",options="header"]
 |===
 
