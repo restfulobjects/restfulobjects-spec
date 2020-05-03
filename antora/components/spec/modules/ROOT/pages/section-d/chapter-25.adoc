@@ -109,7 +109,10 @@ where:
 |link to a resource that can obtain this representation
 
 |id
-|the Id of this action friendlyName the action name, formatted for rendering in a UI.
+|the Id of this action
+
+|friendlyName
+|the action name, formatted for rendering in a UI.
 
 |pluralForm
 |(optional) for actions returning collections the pluralized form of the element type within the collection/list.
