@@ -3,17 +3,17 @@
 The domain collection description resource represents a description of a domain collection, within the metamodel.
 Clients can use the domain collection description's representation as hints when building a UI. For example, there will be links back to the domain type representing the collection's element type; this can be used by a client to determine columns for a table view.
 Or, the client can use information in the representation in order to apply client-side validation of declarative semantics (for example, minimum or maximum cardinality of a collection).
+
 The endpoint URL for this resource is:
-/domain-types/{domainType}/collections/{collectionId}
+
+    /domain-types/{domainType}/collections/{collectionId}
+
 where:
 
-* {domainType} is either
-
+* `\{domainType}` is either
 ** the domain type id, or
-
 ** is a built-in JSON type
-
-* {collectionId} identifies the collection.
+* `\{collectionId}` identifies the collection.
 
 == 24.1 HTTP GET
 

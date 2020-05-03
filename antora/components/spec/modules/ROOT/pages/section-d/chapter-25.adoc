@@ -2,19 +2,17 @@
 
 The domain action description resource represents an action of a domain type, within the metamodel.
 Clients can use the domain action description's representation as hints when building a UI. For example, the representation of an object action may include a link to that action's return type.
+
 The endpoint URL for this resource is:
-/domain-types/{domainType}/actions/{actionId}
+
+    /domain-types/{domainType}/actions/{actionId}
+
 where:
 
-* {domainType} is either
-
-
+* `\{domainType}` is either
 ** the domain type id, or
-
-
 ** is a built-in JSON type
-
-* {actionId} identifies the action.
+* `\{actionId}` identifies the action.
 
 == 25.1 HTTP GET
 

@@ -5,14 +5,15 @@ Its representation links through to other elements of the metamodel which repres
 These link back in turn to other domain type resources, for example representing the property type or an action's parameter types.
 Clients can use the domain type to, for example, render a data element using a particular UI widget (datetime picker, textfield, spinner).
 Server implementations are free to extend the representation as required, for example providing links to additional media (icons, videos and so forth).
+
 The endpoint URL for this resource is:
-/domain-types/{domainType}
+
+    /domain-types/{domainType}
+
 where:
 
-* {domainType} is either
-
+* `\{domainType}` is either:
 ** the domain type id, or
-
 ** is a built-in JSON type
 
 == 22.1 HTTP GET

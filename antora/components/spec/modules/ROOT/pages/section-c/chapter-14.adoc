@@ -8,9 +8,11 @@ The endpoint URL (using templated URI syntax) for this resource is:
 
 where:
 
-* {domainType} uniquely identifies the object's domain type, and
+* `\{domainType}` uniquely identifies the object's domain type, and
 
-* {instanceId} uniquely identifies an object instance of that type Together the {domainType}/{instanceId} may be referred to as the object identifier, or oid.
+* `\{instanceId}` uniquely identifies an object instance of that type
+
+Together the `\{domainType}/\{instanceId}` may be referred to as the object identifier, or oid.
 
 The specification does not mandate the format of either the domainType or the instanceId; the following are all potentially valid forms:
 

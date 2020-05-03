@@ -9,9 +9,9 @@ The endpoint URL for this resource is:
 
 where:
 
-* {domainType} uniquely identifies the object's type, and
-* {instanceId} uniquely identifies an object instance of that type
-* {propertyId} is the property identifier
+* `\{domainType}` uniquely identifies the object's type, and
+* `\{instanceId}` uniquely identifies an object instance of that type
+* `\{propertyId}` is the property identifier
 
 [#_16_1_http_get]
 == 16.1 HTTP GET

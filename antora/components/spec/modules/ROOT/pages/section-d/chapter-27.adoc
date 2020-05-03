@@ -5,16 +5,20 @@ Conceptually it is similar to the domain object action invoke resource, xref:sec
 Restful Objects defines the following type actions.
 Type action See Description isSubtypeOf() §27.1 to determine if a domain type is a subtype of (or the same as) a given type.
 isSupertypeOf() §27.2 to determine if a domain type is a supertype of (or the same as) a given type.
+
 The endpoint URL for this resource is:
-/domain-types/{domainType}/type-actions/{typeactionId}/invoke where:
 
-* {domainType} is either
+    /domain-types/{domainType}/type-actions/{typeactionId}/invoke
 
+where:
+
+* `\{domainType}` is either
 ** the domain type id or
-
 ** is a built-in JSON type
+* `\{typeactionId}` identifies the action
 
-* {typeactionId} identifies the action Both of the defined type actions take a single argument representing a link to the supertype.
+Both of the defined type actions take a single argument representing a link to the supertype.
+
 As for the invocation of object actions (xref:section-c/chapter-19.adoc[§C19]), type actions return a representation that links back to the type action and also to the result of the action.
 Both the currently defined type actions return a scalar xref:section-b/chapter-12.adoc[§B12]. The links from the domain type action result representation to other resources are as shown in the diagram below:
 
@@ -32,7 +36,18 @@ Obtain a representation resulting from the invocation of the isSubtypeOf() domai
 ==== 27.1.1.1 URL and Query String
 
 The endpoint URL for this resource is:
-/domain-types/{domainType}/type-actions/isSubtypeOf/invoke This resource requires a parameter "supertype" which can be specified either in the simple style, or in the formal style.
+
+    /domain-types/{domainType}/type-actions/isSubtypeOf/invoke
+
+where:
+
+* `\{domainType}` is either
+** the domain type id, or
+** is a built-in JSON type
+
+
+This resource requires a parameter "supertype" which can be specified either in the simple style, or in the formal style.
+
 Simple Style If query arguments are specified using the simple style (xref:section-a/chapter-02.adoc#_2-9-1-simple-arguments[§A2.9.1] then the query string is simply:
 
 ?supertype=xxx

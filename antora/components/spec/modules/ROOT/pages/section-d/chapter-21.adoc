@@ -1,8 +1,10 @@
 = 21 DOMAIN TYPES RESOURCE
 
 The domain types resource provides a list of all the domain types that are known to the system.
+
 The endpoint URL for this resource is simply:
-/domain-types/
+
+    /domain-types/
 
 == 21.1 HTTP GET
 

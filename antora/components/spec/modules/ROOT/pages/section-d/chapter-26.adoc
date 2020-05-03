@@ -2,19 +2,18 @@
 
 The domain action parameter description resource represents a description of a parameter of an action on a domain type, within the metamodel.
 Clients can use the domain action parameter description representations as hints when building a UI. For example, there will be links back to the domain type representing each of the action parameter return types; this might be used in order to select the appropriate widgets when building a UI. Or, the client can use information in the representation to apply client-side validation of declarative semantics (for example, mandatory parameters, or regex patterns).
+
 The endpoint URL for this resource is:
-/domain-types/{domainType}/actions/{actionId}/params/{paramName}
+
+    /domain-types/{domainType}/actions/{actionId}/params/{paramName}
+
 where:
 
-* {domainType} is either
-
+* `\{domainType}` is either
 ** the domain type id, or
-
 ** is a built-in JSON type
-
-* {actionId} identifies the action
-
-* {paramName} is the named action parameter
+* `\{actionId}` identifies the action
+* `\{paramName}` is the named action parameter
 
 == 26.1 HTTP GET
 

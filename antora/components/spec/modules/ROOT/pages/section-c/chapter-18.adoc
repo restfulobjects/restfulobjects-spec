@@ -3,21 +3,26 @@
 The action resource can be used to obtain the detailed domain object action representation xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2] for a particular domain object instance or for a particular domain service.
 This provides a description of the action only; to invoke it, the object action invoke sub-resource xref:section-c/chapter-18.adoc#_18_2_representation[§C18.2] is used.
 
-This resource is typically requested as a result of following a link from the domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4]. The endpoint URL for this resource for an action on a domain service is:
-/services/{serviceId}/actions/{actionId}
+This resource is typically requested as a result of following a link from the domain object representation xref:section-c/chapter-14.adoc#_14_4_representation[§C14.4].
+
+The endpoint URL for this resource for an action on a domain service is:
+
+    /services/{serviceId}/actions/{actionId}
+
 where:
 
-* {serviceId} is a unique identifier for the service
+* `\{serviceId}` is a unique identifier for the service
+* `\{actionId}` is the action identifier
 
-* {actionId} is the action identifier The endpoint URL for this resource for an action on a domain object is:
-/objects/{domainType}/{instanceId}/actions/{actionId}
+The endpoint URL for this resource for an action on a domain object is:
+
+    /objects/{domainType}/{instanceId}/actions/{actionId}
+
 where:
 
-* {domainType} uniquely identifies the object's type, and
-
-* {instanceId} uniquely identifies an object instance of that type
-
-* {actionId} is the action identifier
+* `\{domainType}` uniquely identifies the object's type, and
+* `\{instanceId}` uniquely identifies an object instance of that type
+* `\{actionId}` is the action identifier
 
 [#_18_1_http_get]
 == 18.1 HTTP GET

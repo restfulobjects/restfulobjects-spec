@@ -15,7 +15,7 @@ The endpoint URL for this resource is:
 
 where:
 
-* {serviceId} is a unique identifier for the service
+* `\{serviceId}` is a unique identifier for the service
 
 === 15.1.1 Request
 

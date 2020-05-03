@@ -3,17 +3,17 @@
 The domain property description resource describes a property of a domain type within the metamodel.
 Clients can use the domain property description's representation as hints when building a UI. For example, there will be links back to a domain type representing the property type; this can be used to select the relevant widget for that property.
 Or, the client can use information in the representation to apply client-side validation of declarative semantics (for example, mandatory properties, or regex patterns).
+
 The endpoint URL for this resource is:
-/domain-types/{domainType}/properties/{propertyId}
+
+    /domain-types/{domainType}/properties/{propertyId}
+
 where:
 
-* {domainType} is either
-
+* `\{domainType}` is either
 ** the domain type id, or
-
 ** is a built-in JSON type
-
-* {propertyId} identifies the property.
+* `\{propertyId}` identifies the property.
 
 == 23.1 HTTP GET
 
