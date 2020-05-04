@@ -25,7 +25,7 @@ A simpler approach is to use addressable view models xref:section-a/chapter-02.a
 Thus, one client may consume `v2.CustomerViewModel`, while another may consume `v3.CustomerViewModel`.
 Each of these view models delegates to an underlying Customer entity, but doesn't expose it directly.
 
-Restful Objects does not mandate how implementations support addressable view models.
+Restful Objects does not mandate how implementations support addressable view models, but a code sketch is described in xref:section-e/chapter-32.adoc[§E32].
 
 Within HTTP the client indicates the version of the representation it requires using the *Accept* header.
 The server either serves up that representation with a matching *Content-Type* header, or returns a 406 "not acceptable" error.

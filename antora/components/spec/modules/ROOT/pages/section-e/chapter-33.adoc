@@ -4,14 +4,21 @@
 
 The short answer is: no, you can't change the URL format of the instance identifier.
 The slightly longer answer is: and you shouldn't care.
-The primary reason that the specification does not allow the format of its URLs to be changed is to ensure that all the resources for all objects can be addressed in a uniform way.
+
+The primary reason that the specification does not allow the format of its URLs to be changed is to ensure that *all* the resources for *all* objects can be addressed in a uniform way.
+
 For example, the templated URL:
-http://~/objects/{domainType}/{instanceId}/properties/{propertyName}
-defines how to access any given property 'propertyName' of any given object identified by its 'domainType' and 'instanceId'.
-If instead the specification allowed an Order to be accessed as /objects/ORD/123, while an order line item to be accessed as, say, /objects/ORI/123/1, then this would break the above templating rules.
-Restful Objects stance here echos one of the Berners-Lee's axioms of web architecture : that URIs should be opaque.
+
+    http://~/objects/{domainType}/{instanceId}/properties/{propertyName}
+
+defines how to access any given property '_propertyName_' of any given object identified by its '_domainType_' and '_instanceId_'.
+
+If instead the specification allowed an `Order` to be accessed as /objects/ORD/123, while an order line item to be accessed as, say, /objects/ORI/123/1, then this would break the above templating rules.
+
+Restful Objects' stance here echos one of the Berners-Lee's axioms of web architecture footnote:[Tim Berners-Lee, link:http://www.w3.org/DesignIssues/Axioms.html[]] : that URIs should be opaque.
 Because the spec fully supports HATEOAS, it is certainly possible for URLs to be treated as entirely opaque.
 Or, they can be treated as semi-opaque: the instance identifiers are opaque, the rest of URL is as defined by its template.
+
 One other benefit of this approach is that implementations are free to encrypt instance ids.
 This could be used to prevent a rogue client from generating URLs that would give it access to restricted resources.
 
@@ -19,51 +26,67 @@ This could be used to prevent a rogue client from generating URLs that would giv
 
 Many REST practitioners recommend minting custom media types for every representation.
 Such media types effectively encode the semantics of the representations.
+
 If Restful Objects had taken this approach, it would have defined media types such as:
-application/vnd.org.restfulobjects.object+json and application/vnd.org.restfulobjects.property+json instead of:
-application/json; profile="org.restfulobjects/object"; x-ro-domain-type=com.mycompany.myapp.Customer and application/json;profile="org.restfulobjects/property" However, there are two big issues with vendor-specific media types.
+
+    application/vnd.org.restfulobjects.object+json and application/vnd.org.restfulobjects.property+json
+
+instead of:
+
+    application/json; profile="org.restfulobjects/object"; x-ro-domain-type=com.mycompany.myapp.Customer and application/json;profile="org.restfulobjects/property"
+
+However, there are two big issues with vendor-specific media types.
+
 The first is that developer tools (e.g. the JSONView or RESTConsole plugin for Chrome web browser) do not understand these media types, and so make it hard for a developer to informally browse the representations.
+
 The second is that the media type only defines one level of abstraction: "application/vnd.org.restfulobjects.object+json" indicates a representation of a domain object, but does not indicate its type.
 In contrast, the media type defined by Restful Objects, through its use of media type parameters, defines three levels of abstraction: that the representation is JSON, that it is a domain object, and that it is a domain object of a certain type.
+
 It would, of course, be possible to add a media type parameter x-ro-domain-type to a custom media type, but why bother?
 Better to overlay the additional layers of abstraction.
 
 == 33.3 "Restful Objects can expose domain entities as resources. But doesn't exposing domain entities mean that the server and client are closely coupled, thereby violating REST?"
 
 To answer this properly we should distinguish three cases.
+
 The first is to note that in many cases the server and client will in fact be closely coupled.
 For example, in many internal enterprise applications both will be developed and deployed by the same team.
 For such scenarios the coupling described is of no concern.
+
 For cases where the client is independently developed from the server, we should distinguish generic clients from bespoke clients.
 The media types for the representations defined by Restful Objects have been carefully designed such that a fully generic client could be written, driven purely from the hypertext.
-Such an application would be an example of the Naked Objects pattern (it could use the "x-ro-domain-type" and "x-ro-element-type" media parameters to customize the display of certain objects and collections).
+
+Such an application would be an example of the Naked Objects pattern (it could use the "*x-ro-domain-type*" and "*x-ro-element-type*" media parameters to customize the display of certain objects and collections).
 While Naked Objects is not a common architecture, it is worth noting the similarity with web browsers; a web brower can consume any text/html and render it to a user.
 A generic Restful Objects application would in effect be doing the same thing.
+
 The last case to consider is an independently-developed client that is bespoke; in other words it makes hard-coded assumptions about the structure of the JSON representations.
-For these cases, it is currently the case that Restful Objects offers limited support; the domain type of the representation is advertised through the "x-ro-domain-type" media type parameter of the *Content-Type* header, but it is not possible for the client to request a particular representation by setting the Accept header.
+For these cases, it is currently the case that Restful Objects offers limited support; the domain type of the representation is advertised through the "*x-ro-domain-type*" media type parameter of the *Content-Type* header, but it is not possible for the client to request a particular representation by setting the Accept header.
 This is likely to be added as a future enhancement, see xref:section-e/chapter-34.adoc#_34_1_content_negotiation[§E34.1].
 
 == 33.4 But isn't exposing domain entities just the wrong thing to do?  Surely I should be exposing use cases as resources?
 
 Not necessarily; both are valid approaches.
+
 Some practitioners have claimed that exposing entities makes it difficult to render the relevant links to support hypermedia-driven designs.
 While this may be a legitimate issue with some frameworks, such issues are not a problem with Restful Objects (due to framework implementations' use of an underlying metamodel).
-As noted in §29, Restful Objects is agnostic as to what it exposes: use cases, or entities.
+
+As noted in xref:section-e/chapter-29.adoc[§E29], Restful Objects is agnostic as to what it exposes: use cases, or entities.
 Because of that, you can start off exposing behaviour directly on entities.
-Later on – if you find that you need them – then you can start to add in either commands/use case objects to support the commonly-trod paths.
+Later on -- if you find that you need them -- then you can start to add in either commands/use case objects to support the commonly-trod paths.
+
 In other words, Restful Objects lets you add in layering as and when it's justified, but allows you to defer that decision until a later point in the project when you've learnt more.
 
 == 33.5 I prefer having an application service layer that exposes use cases and views. Doesn't Restful Objects simply move the design work that I would normally have done in my resources back a level".
 
 Yes, it does.
+
 But the benefits of doing so are that:
 
 * it reduces the learning curve for new developers
-
 * it separates responsibilities of your system
-
 * it eliminates the need to explicitly document the REST API, and
-
 * it makes the domain classes easier/faster to test.
+
 There's further discussion on all this in xref:section-a/chapter-01.adoc#_1-3-benefits[§A1.3].
 
