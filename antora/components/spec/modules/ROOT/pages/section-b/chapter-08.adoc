@@ -101,7 +101,7 @@ where:
 |link to a resource that can generate this representation.
 
 |links[rel=up]
-|link to the home page resource, xref:section-b/chapter-05.adoc[§5].
+|link to the home page resource, xref:section-b/chapter-05.adoc[§B5].
 
 |specVersion
 |The "major.minor" parts of the version of the spec supported by this implementation, e.g. "1.0", see  xref:#_specversion[below].

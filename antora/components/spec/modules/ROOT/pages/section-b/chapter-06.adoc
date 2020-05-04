@@ -45,7 +45,7 @@ temporary caching of user details
 
 ==== 6.1.2.3 Body
 
-As per xref:#_6_2_representation[§6.2].
+As per xref:#_6_2_representation[§B6.2].
 
 [#_6_2_representation]
 == 6.2 Representation
@@ -98,7 +98,7 @@ where:
 |link to a resource that can generate this representation
 
 |links[rel=up]
-|link to the homepage resource, xref:section-b/chapter-08.adoc[§5].
+|link to the homepage resource, xref:section-b/chapter-08.adoc[§B5].
 
 |userName
 |a unique user name friendlyName (optional) the user's name in a form suitable to be rendered in a UI.

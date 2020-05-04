@@ -22,7 +22,7 @@ Some clients may wish to perform client-side validation before submitting change
 Such rules are applicable to any domain object instance of that given type, and so may be defined on the domain type.
 
 Restful Objects defines two ways in which such domain type information may be represented: a "simple" scheme and a "formal" scheme, defined below.
-Common to both is that the information is accessible by way of links and extensions xref:section-a/chapter-02.adoc#_2-11-extensible-representations[§2.11].
+Common to both is that the information is accessible by way of links and extensions xref:section-a/chapter-02.adoc#_2-11-extensible-representations[§A2.11].
 
 A client may query the version resource xref:section-b/chapter-08.adoc[§B8] to determine the server's support for domain metadata:
 
@@ -257,7 +257,7 @@ If a validation failure occurs, then the response will be *422* "unprocessable e
 [#_3_3_blobsclobs_and_attachments]
 == 3.3 Blobs/Clobs and Attachments
 
-As well as properties representing strings and dates, etc, the specification also defines optional support for properties whose value is a blob (binary large object) or a clob (character large object) xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§2.5].
+As well as properties representing strings and dates, etc, the specification also defines optional support for properties whose value is a blob (binary large object) or a clob (character large object) xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§A2.5].
 A typical example is a property representing a media item such as a picture or document.
 
 If an implementation does support blobs/clobs, then the value of the blob/clob is suppressed from the property representation.
@@ -290,7 +290,7 @@ A client can determine whether an implementation supports blobs/clobs by inspect
 [#_3_4_proto_persistent_objects]
 == 3.4 Proto-persistent Objects
 
-As described in xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§2.2], a proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
+As described in xref:section-a/chapter-02.adoc#_2-2-domain-object-ontology[§A2.2], a proto-persistent domain entity is an object instance that is created as a result of an interaction and immediately represented back to the client, without having been persisted first.
 
 The ultimate persistence of the entity is therefore under the control of the client, which is done by POSTing to the Objects of Type resource, xref:section-b/chapter-09.adoc#_9-1-http-post[§B9.1].
 

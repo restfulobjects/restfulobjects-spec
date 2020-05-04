@@ -62,7 +62,7 @@ Present only for domain services.
 
 |===
 
-A "*self*" link will be present only if the representation was generated from the domain services resource xref:section-b/chapter-07.adoc[§7].
+A "*self*" link will be present only if the representation was generated from the domain services resource xref:section-b/chapter-07.adoc[§B7].
 
 Restful Objects defines no standard child properties of the "*extensions*" json-property.
 Implementations are free to add to their own links/json-properties to "links" and "*extensions*" as they require.

@@ -1,6 +1,6 @@
 = 7	DOMAIN SERVICES RESOURCE
 
-Returns a list xref:section-b/chapter-11.adoc[§11] of (links to) domain service resources xref:section-c/chapter-15.adoc[§C15].
+Returns a list xref:section-b/chapter-11.adoc[§B11] of (links to) domain service resources xref:section-c/chapter-15.adoc[§C15].
 
 The endpoint URL for this resource is:
 
@@ -45,12 +45,12 @@ list of available services will not change between deployments
 
 ==== 7.1.2.3 Body
 
-As per xref:#_7_2_representation[§7.2].
+As per xref:#_7_2_representation[§B7.2].
 
 [#_7_2_representation]
 == 7.2 Representation
 
-The returned representation is a simple list xref:section-b/chapter-11.adoc[§11], but with an additional link with a rel="up" referring back to the homepage resource xref:section-b/chapter-05.adoc[§5]
+The returned representation is a simple list xref:section-b/chapter-11.adoc[§B11], but with an additional link with a rel="up" referring back to the homepage resource xref:section-b/chapter-05.adoc[§B5]
 
 The links from the services representation to other resources are as shown in the diagram below:
 

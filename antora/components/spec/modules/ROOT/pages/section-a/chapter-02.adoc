@@ -554,7 +554,7 @@ As the diagram shows, the "profile" parameter refines thesemantics of applicatio
 The "x-ro-element-type" parameter similarly refines the semantics of "profile" for list/collection representations.
 
 Note that the spec also supports non-JSON media types, such as application/pdf and image/jpeg, for blobs and clobs.
-See xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§3.3].
+See xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§A3.3].
 
 [#_2-4-1-representationtype-profile-parameter]
 === 2.4.1 RepresentationType ("profile" parameter)
@@ -811,9 +811,9 @@ Otherwise, the number is a 64-bit IEE754 floating point number.
 Note that the internationalization of dates (e.g. formatting a date as MM/DD/YYYY for the en_US locale) is a responsibility of the client, not the server implementation.
 Dates should always be provided in the formats described above; the Accept-Language header should be ignored.
 
-If the implementation supports the formal metamodel scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§3.1.2], then each of these datatypes has a corresponding pre-defined domain type resource xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3].
+If the implementation supports the formal metamodel scheme xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2], then each of these datatypes has a corresponding pre-defined domain type resource xref:section-d/chapter-21.adoc#_21_3_predefined_domain_types[§D21.3].
 
-Support for blobs and clobs is an optional capability, and is discussed further in xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§3.3].
+Support for blobs and clobs is an optional capability, and is discussed further in xref:section-a/chapter-03.adoc#_3_3_blobsclobs_and_attachments[§A3.3].
 
 [#_2-6-values]
 == 2.6 Values
@@ -823,7 +823,7 @@ These either being of a value type (e.g. String, date, int) or a reference type 
 This is true both for property values and for argument values; collections only ever contain reference types.
 
 For value types, the value that appears in the JSON is the actual JSON value, either a number, a Boolean, a string or a null.
-In the case of a string value this may may be the formatted version of some other datatype, such as a date xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§2.5].
+In the case of a string value this may may be the formatted version of some other datatype, such as a date xref:section-a/chapter-02.adoc#_2-5-scalar-datatypes-and-formats[§A2.5].
 
 For example, if the 'createdOn' property is a date, then its value would be represented thus:
 
@@ -917,7 +917,7 @@ The value of the "rel" json-property either takes one of the IANA-specified rel 
 
 |self
 |"Conveys an identifier for the link's context", in other words, following this link returns the same representation.
-Discussed further in xref:#_2-8-self[§2.8].
+Discussed further in xref:#_2-8-self[§A2.8].
 |up
 |Link from member to parent object/type, or from action param to its action
 |===
@@ -1119,7 +1119,7 @@ Sometimes a link represents a resource that requires additional data to be speci
 When a representation includes a link to these resources, it may optionally include an "arguments" json-property, for example to provide a default value for an action argument.
 
 Note that the client is not obliged to use this information.
-The representation of arguments is itself well-defined, see xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§2.9].
+The representation of arguments is itself well-defined, see xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9].
 
 [#_2-7-4-value]
 === 2.7.4 "value"
@@ -1197,12 +1197,12 @@ For example:
 
 However, if either of these conditions are not true (the action invoked is called using PUT or POST, or if the action takes arguments that are references to other objects) then this simple form cannot be used.
 
-This form of arguments also cannot be used when updating multiple properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]. For these cases the ‘Formal’ mechanism must be used xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§3.1.2].
+This form of arguments also cannot be used when updating multiple properties xref:section-c/chapter-14.adoc#_14_2_http_put[§C14.2]. For these cases the ‘Formal’ mechanism must be used xref:section-a/chapter-03.adoc#_3_1_2_formal_scheme[§A3.1.2].
 
 [#_2-9-2-formal-arguments]
 === 2.9.2 Formal Arguments
 
-Although simple arguments xref:section-a/chapter-02.adoc#_2-9-1-simple-arguments[§2.9.1] are convenient to use, their applicability is limited.
+Although simple arguments xref:section-a/chapter-02.adoc#_2-9-1-simple-arguments[§A2.9.1] are convenient to use, their applicability is limited.
 For all other cases arguments must be provided using a more formal syntax, either as a single argument node, or as a map or argument nodes:
 
 * resources that require a single value (xref:section-c/chapter-16.adoc#_16_2_http_put[§C16.2], xref:section-c/chapter-17.adoc#_17_2_http_put[§C17.2]) take a single argument node;
@@ -1358,7 +1358,7 @@ For example:
 
 ==== 2.9.2.4	Validating argument sets
 
-The client can also request the validation of arguments; this is done by providing the reserved x-ro-validate-only param (xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§3.2]) footnote:[The "x-ro-" prefix is used to distinguish from regular argument names.].
+The client can also request the validation of arguments; this is done by providing the reserved x-ro-validate-only param (xref:section-a/chapter-03.adoc#_3_2_validation_x_ro_validate_only[§A3.2]) footnote:[The "x-ro-" prefix is used to distinguish from regular argument names.].
 
 In the example introduced above, an object has an action listProducts(Category category, Subcategory subcategory).
 To validate the category by itself (for example, when the user tabs from the category field in the UI), it would provide only the category argument:
@@ -1416,13 +1416,13 @@ Note that the spec does not currently support obtaining the set of choices of on
 [#_2-10-passing-arguments-to-resources]
 == 2.10	Passing arguments to resources
 
-As noted previously, calling a resource using GET with simple arguments xref:section-a/chapter-02.adoc#_2-9-1-simple-arguments[§2.9.1] is straight-forward: the arguments are simply passed as key/value pairs.
+As noted previously, calling a resource using GET with simple arguments xref:section-a/chapter-02.adoc#_2-9-1-simple-arguments[§A2.9.1] is straight-forward: the arguments are simply passed as key/value pairs.
 
 For example:
 
     GET services/x.TaskRepository/actions/findTasks?tagged=urgent
 
-Passing formal arguments xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§2.9].2 through to resources that accept a PUT or a POST is also easy: a string representation of the arguments map should simply be provided as the body of the request.
+Passing formal arguments xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9].2 through to resources that accept a PUT or a POST is also easy: a string representation of the arguments map should simply be provided as the body of the request.
 
 However, if formal arguments need to be passed through to a resource using GET and DELETE then matters are slightly more complex, because the HTTP spec footnote:[link:http://www.w3.org/Protocols/rfc2616/rfc2616.html[], sec 4.3 and 9.7.] does not guarantee that resources called using GET and DELETE will receive a body footnote:[Emperical testing confirms that bodies are not preserved by servlet containers such as Tomcat and Jetty.  Proxies may also strip out the body.].
 Therefore, any query arguments to such resources must be encoded within the URL.

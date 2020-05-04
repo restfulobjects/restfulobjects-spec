@@ -48,7 +48,7 @@ since home page changes only on redeployment
 
 ==== 5.1.2.3 Body
 
-As per xref:#_5_2_representation[§5.2].
+As per xref:#_5_2_representation[§B5.2].
 
 [#_5_2_representation]
 == 5.2 Representation
@@ -112,13 +112,13 @@ where:
 |link back to the resource that generated this representation.
 
 |link[rel=…/user]
-|link to the user resource xref:section-b/chapter-06.adoc[§6]
+|link to the user resource xref:section-b/chapter-06.adoc[§B6]
 
 |link[rel=…/services]
-|link to the services resource xref:section-b/chapter-07.adoc[§7]
+|link to the services resource xref:section-b/chapter-07.adoc[§B7]
 
 |link[rel=…/version]
-|link to the version resource xref:section-b/chapter-08.adoc[§8]
+|link to the version resource xref:section-b/chapter-08.adoc[§B8]
 
 |link[rel=…/types]
 |link to the domain types resource xref:section-d/chapter-21.adoc[§D21]

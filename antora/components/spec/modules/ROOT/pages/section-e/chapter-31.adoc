@@ -28,7 +28,7 @@ The server either serves up that representation with a matching Content-Type hea
 The name for this process is ‘content negotiation’ (sometimes shortened to ‘conneg’).
 Restful Objects currently provides some of the infrastructure for conneg, through the "x-ro-domain-type" media type parameter xref:section-a/chapter-02.adoc#_2-4-2-domain-type-x-ro-domain-type-parameter-and-element-type-x-ro-element-type-parameter[§A2.4.2]. Using this parameter the server indicates the domain type of each object representation it serves; this applies to all representations, be they of view models or of entities.
 However full content negotiation is not currently supported in the spec; the client cannot specify the "x-ro-domain-type" media parameter in the Accept header in order to request a specific representation (or if they do, it will be ignored).
-A future version of the spec is likely to include support, however; see xref:section-e/chapter-34.adoc#_34_1_content_negotiation[§34.1].
+A future version of the spec is likely to include support, however; see xref:section-e/chapter-34.adoc#_34_1_content_negotiation[§E34.1].
 
 == 31.3 When Conneg isn't required
 

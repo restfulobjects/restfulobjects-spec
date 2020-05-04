@@ -10,7 +10,7 @@ This means that a client cannot insist that a particular representation is of a 
 This idea is for the spec to be extended so that the x-ro-domain-type from an Accept header is checked when invoking an object or service action, and is used as a hint to ensure that a representation of the correct type is returned to the client.
 In this way the spec would support content negotiation (conneg).
 In theory, this functionality could be applied to any domain type, either a persistent entity or an (addressable) view model.
-In practice, though, supporting different versions of persistent entities (v2.Customer, v3.Customer) may well be difficult, and so implementations may choose to restrict support to actions that return addressable view models, xref:section-e/chapter-32.adoc#_32_1_making_view_models_addressable[§32.1]. For example, given a versioned CustomerViewModel, a client would set the Accept request header to:
+In practice, though, supporting different versions of persistent entities (v2.Customer, v3.Customer) may well be difficult, and so implementations may choose to restrict support to actions that return addressable view models, xref:section-e/chapter-32.adoc#_32_1_making_view_models_addressable[§E32.1]. For example, given a versioned CustomerViewModel, a client would set the Accept request header to:
 Accept: application/json; profile="urn:org.restfulobjects:repr-types/object"; x ro domain type= "http://~/domain-types/x.viewmodels.v2.CustomerViewModel"
 The server would then either serve up a representation with a matching Content-Type, or would return a 406 error code ("Not acceptable") to indicate that the domain type required is not (or is no longer) supported.
 It is easy enough for the framework implementation to parse the x-ro-domain-type and determine the corresponding domain type (e.g. java.lang.Class on a Java implementation, or System.Type on a .NET implementation).
@@ -175,7 +175,7 @@ This is not currently the case with Restful Objects, as there are no definitions
 
 * ~/objects/{domainType}
 
-** except for POST; see also xref:section-e/chapter-34.adoc#_34_7_listable_instances[§34.7].
+** except for POST; see also xref:section-e/chapter-34.adoc#_34_7_listable_instances[§E34.7].
 
 * ~/objects/{domainType}/{instanceId}/properties
 

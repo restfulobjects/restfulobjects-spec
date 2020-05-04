@@ -1,6 +1,6 @@
 = 28 HATEOAS VS WEB APIS
 
-Comparing two styles of distributed system.
+_Comparing two styles of distributed system._
 
 [#_28_1_hateoas_hypermedia_controls]
 == 28.1 HATEOAS (Hypermedia Controls)

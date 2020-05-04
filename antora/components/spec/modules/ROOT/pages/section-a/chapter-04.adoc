@@ -19,7 +19,7 @@ They are:
 
 |invalidReason
 |Provides the reason (or the literal "invalid’) why a proposed value for a property, collection or action argument is invalid.
-Appears within an argument representation xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§2.9] returned as a response.
+Appears within an argument representation xref:section-a/chapter-02.adoc#_2-9-resource-argument-representation[§A2.9] returned as a response.
 
 |x-ro-invalidReason
 |Provides the reason why a SET OF proposed values for properties or arguments is invalid.
@@ -27,11 +27,11 @@ The "x-ro-" prefix is to avoid name clashes with the property/argument names.
 
 |links
 |A list of additional links from the representation to other resources.
-Implementation-specific links may also be present in this list; see xref:section-a/chapter-02.adoc#_2-11-extensible-representations[§2.11].
+Implementation-specific links may also be present in this list; see xref:section-a/chapter-02.adoc#_2-11-extensible-representations[§A2.11].
 
 |extensions
 |Map of additional information about the resource.
-Implementation-specific json-properties may also be present in this map; see xref:section-a/chapter-02.adoc#_2-11-extensible-representations[§2.11].
+Implementation-specific json-properties may also be present in this map; see xref:section-a/chapter-02.adoc#_2-11-extensible-representations[§A2.11].
 |===
 
 == 4.2 Specified (reserved) query parameters
@@ -45,7 +45,7 @@ The query parameters reserved by Restful Objects are:
 |Description
 
 |x-ro-domain-model
-|Which domain model scheme xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§3.1] the server should return.
+|Which domain model scheme xref:section-a/chapter-03.adoc#_3_1_domain_metadata_x_ro_domain_model[§A3.1] the server should return.
 Understood only by servers that provide "selectable" for the "domainModel" capability xref:section-b/chapter-08.adoc[§B8]
 |x-ro-validate-only
 |Indicates that parameters should be validated but no change in state should occur.

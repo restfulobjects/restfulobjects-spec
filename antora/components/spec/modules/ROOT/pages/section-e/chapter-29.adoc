@@ -1,61 +1,137 @@
 = 29 PERSONAL VS SHARED STATE
 
-Different types of resource state, what is not resource state, and discussion of the "domain-model rest anti-pattern" paper.
+_Different types of resource state, what is not resource state, and discussion of the "domain-model rest anti-pattern" paper._
 
 == 29.1 Resources representing Shared State
 
 In Roy Fielding's thesis that originally describes the REST architectural style, the definition of a resource is very general, with the focus being that resources may be identified and thus may be linked to.
+
 The examples of resources given by Fielding in his thesis tend towards shared information, for example a document, an image, "today's weather in Los Angeles", or "revision 1.2.7 of a source code file".
+
 These examples of resources are shared in the sense that any user could ask the system for a representation of the resource, and would obtain broadly the same information.
 Put another way, these resources correspond to domain entities, with the representations being a projection of the state of those entities.
-Their representation may need to be versioned to allow clients to evolve independently of server, but that is a separate issue (see xref:section-e/chapter-30.adoc[§30]).
+Their representation may need to be versioned to allow clients to evolve independently of server, but that is a separate issue (see xref:section-e/chapter-30.adoc[§E30]).
+
 Most of the examples in this specification are of domain entities: customer, order, product and so forth.
 The representations of these entities have hypermedia controls (links) to enable a client to navigate between entities, either as a result of following a property or collection link, or as the result of invoking an action.
 The links available may vary depending upon both the state of the resource, and upon the authorization of the user requesting the representation.
-For example, the client can use the link representing the Order's placedBy property to find the Customer that placed the order, or can use the link representing the Order's items collection to find the items within the Order.
-However, an Order that has not yet been placed might suppress the Customer link.
+
+For example, the client can use the link representing the ``Order``'s `placedBy` property to find the `Customer` that placed the order, or can use the link representing the ``Order``'s `items` collection to find the items within the `Order`.
+However, an `Order` that has not yet been placed might suppress the `Customer` link.
+
 Links not only represent static relationships between entities, they can also represent entity behaviour.
-So, the Order could have been created in the first place by the client following the link representing the Customer's placeOrder() action.
-However, a user with insufficient privileges might not see the placeOrder() link.
-In this way, resources representing domain entities fully support the HATEOAS constraint (§28.1) of RESTful systems.
+So, the `Order` could have been created in the first place by the client following the link representing the ``Customer``'s `placeOrder()` action.
+However, a user with insufficient privileges might not see the `placeOrder()` link.
+
+In this way, resources representing domain entities fully support the HATEOAS constraint (xref:section-e/chapter-28.adoc#_28_1_hateoas_hypermedia_controls[§E28.1]) of RESTful systems.
 
 == 29.2 Resources representing Personal State
 
 Whereas domain entities constitute shared state (available to any requesting user), some state is private to a given user and should not be accessible to other users.
-The classic example is that of a ShoppingCart.
-Each user may have access to a resource representing "their" ShoppingCart, but should not be able to access (or even determine the existence of) other users' ShoppingCarts.
+
+The classic example is that of a ``ShoppingCart``.
+Each user may have access to a resource representing "their" `ShoppingCart`, but should not be able to access (or even determine the existence of) other users' ``ShoppingCart``s.
+
 Resources that capture such "personal" state often double up as a means to take the user through the process of completing a user goal.
 For example, the initial representation of a ShoppingCart may provide links to browse for products to add to the cart.
 Once some products have been added, it may additionally provide a link to checkout the cart.
 Once the checkout is started, the links will change to the various steps of the checkout process (payment, delivery options and so on).
-Restful Objects does not specify how implementations should protect personal state, but there are at lest two possible approaches.
-In the first, implementations can exploit the fact that URLs are opaque, and encrypt the instance identifier component.
-This is discussed further and in more general terms in xref:section-e/chapter-30.adoc[§30]. The second approach is for the implementation to provide a mechanism to distinguish between a resource that holds personal state and one that holds shared state, and ensued that a user is only ever served up "their" personal resources.
-This would be analogous to querying from a database view that restricts rows by userId:
-create view MyPersonalResource as select * from AllPersonalResourses where user_id = @@user_id     -- current user id One way to implement this could be though a reserved/annotated "UserId" property (or method) in the domain object; for example:
-public class ShoppingCart { @UserId public int getPersonalTo() { … }
 
-    public List<Item> getItems() { … }
-    …
+Restful Objects does not specify how implementations should protect personal state, but there are at lest two possible approaches.
+
+In the first, implementations can exploit the fact that URLs are opaque, and encrypt the instance identifier component.
+This is discussed further and in more general terms in xref:section-e/chapter-30.adoc[§E30].
+
+The second approach is for the implementation to provide a mechanism to distinguish between a resource that holds personal state and one that holds shared state, and ensued that a user is only ever served up "their" personal resources.
+This would be analogous to querying from a database view that restricts rows by `userId`:
+
+[source,sql]
+----
+create view MyPersonalResource
+as
+select * from AllPersonalResourses
+where user_id = @@user_id     -- <.>
+----
+<.> current user id
+
+One way to implement this could be though a reserved/annotated "UserId" property (or method) in the domain object; for example:
+
+[source,java]
+----
+public class ShoppingCart {
+
+    @UserId
+    public int getPersonalTo() { ... }
+
+    public List<Item> getItems() { ... }
+    ...
 }
-If the @UserId property is present then the implementation infers that the object is personal to that user, and never returns it as a resource if requested by any other user.
+----
+
+If the `@UserId` property is present then the implementation infers that the object is personal to that user, and never returns it as a resource if requested by any other user.
+
 == 29.3 Application State
-Personal state, discussed above, is not the same as application state, though the distinction is subtle. In a blog post from 2008 , Roy Fielding wrote:
-Don’t confuse application state (the state of the user’s application of computing to a given task) with resource state (the state of the world as exposed by a given service). They are not the same thing.
-At first glance one might consider that this definition does not allow resources to represent personal state; after all, a personal state resource exists to manage the state of a user's application. However, we should not confuse the state of a resource on the server with the state of the client as a result of consuming that representation. Put another way: if a user accesses their shopping cart with a web browser, then the application state is not the shopping cart resource, it is the in-memory DOM structure within their browser.
-What this also means is that the phrase "state of the world" in Fielding's definition is quite narrow: it should be taken to mean "as observed by a given user" rather than "as observed by any user". REST does therefore allow for resources to have either personal state or to have shared state.
+
+Personal state, discussed above, is not the same as application state, though the distinction is subtle.
+In a blog post from 2008 footnote:[http://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven#comment-744], Roy Fielding wrote:
+
+[quote,Roy Fielding,2008]
+____
+Don’t confuse application state (the state of the user’s application of computing to a given task) with resource state (the state of the world as exposed by a given service).
+They are not the same thing.
+____
+
+At first glance one might consider that this definition does not allow resources to represent personal state; after all, a personal state resource exists to manage the state of a user's application.
+However, we should not confuse the state of a resource on the server with the state of the client as a result of consuming that representation.
+Put another way: if a user accesses their shopping cart with a web browser, then the application state is not the shopping cart resource, it is the in-memory DOM structure within their browser.
+
+What this also means is that the phrase "state of the world" in Fielding's definition is quite narrow: it should be taken to mean "as observed by a given user" rather than "as observed by any user".
+REST does therefore allow for resources to have either personal state or to have shared state.
+
 == 29.4 Domain Model Resources an Anti-Pattern?
-Some REST practitioners argue  that exposing domain model objects through REST is an anti-pattern. Or to use the terminology introduced in this chapter, the argument is that resources should only expose personal state, never shared state. To this, we strongly disagree.
-For a system to be called RESTful it must obey the HATEOAS constraint and provide hypermedia controls to enable the client to navigate its resources. As described above, both personal state resources (shopping carts) and shared state resources (customer, order, product) can do this. And in both cases the set of links returned in the representation will depend upon the state of the resource and upon the requesting user. There is nothing intrinsically different between personal and shared state resources in this regard; the real objection to exposing domain entities through REST would seem to lie elsewhere.
+
+Some REST practitioners argue footnote:[And they argue quite strongly; see for example http://java.dzone.com/articles/domain-model-rest-anti-pattern] that exposing domain model objects through REST is an anti-pattern.
+Or to use the terminology introduced in this chapter, the argument is that resources should only expose personal state, never shared state.
+To this, we strongly disagree.
+
+For a system to be called RESTful it must obey the HATEOAS constraint and provide hypermedia controls to enable the client to navigate its resources.
+As described above, both personal state resources (shopping carts) and shared state resources (customer, order, product) can do this.
+And in both cases the set of links returned in the representation will depend upon the state of the resource and upon the requesting user.
+There is nothing intrinsically different between personal and shared state resources in this regard; the real objection to exposing domain entities through REST would seem to lie elsewhere.
+
 === 29.4.1 Inductive vs Deductive Style
-A more useful distinction is between systems that use an inductive style and those that use a deductive style.  The inductive style is about taking the user through a series of steps in order to accomplish a goal. The inductive style works well when the users needs explicit assistance in order to navigate it. One of the earliest examples was Microsoft Money 2000 , which took users through various common-place financial book-keeping tasks.
+
+A more useful distinction is between systems that use an inductive style and those that use a deductive style.
+The inductive style is about taking the user through a series of steps in order to accomplish a goal.
+The inductive style works well when the users needs explicit assistance in order to navigate it.
+One of the earliest examples was Microsoft Money 2000 footnote:[http://msdn.microsoft.com/en-us/library/ms997506.aspx], which took users through various common-place financial book-keeping tasks.
+
 The opposite of the inductive style is the deductive style, and a good example is a word-processor that starts with a blank page and more-or-less leaves the user to write the document in any order that they choose.
-Other examples of deductive style apps are IDEs and the UNIX shell. The developer is free to write code in any order, or to string UNIX commands together as they see wish. Deductive style applications have much in common with sovereign applications .
+
+Other examples of deductive style apps are IDEs and the UNIX shell.
+The developer is free to write code in any order, or to string UNIX commands together as they see wish.
+Deductive style applications have much in common with sovereign applications footnote:[http://en.wikipedia.org/wiki/Application_posture].
+
 === 29.4.2 Application styles and Resource state
-The key distinction between inductive and deductive style is about who is in charge – the user or the computer?. With an inductive application the process is hard-wired into the system, and the user must follow this process. With a deductive application the system offers the functionality to allow the user to accomplish their goal, but does not mandate the order of the user's interactions; the process is in the user's head -  though there will almost certainly be rules implemented within the domain model to prevent actions that would be illegal or illogical given the current state.
-There is no right or wrong to this; as already noted it depends on the experience of the user with respect to the domain. An inductive system can be frustrating to use for an experienced user, while a deductive system can leave an inexperienced user at a loss as to how to proceed.
-Tying the above back to REST, applications built in the inductive style make heavy use of resources with personal state, with those resources modelling a user's goal and holding the state of the user's progression to that goal. The resource represents a use case instance, and its representation has links that represent the state transitions of the use case instance. These resources will most likely interact with underlying domain entities but those entities are never exposed.
-In contrast, applications built in the deductive style will more likely make use of resources with shared state (domain entities), with the functionality of those entities made directly available for the user to invoke as they see fit. This should not be confused with a simple CRUD system; the behaviour on the entities can be every bit as rich as the behaviour exposed by a use case resource.
-Some systems provide a mix of inductive and deductive styles, with corresponding resources to match. In an internet shop, the browsing of the shop is deductive in nature; the user can hop from product to product as they see fit. The checkout process though is more well-defined, and users tend to expect to be taken through it in an inductive style.
-A related approach is to start with a deductive system, and then to look for the "commonly-trodden path". These paths can be determined by observing experienced users' behaviour of the system, and then using this to provide inductive guidance for less experienced users.
+
+The key distinction between inductive and deductive style is about who is in charge – the user or the computer?.
+With an inductive application the process is hard-wired into the system, and the user must follow this process.
+With a deductive application the system offers the functionality to allow the user to accomplish their goal, but does not mandate the order of the user's interactions; the process is in the user's head - though there will almost certainly be rules implemented within the domain model to prevent actions that would be illegal or illogical given the current state.
+
+There is no right or wrong to this; as already noted it depends on the experience of the user with respect to the domain.
+An inductive system can be frustrating to use for an experienced user, while a deductive system can leave an inexperienced user at a loss as to how to proceed.
+
+Tying the above back to REST, applications built in the inductive style make heavy use of resources with personal state, with those resources modelling a user's goal and holding the state of the user's progression to that goal.
+The resource represents a use case instance, and its representation has links that represent the state transitions of the use case instance.
+These resources will most likely interact with underlying domain entities but those entities are never exposed.
+
+In contrast, applications built in the deductive style will more likely make use of resources with shared state (domain entities), with the functionality of those entities made directly available for the user to invoke as they see fit.
+This should not be confused with a simple CRUD system; the behaviour on the entities can be every bit as rich as the behaviour exposed by a use case resource.
+
+Some systems provide a mix of inductive and deductive styles, with corresponding resources to match.
+In an internet shop, the browsing of the shop is deductive in nature; the user can hop from product to product as they see fit.
+The checkout process though is more well-defined, and users tend to expect to be taken through it in an inductive style.
+
+A related approach is to start with a deductive system, and then to look for the "commonly-trodden path".
+These paths can be determined by observing experienced users' behaviour of the system, and then using this to provide inductive guidance for less experienced users.
 
