@@ -1,3 +1,5 @@
+THIS PROJECT HAS BEEN ARCHIVED, AND MOVED TO https://gitlab.com/restful/restfulobjects-spec
+
 # Restful Objects #
 
 The Restful Objects specification defines a set of RESTful resources, and corresponding JSON representations, for accessing and manipulating a domain object model.
